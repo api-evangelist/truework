@@ -1,0 +1,108 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Truework Verifications API — Reports
+  description: 'Truework Verifications API — Reports. 2 operations: retrieve a verification report and replay order event logs. Self-contained Naftiko capability covering one Truework business surface.'
+  tags:
+  - Truework
+  - Verifications
+  - Reports
+  - VOIE
+  created: '2026-05-24'
+  modified: '2026-05-24'
+binds:
+- namespace: env
+  keys:
+    TRUEWORK_API_KEY: TRUEWORK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: verifications-reports
+    baseUri: https://api.truework.com
+    description: Truework Verifications — Reports and order events. Self-contained, no shared references.
+    resources:
+    - name: report-by-id
+      path: /reports/{verification_report_id}
+      operations:
+      - name: getreport
+        method: GET
+        description: Retrieve a verification report by id.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: verification_report_id
+          in: path
+          type: string
+          required: true
+    - name: order-events
+      path: /orders/{order_id}/events
+      operations:
+      - name: getorderevents
+        method: GET
+        description: Replay the event log for an order.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: order_id
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      key: Authorization
+      value: 'Bearer {{env.TRUEWORK_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: verifications-reports-rest
+    port: 8081
+    description: REST adapter for Truework Verifications — Reports.
+    resources:
+    - path: /v1/reports/{verification_report_id}
+      name: report-by-id
+      description: REST surface for retrieving a verification report.
+      operations:
+      - method: GET
+        name: getreport
+        description: Retrieve a verification report.
+        call: verifications-reports.getreport
+        with:
+          verification_report_id: rest.verification_report_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: verifications-reports-mcp
+    port: 9091
+    transport: http
+    description: MCP adapter for Truework Verifications — Reports.
+    tools:
+    - name: truework-get-report
+      description: Retrieve a Truework verification report.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: verifications-reports.getreport
+      with:
+        verification_report_id: tools.verification_report_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: truework-get-order-events
+      description: Replay the event log for a Truework order.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: verifications-reports.getorderevents
+      with:
+        order_id: tools.order_id
+      outputParameters:
+      - type: object
+        mapping: $.

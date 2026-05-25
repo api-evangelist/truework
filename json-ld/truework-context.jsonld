@@ -1,0 +1,106 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://schema.org/",
+    "truework": "https://api.truework.com/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+
+    "Order": {
+      "@id": "truework:Order",
+      "@context": {
+        "id": { "@id": "truework:Order/id", "@type": "xsd:string" },
+        "state": { "@id": "truework:Order/state", "@type": "xsd:string" },
+        "external_id": { "@id": "truework:Order/externalId", "@type": "xsd:string" },
+        "permissible_purpose": { "@id": "truework:Order/permissiblePurpose", "@type": "xsd:string" },
+        "verification_requests": {
+          "@id": "truework:Order/verificationRequests",
+          "@container": "@list"
+        },
+        "created_at": { "@id": "truework:Order/createdAt", "@type": "xsd:dateTime" },
+        "updated_at": { "@id": "truework:Order/updatedAt", "@type": "xsd:dateTime" }
+      }
+    },
+
+    "VerificationRequest": {
+      "@id": "truework:VerificationRequest",
+      "@context": {
+        "id": { "@id": "truework:VerificationRequest/id", "@type": "xsd:string" },
+        "state": { "@id": "truework:VerificationRequest/state", "@type": "xsd:string" },
+        "type": { "@id": "truework:VerificationRequest/type", "@type": "xsd:string" },
+        "method": { "@id": "truework:VerificationRequest/method", "@type": "xsd:string" },
+        "target": { "@id": "truework:VerificationRequest/target", "@type": "truework:Target" },
+        "employer": { "@id": "truework:VerificationRequest/employer", "@type": "truework:Employer" },
+        "report_id": { "@id": "truework:VerificationRequest/reportId", "@type": "xsd:string" }
+      }
+    },
+
+    "Target": {
+      "@id": "truework:Target",
+      "@context": {
+        "first_name": { "@id": "schema:givenName", "@type": "xsd:string" },
+        "last_name": { "@id": "schema:familyName", "@type": "xsd:string" },
+        "social_security_number": { "@id": "truework:Target/ssn", "@type": "xsd:string" },
+        "email": { "@id": "schema:email", "@type": "xsd:string" },
+        "phone_number": { "@id": "schema:telephone", "@type": "xsd:string" },
+        "date_of_birth": { "@id": "schema:birthDate", "@type": "xsd:date" }
+      }
+    },
+
+    "Employer": {
+      "@id": "truework:Employer",
+      "@context": {
+        "name": { "@id": "schema:name", "@type": "xsd:string" },
+        "address": { "@id": "schema:address", "@type": "xsd:string" },
+        "company_id": { "@id": "truework:Employer/companyId", "@type": "xsd:string" }
+      }
+    },
+
+    "VerificationReport": {
+      "@id": "truework:VerificationReport",
+      "@context": {
+        "id": { "@id": "truework:VerificationReport/id", "@type": "xsd:string" },
+        "verification_request_id": { "@id": "truework:VerificationReport/verificationRequestId", "@type": "xsd:string" },
+        "order_id": { "@id": "truework:VerificationReport/orderId", "@type": "xsd:string" },
+        "type": { "@id": "truework:VerificationReport/type", "@type": "xsd:string" },
+        "method": { "@id": "truework:VerificationReport/method", "@type": "xsd:string" },
+        "employments": { "@id": "truework:VerificationReport/employments", "@container": "@list" },
+        "documents": { "@id": "truework:VerificationReport/documents", "@container": "@list" },
+        "completed_at": { "@id": "truework:VerificationReport/completedAt", "@type": "xsd:dateTime" }
+      }
+    },
+
+    "Employment": {
+      "@id": "truework:Employment",
+      "@context": {
+        "employer": { "@id": "truework:Employment/employer", "@type": "truework:Employer" },
+        "status": { "@id": "truework:Employment/status", "@type": "xsd:string" },
+        "position": { "@id": "schema:jobTitle", "@type": "xsd:string" },
+        "hire_date": { "@id": "truework:Employment/hireDate", "@type": "xsd:date" },
+        "termination_date": { "@id": "truework:Employment/terminationDate", "@type": "xsd:date" },
+        "pay_rate": { "@id": "truework:Employment/payRate" },
+        "income": { "@id": "truework:Employment/income" }
+      }
+    },
+
+    "QualificationCheck": {
+      "@id": "truework:QualificationCheck",
+      "@context": {
+        "id": { "@id": "truework:QualificationCheck/id", "@type": "xsd:string" },
+        "result": { "@id": "truework:QualificationCheck/result", "@type": "xsd:string" },
+        "rules": { "@id": "truework:QualificationCheck/rules", "@container": "@list" }
+      }
+    },
+
+    "WebhookEvent": {
+      "@id": "truework:WebhookEvent",
+      "@context": {
+        "event": { "@id": "truework:WebhookEvent/event", "@type": "xsd:string" },
+        "version": { "@id": "truework:WebhookEvent/version", "@type": "xsd:string" },
+        "data": { "@id": "truework:WebhookEvent/data" },
+        "triggered_at": { "@id": "truework:WebhookEvent/triggeredAt", "@type": "xsd:dateTime" }
+      }
+    }
+  }
+}

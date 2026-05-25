@@ -1,0 +1,52 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Truework
+providerId: truework
+created: '2026-05-24'
+modified: '2026-05-24'
+reconciled: true
+tags:
+  - Verifications
+  - Rate Limiting
+  - Mortgage
+description: >
+  Documented rate limits for the Truework Verifications API as published at
+  truework.docs.buildwithfern.com/docs/api-reference/limits. Truework enforces a flat
+  10 req/s budget per source IP and a 10 req/s budget per account, returning HTTP 429
+  on overage. Custom limits available on request via implementations@truework.com.
+sources:
+  - https://www.truework.com/docs/api-reference/limits
+  - https://www.truework.com/docs/api-reference/monitoring
+responseCodes:
+  throttled: 429
+  quotaExceeded: 429
+algorithm: fixed-window
+limits:
+  - scope: ip
+    window: second
+    requests: 10
+    description: 10 requests per second per source IP address.
+  - scope: account
+    window: second
+    requests: 10
+    description: 10 requests per second across the entire account.
+  - scope: account
+    window: webhook-instances
+    requests: 10
+    description: A Truework account may register up to 10 webhook destinations.
+retry:
+  recommendedStrategy: exponential-backoff
+  recommendedHeader: retry-after
+  retryOn: [429]
+custom:
+  supported: true
+  contact: implementations@truework.com
+  description: >
+    Lenders with bulk-verification or peak-day workloads can negotiate higher per-second
+    and per-account ceilings; reach out to implementations@truework.com with the expected
+    QPS profile.
+notes:
+  - Webhook delivery retries failed calls periodically over a 48-hour window.
+  - Persistent webhook failures email the service-account address on file.
+  - Sandbox honors the same envelope as production.

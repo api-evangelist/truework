@@ -1,0 +1,4979 @@
+openapi: 3.1.0
+info:
+  title: Truework Verifications API
+  description: >
+    Truework Verifications API for orders, reports, and order events. Submit verification of
+    income and employment (VOIE) orders against a known target employer, run synchronous
+    employer search, kick off a Truework Direct (Truework.js) borrower-driven verification,
+    retrieve completed verification reports, list/cancel orders, and replay order event logs.
+    Current API version is 2023-10-30.
+  version: 2023-10-30
+  contact:
+    name: Truework Implementations
+    email: implementations@truework.com
+    url: https://www.truework.com/docs
+  license:
+    name: Truework Terms of Service
+    url: https://www.truework.com/legal/terms
+paths:
+  /orders/target-employer:
+    post:
+      operationId: create-new-target-employer-verification
+      summary: Create a target employer order
+      description: >
+        Creates a new order and verification. Returns a JSON object representing the newly created order and
+        verification.
+
+
+        A target employer verification is distinct in that it _requires_ a target employer in the request body for
+        processing.
+
+
+        ## Verification processing
+
+
+        Target employer verifications are processed _asynchronously_: they will be created and returned in the response
+        body without any [reports](api.yaml/paths/~1verification-requests~1{verification_id}~1report/get). Truework will
+        then send a webhook when the request has finished processing, and the reports can be retrieved.
+
+
+        This creates a verification request with the following attributes:
+
+
+        - Target employer required
+
+        - Is processed asynchronously
+
+        - Can be any client-defined combination of Instant, Credentials, and Smart Outreach verification methods
+
+        - Returns the verification on a new order object
+
+
+        ### Controlling Processing with request config
+
+
+        The request config object allows you to configure how you use Truework by selecting only the verification
+        methods and features you need.
+      tags:
+        - subpackage_orders
+      parameters:
+        - name: Authorization
+          in: header
+          description: >-
+            Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+            Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with
+            `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+
+            Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+            **Examples**
+
+            - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+            - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.
+          required: true
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: >-
+            Specify the content type and version that the API should use. It's recommended to include this to avoid
+            breaking changes.
+          required: false
+          schema:
+            $ref: '#/components/schemas/OrdersTargetEmployerPostParametersAccept'
+            default: application/json
+      responses:
+        '201':
+          description: Order Request Created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponseResourceV20231030'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: The request's authorization is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error403'
+        '406':
+          description: An invalid API version was requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '451':
+          description: Frozen SSN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error451'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error501'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderTargetEmployerVerificationRequestV20231030'
+  /orders/employer-search:
+    post:
+      operationId: create-new-order-employer-search-verification
+      summary: Create an employer search order
+      description: >
+        POST requests create both an order and a verification. Returns a JSON object representing the newly created
+        order and verification.
+
+
+        ## Verification processing
+
+
+        Employer search verifications are processed _synchronously_: Truework will attempt to process the verification
+        during the initial POST request. If successful, the `201` response will include a `reports` key, which will
+        contain the requested data.
+
+
+        It is recommended to set a timeout on synchronous requests, to account for potential latency when calling our
+
+        partners. Synchronous requests generally take only a few seconds to complete, but in rare cases they may take
+        longer.
+
+
+        This creates a verification request with the following attributes:
+
+
+        - No target company
+
+        - Is processed synchronously
+
+        - Is Instant verification method only
+
+        - Filter employers by one of the following: any-employers, current-employers, previous-employers
+
+        - Returns the verification on a new order object
+      tags:
+        - subpackage_orders
+      parameters:
+        - name: fields
+          in: query
+          description: >-
+            Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote
+            subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case
+            of a list, subfields apply to each individual object. If omitted, all fields are included.
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+        - name: include_income_analytics
+          in: query
+          description: Whether to calculate income analytics for the nested reports in each verification.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: include_report_annotations
+          in: query
+          description: Include potentially unverified data in the response, including report annotations and unparsed documents.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: Authorization
+          in: header
+          description: >-
+            Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+            Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with
+            `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+
+            Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+            **Examples**
+
+            - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+            - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.
+          required: true
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: >-
+            Specify the content type and version that the API should use. It's recommended to include this to avoid
+            breaking changes.
+          required: false
+          schema:
+            $ref: '#/components/schemas/OrdersEmployerSearchPostParametersAccept'
+            default: application/json
+      responses:
+        '201':
+          description: Order and Verification Request Created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponseResourceV20231030'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: The request's authorization is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error403'
+        '406':
+          description: An invalid API version was requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '451':
+          description: Frozen SSN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error451'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error501'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderEmployerSearchVerificationRequestV20231030'
+  /orders/truework-direct:
+    post:
+      operationId: create-new-truework-direct-order
+      summary: Create a Truework Direct order
+      description: >-
+        POST requests create an order with a Truework Direct session token, used for instantiating the Truework.js
+        widget.
+      tags:
+        - subpackage_orders
+      parameters:
+        - name: Authorization
+          in: header
+          description: >-
+            Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+            Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with
+            `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+
+            Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+            **Examples**
+
+            - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+            - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.
+          required: true
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: >-
+            Specify the content type and version that the API should use. It's recommended to include this to avoid
+            breaking changes.
+          required: false
+          schema:
+            $ref: '#/components/schemas/OrdersTrueworkDirectPostParametersAccept'
+            default: application/json
+      responses:
+        '201':
+          description: Order Created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponseResourceV20231030'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: The request's authorization is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error403'
+        '406':
+          description: An invalid API version was requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '451':
+          description: Frozen SSN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error451'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error501'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderTrueworkDirectPostRequestV20231030'
+  /orders/{order_id}:
+    get:
+      operationId: get-one-order
+      summary: Get one order
+      description: |
+        Retrieves an order by id.
+      tags:
+        - subpackage_orders
+      parameters:
+        - name: order_id
+          in: path
+          description: Order ID
+          required: true
+          schema:
+            type: string
+        - name: include_report_annotations
+          in: query
+          description: Include potentially unverified data in the response, including report annotations and unparsed documents.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: Authorization
+          in: header
+          description: >-
+            Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+            Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with
+            `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+
+            Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+            **Examples**
+
+            - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+            - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.
+          required: true
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: >-
+            Specify the content type and version that the API should use. It's recommended to include this to avoid
+            breaking changes.
+          required: false
+          schema:
+            $ref: '#/components/schemas/OrdersOrderIdGetParametersAccept'
+            default: application/json
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponseResourceV20231030'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: The request's authorization is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error403'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        '406':
+          description: An invalid API version was requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '451':
+          description: Frozen SSN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error451'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error501'
+  /orders:
+    get:
+      operationId: get-all-orders
+      summary: Get all orders
+      description: An order is a consolidation of multiple verifications.
+      tags:
+        - subpackage_orders
+      parameters:
+        - name: limit
+          in: query
+          description: Limit the number of results returned
+          required: false
+          schema:
+            type: integer
+            default: 25
+        - name: offset
+          in: query
+          description: Offset the results by page
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: search_key
+          in: query
+          description: Filter by search_key value passed in on Order creation
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+        - name: include_report_annotations
+          in: query
+          description: Opt-in to including annotations on reports
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: verification_id
+          in: query
+          description: Filter by associated verification_id
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+        - name: Authorization
+          in: header
+          description: >-
+            Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+            Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with
+            `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+
+            Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+            **Examples**
+
+            - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+            - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.
+          required: true
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: >-
+            Specify the content type and version that the API should use. It's recommended to include this to avoid
+            breaking changes.
+          required: false
+          schema:
+            $ref: '#/components/schemas/OrdersGetParametersAccept'
+            default: application/json
+      responses:
+        '200':
+          description: A list of Orders was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderListResponseResourceV20231030'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: The request's authorization is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error403'
+        '406':
+          description: An invalid API version was requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '451':
+          description: Frozen SSN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error451'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error501'
+  /orders/{order_id}/cancel:
+    put:
+      operationId: cancel-an-order
+      summary: Cancel an order
+      description: |
+        Cancels all verification requests on an order, provided each request is not already in a terminal state.
+      tags:
+        - subpackage_orders
+      parameters:
+        - name: order_id
+          in: path
+          description: Order ID
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: >-
+            Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+            Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with
+            `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+
+            Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+            **Examples**
+
+            - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+            - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.
+          required: true
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: >-
+            Specify the content type and version that the API should use. It's recommended to include this to avoid
+            breaking changes.
+          required: false
+          schema:
+            $ref: '#/components/schemas/OrdersOrderIdCancelPutParametersAccept'
+            default: application/json
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderCancelResponseResourceV20231030'
+        '400':
+          description: Bad Request or Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: The request's authorization is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error403'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        '406':
+          description: An invalid API version was requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '451':
+          description: Frozen SSN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error451'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error501'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderCancelPutRequestV20231030'
+  /reports/{verification_report_id}:
+    get:
+      operationId: get-report-details
+      summary: Get one report
+      description: >
+        Retrieves a report for a given report ID.
+
+        If you don't have the report id, it is recommended to use the embedded reports key on a completed verification
+        object returned from `GET /orders`.
+
+        You can get the report in PDF format by adding `Accept: application/pdf` to your headers. When testing, please
+        use the generated curl command
+
+        with `--output <PDF filename>` specified.
+
+
+        <Info>
+
+        Only completed Reports will be returned. Any other request will fail with either 400 or 404, and provide more
+        information as an attached error message.
+
+        </Info>
+      tags:
+        - subpackage_reports
+      parameters:
+        - name: verification_report_id
+          in: path
+          description: Report ID
+          required: true
+          schema:
+            type: string
+        - name: include_income_analytics
+          in: query
+          description: Whether to calculate income analytics for the nested reports in each verification.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: include_report_annotations
+          in: query
+          description: Whether to include annotations for the nested reports in each verification.
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: fields
+          in: query
+          description: >-
+            Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote
+            subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case
+            of a list, subfields apply to each individual object. If omitted, all fields are included.
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+        - name: Authorization
+          in: header
+          description: >-
+            Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+            Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with
+            `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+
+            Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+            **Examples**
+
+            - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+            - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.
+          required: true
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: >-
+            Specify the content type and version that the API should use. It's recommended to include this to avoid
+            breaking changes.
+          required: false
+          schema:
+            $ref: '#/components/schemas/ReportsVerificationReportIdGetParametersAccept'
+            default: application/json
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderVerificationReportResourceV20231030'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: The request's authorization is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error403'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        '406':
+          description: An invalid API version was requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '451':
+          description: Frozen SSN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error451'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error501'
+  /orders/{order_id}/events:
+    get:
+      operationId: get-order-events
+      summary: Get order events
+      description: Returns all events associated with an order.
+      tags:
+        - subpackage_orders
+      parameters:
+        - name: order_id
+          in: path
+          description: Order ID
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Limit the number of results returned
+          required: false
+          schema:
+            type: integer
+            default: 25
+        - name: offset
+          in: query
+          description: Offset the results by page
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: Authorization
+          in: header
+          description: >-
+            Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+            Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with
+            `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+
+            Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+            **Examples**
+
+            - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+            - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.
+          required: true
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: >-
+            Specify the content type and version that the API should use. It's recommended to include this to avoid
+            breaking changes.
+          required: false
+          schema:
+            $ref: '#/components/schemas/OrdersOrderIdEventsGetParametersAccept'
+            default: application/json
+      responses:
+        '200':
+          description: A list of Events was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventListResource'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: The request's authorization is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error403'
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        '406':
+          description: An invalid API version was requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '451':
+          description: Frozen SSN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error451'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error501'
+  /orders/reverification:
+    post:
+      operationId: reverify-a-verification
+      summary: Reverify a report
+      description: Reverifies a report, provided no more than 90 days have passed since completion of the verification.
+      tags:
+        - subpackage_orders
+      parameters:
+        - name: Authorization
+          in: header
+          description: >-
+            Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+            Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with
+            `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+
+            Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+            **Examples**
+
+            - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+            - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.
+          required: true
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: >-
+            Specify the content type and version that the API should use. It's recommended to include this to avoid
+            breaking changes.
+          required: false
+          schema:
+            $ref: '#/components/schemas/OrdersReverificationPostParametersAccept'
+            default: application/json
+        - name: Request-Sync
+          in: header
+          description: >-
+            A header that defines if a request should be executed synchronously. Only Verifications that were initially
+            executed synchronously may be reverified synchronously. `sync` can only return completed or canceled
+            verification responses, not pending. `async` will return only pending.
+          required: false
+          schema:
+            $ref: '#/components/schemas/OrdersReverificationPostParametersRequestSync'
+            default: async
+      responses:
+        '201':
+          description: Reverification Request Created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponseResourceV20231030'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: The request's authorization is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error403'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        '406':
+          description: An invalid API version was requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '451':
+          description: Frozen SSN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error451'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error501'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderReverificationRequestV20231030'
+servers:
+  - url: https://api.truework-sandbox.com
+  - url: https://api.truework.com
+components:
+  schemas:
+    OrdersTargetEmployerPostParametersAccept:
+      type: string
+      enum:
+        - application/json
+        - application/json; version=2023-10-30
+      default: application/json
+      title: OrdersTargetEmployerPostParametersAccept
+    AuthorizationFormV20220801:
+      type: object
+      properties:
+        content:
+          type: string
+          format: base64
+          description: base64 representation of the file
+        filename:
+          type: string
+      required:
+        - content
+        - filename
+      description: Supporting documentation for the request in PDF, JPEG, or PNG format
+      title: AuthorizationFormV20220801
+    PermissiblePurposeInputV20220801:
+      type: string
+      enum:
+        - child-support
+        - credit-application
+        - employee-eligibility
+        - employee-request
+        - employee-review-or-collection
+        - employment
+        - insurance-underwriting-application
+        - legitimate-reason-initiated
+        - legitimate-reason-review
+        - risk-assessment
+        - subpoena
+      description: >-
+        A valid purpose is required for Truework to process the verification request.
+
+        Throughout the API, this is signified by the `permissible_purpose` field.
+
+
+        | VALUE                              |
+        DESCRIPTION                                                                                                                                        
+        |
+
+        | ---------------------------------- |
+        ---------------------------------------------------------------------------------------------------------------------------------------------------
+        |
+
+        | child-support                      | Determine child support payments (available to verifiers that represent a
+        state or local child support enforcement agencies)                        |
+
+        | credit-application                 | The target's application for
+        credit                                                                                                                
+        |
+
+        | employee-eligibility               | Employee's eligibility for a benefit granted by a governmental agency
+        required by law to consider the employee's financial responsibility or status |
+
+        | employee-request                   | The target has issued the verifier written instruction to obtain this
+        information                                                                   |
+
+        | employee-review-or-collection      | Performing a review or collection of the target's
+        account                                                                                           |
+
+        | employment                         | Employment purposes where the target has given prior written
+        consent                                                                                |
+
+        | insurance-underwriting-application | Underwriting insurance in response to the target's
+        application                                                                                      |
+
+        | legitimate-reason-initiated        | Legitimate business need for the information in connection with a
+        business transaction initiated by the target                                      |
+
+        | legitimate-reason-review           | Legitimate business need to review the target's account to determine
+        whether the employee continues to meet the terms of the account                |
+
+        | risk-assessment                    | To assess the credit or prepayment risks associated with an existing
+        credit obligation of the target                                                |
+
+        | subpoena                           | For a court order or a federal grand jury subpoena
+      title: PermissiblePurposeInputV20220801
+    VerificationMethodV20231030:
+      type: string
+      enum:
+        - instant
+        - credentials
+        - smart-outreach
+        - documents
+      title: VerificationMethodV20231030
+    TargetEmployerVerificationConfigV20231030-Input:
+      type: object
+      properties:
+        allowed_verification_methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/VerificationMethodV20231030'
+          default:
+            - instant
+            - smart-outreach
+            - credentials
+          description: >-
+            The list of allowed verification methods. Note: for tenant screening, documents will be added to supplied
+            methods.
+      title: TargetEmployerVerificationConfigV20231030-Input
+    UseCaseInputVMinimumVersion:
+      type: string
+      enum:
+        - mortgage
+        - home-equity
+        - background
+        - tenant
+        - government
+        - auto
+        - lending
+        - credit
+        - identity
+        - insurance
+        - health
+        - offers
+        - account-management
+        - preapproval
+      description: >-
+        The verification request use case describes the type of product the verification request is originating from.
+
+        If omitted, the verifier type in account settings will be used as a default
+
+
+
+        | VALUE              |
+        DESCRIPTION                                                                                                                   
+        |
+
+        | ------------------ |
+        ------------------------------------------------------------------------------------------------------------------------------
+        |
+
+        | mortgage           | Verification for a
+        mortgage                                                                                                    |
+
+        | home-equity        | Verification for home equity
+
+        | background         | Verification for a background
+        check                                                                                            |
+
+        | tenant             | Verification for a rental
+        property                                                                                             |
+
+        | government         | Verification for government/social
+        services                                                                                    |
+
+        | auto               | Verification for auto
+        lending                                                                                                  |
+
+        | lending            | Verification for personal loans or consumer
+        lending                                                                            |
+
+        | credit             | Verification for credit
+        cards                                                                                                  |
+
+        | identity           | Verification for identity or
+        fraud                                                                                             |
+
+        | insurance          | Verification for
+        insurance                                                                                                     |
+
+        | health             | Verification for health
+        services                                                                                               |
+
+        | offers             | Verification for
+        offers                                                                                                        |
+
+        | account-management | Verification for account
+        management                                                                                            |
+
+        | preapproval        | Verification for
+        preapprovals                                                                                                  |
+      title: UseCaseInputVMinimumVersion
+    ResellerOriginatingPartyInputV20220801:
+      type: object
+      properties:
+        originating_party:
+          type: string
+        permissible_purpose:
+          $ref: '#/components/schemas/PermissiblePurposeInputV20220801'
+        use_case:
+          $ref: '#/components/schemas/UseCaseInputVMinimumVersion'
+      required:
+        - originating_party
+        - permissible_purpose
+        - use_case
+      title: ResellerOriginatingPartyInputV20220801
+    AddressV20220801-Input:
+      type: object
+      properties:
+        address:
+          type:
+            - string
+            - 'null'
+        city:
+          type:
+            - string
+            - 'null'
+        country_code:
+          type:
+            - string
+            - 'null'
+        country_subdivision_code:
+          type:
+            - string
+            - 'null'
+        extended_address:
+          type:
+            - string
+            - 'null'
+        postal_code:
+          type:
+            - string
+            - 'null'
+      title: AddressV20220801-Input
+    CompanyInputV20231030:
+      type: object
+      properties:
+        address:
+          oneOf:
+            - $ref: '#/components/schemas/AddressV20220801-Input'
+            - type: 'null'
+        name:
+          type: string
+      required:
+        - name
+      title: CompanyInputV20231030
+    OrderTargetEmployerVerificationTargetInputV20231030:
+      type: object
+      properties:
+        company:
+          $ref: '#/components/schemas/CompanyInputV20231030'
+        contact_email:
+          type:
+            - string
+            - 'null'
+        date_of_birth:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: Target's date of birth in format YYYY-MM-DD.
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type:
+            - string
+            - 'null'
+        social_security_number:
+          type: string
+          description: |
+            The target's social security number
+      required:
+        - company
+        - first_name
+        - last_name
+        - social_security_number
+      title: OrderTargetEmployerVerificationTargetInputV20231030
+    VerificationTypeVMinimumVersion:
+      type: string
+      enum:
+        - employment-income
+        - employment
+        - tenant-screening
+      title: VerificationTypeVMinimumVersion
+    OrderTargetEmployerVerificationRequestV20231030:
+      type: object
+      properties:
+        additional_information:
+          type:
+            - string
+            - 'null'
+          description: >-
+            Any additional information about the target that can help expedite the completion of the verification
+            request
+        authorization_forms:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/AuthorizationFormV20220801'
+          description: |
+            Authorization form files provided by the verifier for the verification
+        loan_id:
+          type:
+            - string
+            - 'null'
+          description: The loan id associated with the verification request
+        metadata:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            type: string
+          description: >-
+            A single level key-value JSON object that can be used to store custom data on the verification request; keys
+            and values must be strings
+        permissible_purpose:
+          $ref: '#/components/schemas/PermissiblePurposeInputV20220801'
+        request_config:
+          $ref: '#/components/schemas/TargetEmployerVerificationConfigV20231030-Input'
+        reseller_originating_party:
+          oneOf:
+            - $ref: '#/components/schemas/ResellerOriginatingPartyInputV20220801'
+            - type: 'null'
+          description: >-
+            The originating party that requested the verification via a reseller. `reseller_originating_party` is
+            required for for companies that resell data provided by Truework.
+        search_key:
+          type:
+            - string
+            - 'null'
+          description: A non-unique key that can be used to search for Orders
+        target:
+          $ref: '#/components/schemas/OrderTargetEmployerVerificationTargetInputV20231030'
+          description: Information on the individual who is being verified
+        tenant_property_id:
+          type:
+            - string
+            - 'null'
+          description: The ID of the tenant property to be used for this verification request.
+        type:
+          $ref: '#/components/schemas/VerificationTypeVMinimumVersion'
+        use_case:
+          $ref: '#/components/schemas/UseCaseInputVMinimumVersion'
+      required:
+        - permissible_purpose
+        - target
+        - type
+        - use_case
+      title: OrderTargetEmployerVerificationRequestV20231030
+    DocumentOutputResourceV20220801:
+      type: object
+      properties:
+        filename:
+          type:
+            - string
+            - 'null'
+      required:
+        - filename
+      title: DocumentOutputResourceV20220801
+    PermissiblePurposeOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+        - child-support
+        - credit-application
+        - employee-eligibility
+        - employee-request
+        - employee-review-or-collection
+        - employment
+        - insurance-underwriting-application
+        - legitimate-reason-initiated
+        - legitimate-reason-review
+        - risk-assessment
+        - subpoena
+        - other
+      description: >-
+        A valid purpose is required for Truework to process the verification request.
+
+        Throughout the API, this is signified by the `permissible_purpose` field.
+
+
+        | VALUE                              |
+        DESCRIPTION                                                                                                                                        
+        |
+
+        | ---------------------------------- |
+        ---------------------------------------------------------------------------------------------------------------------------------------------------
+        |
+
+        | child-support                      | Determine child support payments (available to verifiers that represent a
+        state or local child support enforcement agencies)                        |
+
+        | credit-application                 | The target's application for
+        credit                                                                                                                
+        |
+
+        | employee-eligibility               | Employee's eligibility for a benefit granted by a governmental agency
+        required by law to consider the employee's financial responsibility or status |
+
+        | employee-request                   | The target has issued the verifier written instruction to obtain this
+        information                                                                   |
+
+        | employee-review-or-collection      | Performing a review or collection of the target's
+        account                                                                                           |
+
+        | employment                         | Employment purposes where the target has given prior written
+        consent                                                                                |
+
+        | insurance-underwriting-application | Underwriting insurance in response to the target's
+        application                                                                                      |
+
+        | legitimate-reason-initiated        | Legitimate business need for the information in connection with a
+        business transaction initiated by the target                                      |
+
+        | legitimate-reason-review           | Legitimate business need to review the target's account to determine
+        whether the employee continues to meet the terms of the account                |
+
+        | risk-assessment                    | To assess the credit or prepayment risks associated with an existing
+        credit obligation of the target                                                |
+
+        | subpoena                           | For a court order or a federal grand jury subpoena
+
+        | other                              | No other value fits the permissible purpose of this verification
+        request      |
+      title: PermissiblePurposeOutputWrapperV20231030CanonicalValue
+    PermissiblePurposeOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/PermissiblePurposeOutputWrapperV20231030CanonicalValue'
+          description: >-
+            A valid purpose is required for Truework to process the verification request.
+
+            Throughout the API, this is signified by the `permissible_purpose` field.
+
+
+            | VALUE                              |
+            DESCRIPTION                                                                                                                                        
+            |
+
+            | ---------------------------------- |
+            ---------------------------------------------------------------------------------------------------------------------------------------------------
+            |
+
+            | child-support                      | Determine child support payments (available to verifiers that
+            represent a state or local child support enforcement agencies)                        |
+
+            | credit-application                 | The target's application for
+            credit                                                                                                                
+            |
+
+            | employee-eligibility               | Employee's eligibility for a benefit granted by a governmental agency
+            required by law to consider the employee's financial responsibility or status |
+
+            | employee-request                   | The target has issued the verifier written instruction to obtain this
+            information                                                                   |
+
+            | employee-review-or-collection      | Performing a review or collection of the target's
+            account                                                                                           |
+
+            | employment                         | Employment purposes where the target has given prior written
+            consent                                                                                |
+
+            | insurance-underwriting-application | Underwriting insurance in response to the target's
+            application                                                                                      |
+
+            | legitimate-reason-initiated        | Legitimate business need for the information in connection with a
+            business transaction initiated by the target                                      |
+
+            | legitimate-reason-review           | Legitimate business need to review the target's account to determine
+            whether the employee continues to meet the terms of the account                |
+
+            | risk-assessment                    | To assess the credit or prepayment risks associated with an existing
+            credit obligation of the target                                                |
+
+            | subpoena                           | For a court order or a federal grand jury subpoena
+
+            | other                              | No other value fits the permissible purpose of this verification
+            request      |
+        raw_value:
+          type: string
+          description: >-
+            An unlimited string representation of the value, which may provide more detail when the canonical value is
+            "other".
+      required:
+        - canonical_value
+        - raw_value
+      title: PermissiblePurposeOutputWrapperV20231030
+    EmployerFilterV20231030:
+      type: string
+      enum:
+        - any-employers
+        - current-employers
+        - previous-employers
+      title: EmployerFilterV20231030
+    EmployerSearchConfigV20231030-Output:
+      type: object
+      properties:
+        employer_filter:
+          $ref: '#/components/schemas/EmployerFilterV20231030'
+      required:
+        - employer_filter
+      title: EmployerSearchConfigV20231030-Output
+    UseCaseOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+        - mortgage
+        - home-equity
+        - background
+        - tenant
+        - government
+        - auto
+        - lending
+        - credit
+        - identity
+        - insurance
+        - health
+        - offers
+        - account-management
+        - preapproval
+        - other
+      description: >-
+        The verification request use case describes the type of product the verification request is originating from.
+
+        If omitted, the verifier type in account settings will be used as a default
+
+
+
+        | VALUE              |
+        DESCRIPTION                                                                                                                   
+        |
+
+        | ------------------ |
+        ------------------------------------------------------------------------------------------------------------------------------
+        |
+
+        | mortgage           | Verification for a
+        mortgage                                                                                                    |
+
+        | home-equity        | Verification for home equity
+
+        | background         | Verification for a background
+        check                                                                                            |
+
+        | tenant             | Verification for a rental
+        property                                                                                             |
+
+        | government         | Verification for government/social
+        services                                                                                    |
+
+        | auto               | Verification for auto
+        lending                                                                                                  |
+
+        | lending            | Verification for personal loans or consumer
+        lending                                                                            |
+
+        | credit             | Verification for credit
+        cards                                                                                                  |
+
+        | identity           | Verification for identity or
+        fraud                                                                                             |
+
+        | insurance          | Verification for
+        insurance                                                                                                     |
+
+        | health             | Verification for health
+        services                                                                                               |
+
+        | offers             | Verification for
+        offers                                                                                                        |
+
+        | account-management | Verification for account
+        management                                                                                            |
+
+        | preapproval        | Verification for
+        preapprovals                                                                                                  |
+
+        | other              | Verification for other products. This exists for historical compatibility, no new Schemas
+        can be created with this value |
+      title: UseCaseOutputWrapperV20231030CanonicalValue
+    UseCaseOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/UseCaseOutputWrapperV20231030CanonicalValue'
+          description: >-
+            The verification request use case describes the type of product the verification request is originating
+            from.
+
+            If omitted, the verifier type in account settings will be used as a default
+
+
+
+            | VALUE              |
+            DESCRIPTION                                                                                                                   
+            |
+
+            | ------------------ |
+            ------------------------------------------------------------------------------------------------------------------------------
+            |
+
+            | mortgage           | Verification for a
+            mortgage                                                                                                   
+            |
+
+            | home-equity        | Verification for home equity
+
+            | background         | Verification for a background
+            check                                                                                            |
+
+            | tenant             | Verification for a rental
+            property                                                                                             |
+
+            | government         | Verification for government/social
+            services                                                                                    |
+
+            | auto               | Verification for auto
+            lending                                                                                                  |
+
+            | lending            | Verification for personal loans or consumer
+            lending                                                                            |
+
+            | credit             | Verification for credit
+            cards                                                                                                  |
+
+            | identity           | Verification for identity or
+            fraud                                                                                             |
+
+            | insurance          | Verification for
+            insurance                                                                                                    
+            |
+
+            | health             | Verification for health
+            services                                                                                               |
+
+            | offers             | Verification for
+            offers                                                                                                       
+            |
+
+            | account-management | Verification for account
+            management                                                                                            |
+
+            | preapproval        | Verification for
+            preapprovals                                                                                                 
+            |
+
+            | other              | Verification for other products. This exists for historical compatibility, no new
+            Schemas can be created with this value |
+        raw_value:
+          type: string
+          description: >-
+            An unlimited string representation of the value, which may provide more detail when the canonical value is
+            "other".
+      required:
+        - canonical_value
+        - raw_value
+      title: UseCaseOutputWrapperV20231030
+    ResellerOriginatingPartyOutputV20231030:
+      type: object
+      properties:
+        originating_party:
+          type: string
+        permissible_purpose:
+          $ref: '#/components/schemas/PermissiblePurposeOutputWrapperV20231030'
+        use_case:
+          $ref: '#/components/schemas/UseCaseOutputWrapperV20231030'
+      required:
+        - originating_party
+        - permissible_purpose
+        - use_case
+      title: ResellerOriginatingPartyOutputV20231030
+    OrderEmployerSearchVerificationTargetOutputV20231030:
+      type: object
+      properties:
+        contact_email:
+          type:
+            - string
+            - 'null'
+        date_of_birth:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: Target's date of birth in format YYYY-MM-DD.
+        first_name:
+          type:
+            - string
+            - 'null'
+        last_name:
+          type:
+            - string
+            - 'null'
+        social_security_number:
+          type:
+            - string
+            - 'null'
+          description: |
+            The target's obfuscated social security number
+      required:
+        - contact_email
+        - date_of_birth
+        - first_name
+        - last_name
+        - social_security_number
+      title: OrderEmployerSearchVerificationTargetOutputV20231030
+    EmployerSearchModeResourceV20231030:
+      type: object
+      properties:
+        additional_information:
+          type:
+            - string
+            - 'null'
+          description: >
+            Any additional information about the target that can help expedite the completion of the verification
+            request
+        authorization_forms:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/DocumentOutputResourceV20220801'
+          description: |
+            Authorization form files provided by the verifier for the verification
+        loan_id:
+          type:
+            - string
+            - 'null'
+          description: |
+            The loan id associated with the verification request
+        metadata:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            type: string
+          description: >-
+            A single level key-value JSON object that can be used to store custom data on the verification request; keys
+            and values must be strings
+        permissible_purpose:
+          $ref: '#/components/schemas/PermissiblePurposeOutputWrapperV20231030'
+        request_config:
+          $ref: '#/components/schemas/EmployerSearchConfigV20231030-Output'
+        reseller_originating_party:
+          oneOf:
+            - $ref: '#/components/schemas/ResellerOriginatingPartyOutputV20231030'
+            - type: 'null'
+          description: >-
+            The originating party that requested the verification via a reseller. `reseller_originating_party` is
+            required for for companies that resell data provided by Truework.
+        search_key:
+          type:
+            - string
+            - 'null'
+          description: A non-unique key that can be used to search for Orders
+        target:
+          $ref: '#/components/schemas/OrderEmployerSearchVerificationTargetOutputV20231030'
+        type:
+          $ref: '#/components/schemas/VerificationTypeVMinimumVersion'
+        use_case:
+          $ref: '#/components/schemas/UseCaseOutputWrapperV20231030'
+      required:
+        - additional_information
+        - authorization_forms
+        - loan_id
+        - metadata
+        - permissible_purpose
+        - request_config
+        - reseller_originating_party
+        - search_key
+        - target
+        - type
+        - use_case
+      title: EmployerSearchModeResourceV20231030
+    ReverificationTargetOutputV20231030:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        truework_direct_session_token:
+          type:
+            - string
+            - 'null'
+      required:
+        - first_name
+        - last_name
+        - truework_direct_session_token
+      title: ReverificationTargetOutputV20231030
+    ReverificationModeResourceV20231030:
+      type: object
+      properties:
+        parent_order_id:
+          type: string
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReverificationTargetOutputV20231030'
+      required:
+        - parent_order_id
+        - targets
+      title: ReverificationModeResourceV20231030
+    TargetEmployerVerificationConfigV20231030-Output:
+      type: object
+      properties:
+        allowed_verification_methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/VerificationMethodV20231030'
+          description: >-
+            The list of allowed verification methods. Note: for tenant screening, documents will be added to supplied
+            methods.
+      required:
+        - allowed_verification_methods
+      title: TargetEmployerVerificationConfigV20231030-Output
+    AddressV20220801-Output:
+      type: object
+      properties:
+        address:
+          type:
+            - string
+            - 'null'
+        city:
+          type:
+            - string
+            - 'null'
+        country_code:
+          type:
+            - string
+            - 'null'
+        country_subdivision_code:
+          type:
+            - string
+            - 'null'
+        extended_address:
+          type:
+            - string
+            - 'null'
+        postal_code:
+          type:
+            - string
+            - 'null'
+      required:
+        - address
+        - city
+        - country_code
+        - country_subdivision_code
+        - extended_address
+        - postal_code
+      title: AddressV20220801-Output
+    CompanyOutputV20231030:
+      type: object
+      properties:
+        address:
+          oneOf:
+            - $ref: '#/components/schemas/AddressV20220801-Output'
+            - type: 'null'
+        name:
+          type:
+            - string
+            - 'null'
+      required:
+        - address
+        - name
+      title: CompanyOutputV20231030
+    OrderTargetEmployerVerificationTargetOutputV20231030:
+      type: object
+      properties:
+        company:
+          oneOf:
+            - $ref: '#/components/schemas/CompanyOutputV20231030'
+            - type: 'null'
+        contact_email:
+          type:
+            - string
+            - 'null'
+        date_of_birth:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: Target's date of birth in format YYYY-MM-DD.
+        first_name:
+          type:
+            - string
+            - 'null'
+        last_name:
+          type:
+            - string
+            - 'null'
+        social_security_number:
+          type:
+            - string
+            - 'null'
+          description: |
+            The target's obfuscated social security number
+      required:
+        - company
+        - contact_email
+        - date_of_birth
+        - first_name
+        - last_name
+        - social_security_number
+      title: OrderTargetEmployerVerificationTargetOutputV20231030
+    TargetEmployerModeResourceV20231030:
+      type: object
+      properties:
+        additional_information:
+          type:
+            - string
+            - 'null'
+          description: >
+            Any additional information about the target that can help expedite the completion of the verification
+            request
+        authorization_forms:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/DocumentOutputResourceV20220801'
+          description: |
+            Authorization form files provided by the verifier for the verification
+        loan_id:
+          type:
+            - string
+            - 'null'
+          description: |
+            The loan id associated with the verification request
+        metadata:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            type: string
+          description: >-
+            A single level key-value JSON object that can be used to store custom data on the verification request; keys
+            and values must be strings
+        permissible_purpose:
+          $ref: '#/components/schemas/PermissiblePurposeOutputWrapperV20231030'
+        request_config:
+          $ref: '#/components/schemas/TargetEmployerVerificationConfigV20231030-Output'
+        reseller_originating_party:
+          oneOf:
+            - $ref: '#/components/schemas/ResellerOriginatingPartyOutputV20231030'
+            - type: 'null'
+          description: >-
+            The originating party that requested the verification via a reseller. `reseller_originating_party` is
+            required for for companies that resell data provided by Truework.
+        search_key:
+          type:
+            - string
+            - 'null'
+          description: A non-unique key that can be used to search for Orders
+        target:
+          $ref: '#/components/schemas/OrderTargetEmployerVerificationTargetOutputV20231030'
+        type:
+          $ref: '#/components/schemas/VerificationTypeVMinimumVersion'
+        use_case:
+          $ref: '#/components/schemas/UseCaseOutputWrapperV20231030'
+      required:
+        - additional_information
+        - authorization_forms
+        - loan_id
+        - metadata
+        - permissible_purpose
+        - request_config
+        - reseller_originating_party
+        - search_key
+        - target
+        - type
+        - use_case
+      title: TargetEmployerModeResourceV20231030
+    ActionTypeWrapperCanonicalValue:
+      type: string
+      enum:
+        - verify
+        - do-not-verify
+        - other
+      description: >-
+        Action Truework should take for applicant's employment at this company.
+
+
+        | VALUE | DESCRIPTION |
+
+        | ----- | ----------- |
+
+        | verify | Truework should attempt to verify the applicant's employment at this company. |
+
+        | do-not-verify | Truework should attempt to avoid verifying the applicant's employment at this company, because
+        it has already been verified by other means. |
+
+        | other | Truework should do something else regarding the applicant's employment at this company |
+      title: ActionTypeWrapperCanonicalValue
+    ActionTypeWrapper:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/ActionTypeWrapperCanonicalValue'
+          description: >-
+            Action Truework should take for applicant's employment at this company.
+
+
+            | VALUE | DESCRIPTION |
+
+            | ----- | ----------- |
+
+            | verify | Truework should attempt to verify the applicant's employment at this company. |
+
+            | do-not-verify | Truework should attempt to avoid verifying the applicant's employment at this company,
+            because it has already been verified by other means. |
+
+            | other | Truework should do something else regarding the applicant's employment at this company |
+        raw_value:
+          type: string
+          description: >-
+            An unlimited string representation of the value, which may provide more detail when the canonical value is
+            "other".
+      required:
+        - canonical_value
+        - raw_value
+      title: ActionTypeWrapper
+    CompanyOutputV20220801:
+      type: object
+      properties:
+        action:
+          oneOf:
+            - $ref: '#/components/schemas/ActionTypeWrapper'
+            - type: 'null'
+        address:
+          oneOf:
+            - $ref: '#/components/schemas/AddressV20220801-Output'
+            - type: 'null'
+        name:
+          type: string
+        phone_number:
+          type:
+            - string
+            - 'null'
+      required:
+        - action
+        - address
+        - name
+        - phone_number
+      title: CompanyOutputV20220801
+    SelfEmploymentOutputV20231030:
+      type: object
+      properties:
+        business_name:
+          type:
+            - string
+            - 'null'
+          description: The business name for a self-employed (sole-proprietor) target.
+      required:
+        - business_name
+      title: SelfEmploymentOutputV20231030
+    TrueworkDirectTargetOutputV20231030:
+      type: object
+      properties:
+        authorization_forms:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/DocumentOutputResourceV20220801'
+          description: |
+            Authorization form files provided by the verifier for the verification
+        companies:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/CompanyOutputV20220801'
+        contact_email:
+          type:
+            - string
+            - 'null'
+        date_of_birth:
+          type: string
+          format: date
+          description: Target's date of birth in format YYYY-MM-DD.
+        first_name:
+          type:
+            - string
+            - 'null'
+        last_name:
+          type:
+            - string
+            - 'null'
+        metadata:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            type: string
+        permissible_purpose:
+          $ref: '#/components/schemas/PermissiblePurposeOutputWrapperV20231030'
+        reseller_originating_party:
+          oneOf:
+            - $ref: '#/components/schemas/ResellerOriginatingPartyOutputV20231030'
+            - type: 'null'
+        self_employment:
+          oneOf:
+            - $ref: '#/components/schemas/SelfEmploymentOutputV20231030'
+            - type: 'null'
+          description: Self-employment details, present when the order includes a self-employment verification.
+        social_security_number:
+          type: string
+          description: |
+            The target's obfuscated social security number
+        truework_direct_session_link:
+          type:
+            - string
+            - 'null'
+        truework_direct_session_token:
+          type: string
+        type:
+          $ref: '#/components/schemas/VerificationTypeVMinimumVersion'
+        use_case:
+          $ref: '#/components/schemas/UseCaseOutputWrapperV20231030'
+      required:
+        - authorization_forms
+        - companies
+        - contact_email
+        - date_of_birth
+        - first_name
+        - last_name
+        - metadata
+        - permissible_purpose
+        - reseller_originating_party
+        - self_employment
+        - social_security_number
+        - truework_direct_session_link
+        - truework_direct_session_token
+        - type
+        - use_case
+      title: TrueworkDirectTargetOutputV20231030
+    TrueworkDirectModeResourceV20231030:
+      type: object
+      properties:
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrueworkDirectTargetOutputV20231030'
+      required:
+        - targets
+      title: TrueworkDirectModeResourceV20231030
+    DetectionOutcomeWrapperCanonicalValue:
+      type: string
+      enum:
+        - passed
+        - failed
+        - not-run
+        - other
+      description: |-
+        The outcome of the detection rule.
+
+        | VALUE | DESCRIPTION |
+        | ----- | ----------- |
+        | passed | The detection rule passed. |
+        | failed | The detection rule failed. |
+        | not-run | The detection rule was not run. |
+        | other | Another outcome occurred. |
+      title: DetectionOutcomeWrapperCanonicalValue
+    DetectionOutcomeWrapper:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/DetectionOutcomeWrapperCanonicalValue'
+          description: |-
+            The outcome of the detection rule.
+
+            | VALUE | DESCRIPTION |
+            | ----- | ----------- |
+            | passed | The detection rule passed. |
+            | failed | The detection rule failed. |
+            | not-run | The detection rule was not run. |
+            | other | Another outcome occurred. |
+        raw_value:
+          type: string
+          description: >-
+            An unlimited string representation of the value, which may provide more detail when the canonical value is
+            "other".
+      required:
+        - canonical_value
+        - raw_value
+      title: DetectionOutcomeWrapper
+    DetectionTypeWrapperCanonicalValue:
+      type: string
+      enum:
+        - ssn-mismatch
+        - employer-name-mismatch
+        - page-edited
+        - other-edits
+        - online-generated-paystub
+        - earnings-edits
+        - deductions-edits
+        - pay-frequency-edits
+        - dollar-amount-edits
+        - employee-taxpayer-id-edits
+        - employee-details-edits
+        - employee-name-edits
+        - employer-name-edits
+        - employer-address-edits
+        - date-edits
+        - misaligned-text
+        - other
+      description: >-
+        The type of detection that was found on the document.
+
+
+        | VALUE | DESCRIPTION |
+
+        | ----- | ----------- |
+
+        | ssn-mismatch | The SSN on the document does not match the SSN on the request. |
+
+        | employer-name-mismatch | The employer name on the document may not match the employer name on the request. |
+
+        | page-edited | The form may have been created by a recognized software package. |
+
+        | other-edits | The form may have been edited with a recognized software package. |
+
+        | online-generated-paystub | The pay stub format may match a template from sites known to create paystubs for a
+        fee. |
+
+        | earnings-edits | The listed earnings may have been edited. |
+
+        | deductions-edits | Current or YTD deductions (including taxes) may have been edited. |
+
+        | pay-frequency-edits | Pay frequency may have been edited. |
+
+        | dollar-amount-edits | One or more of the following dollar amounts may have been changed: Beginning balance,
+        Ending balance, Total deposits, Total withdrawals, Daily balance, Individual amounts, Ledger balances. |
+
+        | employee-taxpayer-id-edits | The employee's social security number may have been edited. |
+
+        | employee-details-edits | The employee's marital status may have been edited. |
+
+        | employee-name-edits | The employee's name may have been edited. |
+
+        | employer-name-edits | The employer’s name may have been edited. |
+
+        | employer-address-edits | The employer’s address may have been edited. |
+
+        | date-edits | One or more of the following dates may have been edited (hire date, pay period, period start
+        date, period end date). |
+
+        | misaligned-text | The field or text may not match the expected alignment compared to the rest of the document.
+        |
+
+        | other | Something else was detected. |
+      title: DetectionTypeWrapperCanonicalValue
+    DetectionTypeWrapper:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/DetectionTypeWrapperCanonicalValue'
+          description: >-
+            The type of detection that was found on the document.
+
+
+            | VALUE | DESCRIPTION |
+
+            | ----- | ----------- |
+
+            | ssn-mismatch | The SSN on the document does not match the SSN on the request. |
+
+            | employer-name-mismatch | The employer name on the document may not match the employer name on the request.
+            |
+
+            | page-edited | The form may have been created by a recognized software package. |
+
+            | other-edits | The form may have been edited with a recognized software package. |
+
+            | online-generated-paystub | The pay stub format may match a template from sites known to create paystubs
+            for a fee. |
+
+            | earnings-edits | The listed earnings may have been edited. |
+
+            | deductions-edits | Current or YTD deductions (including taxes) may have been edited. |
+
+            | pay-frequency-edits | Pay frequency may have been edited. |
+
+            | dollar-amount-edits | One or more of the following dollar amounts may have been changed: Beginning
+            balance, Ending balance, Total deposits, Total withdrawals, Daily balance, Individual amounts, Ledger
+            balances. |
+
+            | employee-taxpayer-id-edits | The employee's social security number may have been edited. |
+
+            | employee-details-edits | The employee's marital status may have been edited. |
+
+            | employee-name-edits | The employee's name may have been edited. |
+
+            | employer-name-edits | The employer’s name may have been edited. |
+
+            | employer-address-edits | The employer’s address may have been edited. |
+
+            | date-edits | One or more of the following dates may have been edited (hire date, pay period, period start
+            date, period end date). |
+
+            | misaligned-text | The field or text may not match the expected alignment compared to the rest of the
+            document. |
+
+            | other | Something else was detected. |
+        raw_value:
+          type: string
+          description: >-
+            An unlimited string representation of the value, which may provide more detail when the canonical value is
+            "other".
+      required:
+        - canonical_value
+        - raw_value
+      title: DetectionTypeWrapper
+    DocumentDetection:
+      type: object
+      properties:
+        count:
+          type: integer
+        outcome:
+          $ref: '#/components/schemas/DetectionOutcomeWrapper'
+        type:
+          $ref: '#/components/schemas/DetectionTypeWrapper'
+      required:
+        - count
+        - outcome
+        - type
+      title: DocumentDetection
+    ApplicantDocumentMetadataV20220801:
+      type: object
+      properties:
+        detections:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentDetection'
+          description: >-
+            A list of fraud detections that were run on the document. If a detection is not present in the list it
+            either passed or was not run.
+        id:
+          type: string
+        url:
+          type: string
+          format: uri
+          description: A URL where the document content can be downloaded via an authenticated GET request.
+      required:
+        - detections
+        - id
+        - url
+      title: ApplicantDocumentMetadataV20220801
+    CancellationReasonOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+        - immediate
+        - high-turnaround-time
+        - competitor
+        - wrong-info
+        - no-match
+        - other
+      description: >-
+        | VALUE                |
+        DESCRIPTION                                                                                          |
+
+        | -------------------- |
+        ---------------------------------------------------------------------------------------------------- |
+
+        | immediate            | Can be used to cancel a request directly after submitting, before Truework has started
+        processing it |
+
+        | high-turnaround-time | The request is taking longer than
+        expected                                                           |
+
+        | competitor           | You preferred a competitor for this
+        request                                                          |
+
+        | wrong-info           | The request that is submitted contains information that is
+        wrong                                     |
+
+        | no-match             | No record was located for the given target and request
+        parameters                                    |
+
+        | other                | No other reason in the list fits the cancellation
+        reason                                             |
+      title: CancellationReasonOutputWrapperV20231030CanonicalValue
+    CancellationReasonOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/CancellationReasonOutputWrapperV20231030CanonicalValue'
+          description: >-
+            | VALUE                |
+            DESCRIPTION                                                                                          |
+
+            | -------------------- |
+            ---------------------------------------------------------------------------------------------------- |
+
+            | immediate            | Can be used to cancel a request directly after submitting, before Truework has
+            started processing it |
+
+            | high-turnaround-time | The request is taking longer than
+            expected                                                           |
+
+            | competitor           | You preferred a competitor for this
+            request                                                          |
+
+            | wrong-info           | The request that is submitted contains information that is
+            wrong                                     |
+
+            | no-match             | No record was located for the given target and request
+            parameters                                    |
+
+            | other                | No other reason in the list fits the cancellation
+            reason                                             |
+        raw_value:
+          type: string
+          description: >-
+            An unlimited string representation of the cancellation reason. When `canonical_value` is `other`, this may
+            carry a more specific identifier such as `family-member-as-respondent`, `self-employed-self-verification`,
+            `ssn-mismatch`, or `employer-refused`.
+      required:
+        - canonical_value
+        - raw_value
+      title: CancellationReasonOutputWrapperV20231030
+    _PositionAnnotation:
+      type: object
+      properties:
+        end_date:
+          type:
+            - string
+            - 'null'
+          format: date
+        start_date:
+          type:
+            - string
+            - 'null'
+          format: date
+        title:
+          type:
+            - string
+            - 'null'
+      required:
+        - end_date
+        - start_date
+        - title
+      title: _PositionAnnotation
+    PayUnitOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+        - annually
+        - daily
+        - semiweekly
+        - monthly
+        - weekly
+        - biweekly
+        - bimonthly
+        - semimonthly
+        - quarterly
+        - semiannually
+        - thirteen-monthly
+        - fourteen-monthly
+        - hourly
+        - variable
+        - other
+      description: A limited enum representation of the value, which will not be extended without a version bump.
+      title: PayUnitOutputWrapperV20231030CanonicalValue
+    PayUnitOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/PayUnitOutputWrapperV20231030CanonicalValue'
+          description: A limited enum representation of the value, which will not be extended without a version bump.
+        raw_value:
+          type: string
+          description: >-
+            An unlimited string representation of the value, which may provide more detail when the canonical value is
+            "other".
+      required:
+        - canonical_value
+        - raw_value
+      title: PayUnitOutputWrapperV20231030
+    PayRateV20231030:
+      type: object
+      properties:
+        amount:
+          type:
+            - string
+            - 'null'
+          description: The amount the employee gets paid per timeframe defined by the adject unit field.
+        unit:
+          oneOf:
+            - $ref: '#/components/schemas/PayUnitOutputWrapperV20231030'
+            - type: 'null'
+          description: 'The timeframe in which the employee gets paid the amount defined in the adjacent amount field. '
+      required:
+        - amount
+        - unit
+      title: PayRateV20231030
+    _SalaryAnnotation:
+      type: object
+      properties:
+        pay_rate:
+          oneOf:
+            - $ref: '#/components/schemas/PayRateV20231030'
+            - type: 'null'
+      required:
+        - pay_rate
+      title: _SalaryAnnotation
+    EmployeeStatusOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+        - active
+        - inactive
+        - unknown
+        - furloughed-covid
+        - non-employee
+        - other
+      description: >-
+        There are five employment statuses available on the `status` field in
+
+        `Employee`:
+
+
+        | VALUE            | DESCRIPTION                                                         | VERSION INTRODUCED |
+        OLDER VERSION VALUE |
+
+        | ---------------- | ------------------------------------------------------------------- | ------------------ |
+        ------------------- |
+
+        | active           | The employee is currently employed and working for this employer    |                   
+        |                     |
+
+        | inactive         | The employee is not employed at this employer anymore               |                   
+        |                     |
+
+        | unknown          | Truework could not determine the employment status of this employee |                   
+        |                     |
+
+        | furloughed-covid | The employee was furloughed due to COVID-19                         | `2020-12-07`       |
+        inactive            |
+
+        | non-employee     | Truework could not find record of this employee                     | `2020-12-07`       |
+        unknown             |
+
+        | other | No other value describes the employee's status | `2022-08-01` | N/A |
+      title: EmployeeStatusOutputWrapperV20231030CanonicalValue
+    EmployeeStatusOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/EmployeeStatusOutputWrapperV20231030CanonicalValue'
+          description: >-
+            There are five employment statuses available on the `status` field in
+
+            `Employee`:
+
+
+            | VALUE            | DESCRIPTION                                                         | VERSION
+            INTRODUCED | OLDER VERSION VALUE |
+
+            | ---------------- | ------------------------------------------------------------------- |
+            ------------------ | ------------------- |
+
+            | active           | The employee is currently employed and working for this employer   
+            |                    |                     |
+
+            | inactive         | The employee is not employed at this employer anymore              
+            |                    |                     |
+
+            | unknown          | Truework could not determine the employment status of this employee
+            |                    |                     |
+
+            | furloughed-covid | The employee was furloughed due to COVID-19                         |
+            `2020-12-07`       | inactive            |
+
+            | non-employee     | Truework could not find record of this employee                     |
+            `2020-12-07`       | unknown             |
+
+            | other | No other value describes the employee's status | `2022-08-01` | N/A |
+        raw_value:
+          type: string
+          description: >-
+            An unlimited string representation of the value, which may provide more detail when the canonical value is
+            "other".
+      required:
+        - canonical_value
+        - raw_value
+      title: EmployeeStatusOutputWrapperV20231030
+    EmployeeStatusDetailOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+        - active
+        - int-assignment
+        - casual
+        - long-term-dis
+        - sick-leave
+        - surviving-spouse
+        - inactive
+        - on-leave
+        - multiple-positions
+        - new-employee
+        - lay-off
+        - part-time
+        - retired
+        - separated
+        - season
+        - temporary
+        - intern
+        - transferred
+        - deceased
+        - severed-pay
+        - on-sabbatical
+        - divested
+        - temp-inactive
+        - full-time
+        - non-emp-ben
+        - not-assignment
+        - not-payroll
+        - active-as-needed
+        - unknown
+        - furloughed-covid
+        - non-employee
+        - future-employee
+        - other
+      description: |-
+        The `status_detail` provides more granular information for some `status` values:
+
+        | VALUE              | DESCRIPTION                                                         | `Status`         |
+        | ------------------ | ------------------------------------------------------------------- | ---------------- |
+        | active             | The employee is currently employed and working for this employer    | active           |
+        | int-assignment     | The employee is on international assignment                         | active           |
+        | casual             | The employee is employed casually                                   | active           |
+        | long-term-dis      | The employee is on long term disability                             | active           |
+        | sick-leave         | The employee is on sick leave                                       | active           |
+        | surviving-spouse   | The employee is a surviving spouse                                  | inactive         |
+        | inactive           | The employee is not employed at this employer anymore               | inactive         |
+        | on-leave           | The employee is on leave                                            | active           |
+        | multiple-positions | The employee has multiple active positions                          | active           |
+        | new-employee       | The employee is new                                                 | active           |
+        | lay-off            | The employee was laid off                                           | inactive         |
+        | part-time          | The employee is currently employed on a part time basis             | active           |
+        | retired            | The employee is retired                                             | inactive         |
+        | separated          | The employee is separated                                           | inactive         |
+        | season             | The employee is seasonal                                            | active           |
+        | temporary          | The employee is temporary                                           | active           |
+        | intern             | The employee is an intern                                           | active           |
+        | transferred        | The employee has been transferred                                   | active           |
+        | deceased           | The employee is deceased                                            | inactive         |
+        | severed-pay        | The employee has been severed with pay                              | inactive         |
+        | on-sabbatical      | The employee is on sabbatical                                       | active           |
+        | divested           | The employee is part of a divested population                       | active           |
+        | temp-inactive      | The employee is temporarily inactive                                | inactive         |
+        | full-time          | The employee is full time                                           | active           |
+        | non-emp-ben        | The employee is a non employee beneficiary                          | inactive         |
+        | not-assignment     | The employee is not currently on assignment                         | inactive         |
+        | not-payroll        | The employee is not currently on payroll                            | inactive         |
+        | active-as-needed   | The employee is active as needed                                    | active           |
+        | unknown            | Truework could not determine the employment status of this employee | unknown          |
+        | furloughed-covid   | The employee was furloughed due to COVID-19                         | furloughed-covid |
+        | non-employee       | Truework could not find record of this employee                     | non-employee     |
+        | other              | No other value exemplifies Verification Status Detail               | other            |
+      title: EmployeeStatusDetailOutputWrapperV20231030CanonicalValue
+    EmployeeStatusDetailOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/EmployeeStatusDetailOutputWrapperV20231030CanonicalValue'
+          description: >-
+            The `status_detail` provides more granular information for some `status` values:
+
+
+            | VALUE              | DESCRIPTION                                                         |
+            `Status`         |
+
+            | ------------------ | ------------------------------------------------------------------- |
+            ---------------- |
+
+            | active             | The employee is currently employed and working for this employer    |
+            active           |
+
+            | int-assignment     | The employee is on international assignment                         |
+            active           |
+
+            | casual             | The employee is employed casually                                   |
+            active           |
+
+            | long-term-dis      | The employee is on long term disability                             |
+            active           |
+
+            | sick-leave         | The employee is on sick leave                                       |
+            active           |
+
+            | surviving-spouse   | The employee is a surviving spouse                                  |
+            inactive         |
+
+            | inactive           | The employee is not employed at this employer anymore               |
+            inactive         |
+
+            | on-leave           | The employee is on leave                                            |
+            active           |
+
+            | multiple-positions | The employee has multiple active positions                          |
+            active           |
+
+            | new-employee       | The employee is new                                                 |
+            active           |
+
+            | lay-off            | The employee was laid off                                           |
+            inactive         |
+
+            | part-time          | The employee is currently employed on a part time basis             |
+            active           |
+
+            | retired            | The employee is retired                                             |
+            inactive         |
+
+            | separated          | The employee is separated                                           |
+            inactive         |
+
+            | season             | The employee is seasonal                                            |
+            active           |
+
+            | temporary          | The employee is temporary                                           |
+            active           |
+
+            | intern             | The employee is an intern                                           |
+            active           |
+
+            | transferred        | The employee has been transferred                                   |
+            active           |
+
+            | deceased           | The employee is deceased                                            |
+            inactive         |
+
+            | severed-pay        | The employee has been severed with pay                              |
+            inactive         |
+
+            | on-sabbatical      | The employee is on sabbatical                                       |
+            active           |
+
+            | divested           | The employee is part of a divested population                       |
+            active           |
+
+            | temp-inactive      | The employee is temporarily inactive                                |
+            inactive         |
+
+            | full-time          | The employee is full time                                           |
+            active           |
+
+            | non-emp-ben        | The employee is a non employee beneficiary                          |
+            inactive         |
+
+            | not-assignment     | The employee is not currently on assignment                         |
+            inactive         |
+
+            | not-payroll        | The employee is not currently on payroll                            |
+            inactive         |
+
+            | active-as-needed   | The employee is active as needed                                    |
+            active           |
+
+            | unknown            | Truework could not determine the employment status of this employee |
+            unknown          |
+
+            | furloughed-covid   | The employee was furloughed due to COVID-19                         |
+            furloughed-covid |
+
+            | non-employee       | Truework could not find record of this employee                     |
+            non-employee     |
+
+            | other              | No other value exemplifies Verification Status Detail               |
+            other            |
+        raw_value:
+          type: string
+          description: >-
+            An unlimited string representation of the value, which may provide more detail when the canonical value is
+            "other".
+      required:
+        - canonical_value
+        - raw_value
+      title: EmployeeStatusDetailOutputWrapperV20231030
+    _EmployeeAnnotation:
+      type: object
+      properties:
+        positions:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/_PositionAnnotation'
+        salary:
+          oneOf:
+            - $ref: '#/components/schemas/_SalaryAnnotation'
+            - type: 'null'
+        status:
+          oneOf:
+            - $ref: '#/components/schemas/EmployeeStatusOutputWrapperV20231030'
+            - type: 'null'
+        status_detail:
+          oneOf:
+            - $ref: '#/components/schemas/EmployeeStatusDetailOutputWrapperV20231030'
+            - type: 'null'
+      required:
+        - positions
+        - salary
+        - status
+        - status_detail
+      title: _EmployeeAnnotation
+    _EmployerAnnotation:
+      type: object
+      properties:
+        email:
+          type:
+            - string
+            - 'null'
+          format: email
+        name:
+          type:
+            - string
+            - 'null'
+        phone_number:
+          type:
+            - string
+            - 'null'
+      required:
+        - email
+        - name
+        - phone_number
+      title: _EmployerAnnotation
+    _OrderAnnotation:
+      type: object
+      properties:
+        employee:
+          oneOf:
+            - $ref: '#/components/schemas/_EmployeeAnnotation'
+            - type: 'null'
+        employer:
+          oneOf:
+            - $ref: '#/components/schemas/_EmployerAnnotation'
+            - type: 'null'
+      required:
+        - employee
+        - employer
+      title: _OrderAnnotation
+    OrderAnnotationsV20231030:
+      type: object
+      properties:
+        applicant:
+          oneOf:
+            - $ref: '#/components/schemas/_OrderAnnotation'
+            - type: 'null'
+        verifier:
+          oneOf:
+            - $ref: '#/components/schemas/_OrderAnnotation'
+            - type: 'null'
+      required:
+        - applicant
+        - verifier
+      title: OrderAnnotationsV20231030
+    CompletedByMethodOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+        - instant
+        - credentials
+        - smart-outreach
+        - third-party-providers
+        - other
+      description: A limited enum representation of the value, which will not be extended without a version bump.
+      title: CompletedByMethodOutputWrapperV20231030CanonicalValue
+    CompletedByMethodOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/CompletedByMethodOutputWrapperV20231030CanonicalValue'
+          description: A limited enum representation of the value, which will not be extended without a version bump.
+        raw_value:
+          type: string
+          description: >-
+            An unlimited string representation of the value, which may provide more detail when the canonical value is
+            "other".
+      required:
+        - canonical_value
+        - raw_value
+      title: CompletedByMethodOutputWrapperV20231030
+    DisputeV20231030:
+      type: object
+      properties:
+        created:
+          type: string
+          format: date-time
+        description:
+          type:
+            - string
+            - 'null'
+          description: Description of dispute
+        id:
+          type: string
+          description: ID for this dispute in Truework
+        reference_id:
+          type:
+            - string
+            - 'null'
+          description: ID for this dispute to be displayed and referenced outside of this API
+      required:
+        - created
+        - description
+        - id
+        - reference_id
+      title: DisputeV20231030
+    EligibilityProviderOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+        - truework
+        - argyle
+        - other
+      description: A limited enum representation of the value, which will not be extended without a version bump.
+      title: EligibilityProviderOutputWrapperV20231030CanonicalValue
+    EligibilityProviderOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/EligibilityProviderOutputWrapperV20231030CanonicalValue'
+          description: A limited enum representation of the value, which will not be extended without a version bump.
+        raw_value:
+          type: string
+          description: >-
+            An unlimited string representation of the value, which may provide more detail when the canonical value is
+            "other".
+      required:
+        - canonical_value
+        - raw_value
+      title: EligibilityProviderOutputWrapperV20231030
+    EligibilityTypeOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+        - d1c
+        - other
+      description: A limited enum representation of the value, which will not be extended without a version bump.
+      title: EligibilityTypeOutputWrapperV20231030CanonicalValue
+    EligibilityTypeOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/EligibilityTypeOutputWrapperV20231030CanonicalValue'
+          description: A limited enum representation of the value, which will not be extended without a version bump.
+        raw_value:
+          type: string
+          description: >-
+            An unlimited string representation of the value, which may provide more detail when the canonical value is
+            "other".
+      required:
+        - canonical_value
+        - raw_value
+      title: EligibilityTypeOutputWrapperV20231030
+    EligibilityV20231030:
+      type: object
+      properties:
+        is_eligible:
+          type:
+            - boolean
+            - 'null'
+          description: Returns true if this report is eligible for this eligibility type
+        provider:
+          $ref: '#/components/schemas/EligibilityProviderOutputWrapperV20231030'
+          description: The provider of the reference ID
+        reference_id:
+          type:
+            - string
+            - 'null'
+          description: This is the reference ID to submit to Fannie Mae for purposes of getting Day 1 Certainty
+        type:
+          oneOf:
+            - $ref: '#/components/schemas/EligibilityTypeOutputWrapperV20231030'
+            - type: 'null'
+          description: Eligibility type
+      required:
+        - is_eligible
+        - provider
+        - reference_id
+        - type
+      title: EligibilityV20231030
+    EarningsV20231030:
+      type: object
+      properties:
+        base:
+          type:
+            - string
+            - 'null'
+        bonus:
+          type:
+            - string
+            - 'null'
+        commission:
+          type:
+            - string
+            - 'null'
+        other:
+          type:
+            - string
+            - 'null'
+        overtime:
+          type:
+            - string
+            - 'null'
+        total:
+          type:
+            - string
+            - 'null'
+        year:
+          type:
+            - string
+            - 'null'
+      required:
+        - base
+        - bonus
+        - commission
+        - other
+        - overtime
+        - total
+        - year
+      title: EarningsV20231030
+    EmploymentTypeOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+        - regular-full-time
+        - regular-part-time
+        - contractor-1099
+        - no-answer
+        - other
+      description: |-
+        | VALUE             | DESCRIPTION                      | VERSION INTRODUCED | OLDER VERSION VALUE |
+        | ----------------- | -------------------------------- | ------------------ | ------------------- |
+        | regular-full-time | Regular full time                |                    |                     |
+        | regular-part-time | Regular part time                |                    |                     |
+        | contractor-1099   | Contractor                       |                    |                     |
+        | no-answer         | Question was not answered        | `2020-12-07`       | other               |
+        | other             | Other or unknown employment type |                    |                     |
+      title: EmploymentTypeOutputWrapperV20231030CanonicalValue
+    EmploymentTypeOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/EmploymentTypeOutputWrapperV20231030CanonicalValue'
+          description: |-
+            | VALUE             | DESCRIPTION                      | VERSION INTRODUCED | OLDER VERSION VALUE |
+            | ----------------- | -------------------------------- | ------------------ | ------------------- |
+            | regular-full-time | Regular full time                |                    |                     |
+            | regular-part-time | Regular part time                |                    |                     |
+            | contractor-1099   | Contractor                       |                    |                     |
+            | no-answer         | Question was not answered        | `2020-12-07`       | other               |
+            | other             | Other or unknown employment type |                    |                     |
+        raw_value:
+          type: string
+          description: >-
+            An unlimited string representation of the value, which may provide more detail when the canonical value is
+            "other".
+      required:
+        - canonical_value
+        - raw_value
+      title: EmploymentTypeOutputWrapperV20231030
+    PositionV20231030:
+      type: object
+      properties:
+        employment_type:
+          oneOf:
+            - $ref: '#/components/schemas/EmploymentTypeOutputWrapperV20231030'
+            - type: 'null'
+        end_date:
+          type:
+            - string
+            - 'null'
+          format: date
+        start_date:
+          type:
+            - string
+            - 'null'
+          format: date
+        title:
+          type:
+            - string
+            - 'null'
+      required:
+        - employment_type
+        - end_date
+        - start_date
+        - title
+      title: PositionV20231030
+    PayFrequencyOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+        - annually
+        - daily
+        - semiweekly
+        - monthly
+        - weekly
+        - biweekly
+        - bimonthly
+        - semimonthly
+        - quarterly
+        - semiannually
+        - thirteen-monthly
+        - fourteen-monthly
+        - hourly
+        - variable
+        - other
+      description: A limited enum representation of the value, which will not be extended without a version bump.
+      title: PayFrequencyOutputWrapperV20231030CanonicalValue
+    PayFrequencyOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/PayFrequencyOutputWrapperV20231030CanonicalValue'
+          description: A limited enum representation of the value, which will not be extended without a version bump.
+        raw_value:
+          type: string
+          description: >-
+            An unlimited string representation of the value, which may provide more detail when the canonical value is
+            "other".
+      required:
+        - canonical_value
+        - raw_value
+      title: PayFrequencyOutputWrapperV20231030
+    ReducedCovidVMinimumVersion:
+      type: string
+      enum:
+        - 'yes'
+        - 'no'
+        - unknown
+      title: ReducedCovidVMinimumVersion
+    SalaryV20231030:
+      type: object
+      properties:
+        hours_per_week:
+          type:
+            - string
+            - 'null'
+        pay_frequency:
+          oneOf:
+            - $ref: '#/components/schemas/PayFrequencyOutputWrapperV20231030'
+            - type: 'null'
+          description: The frequency by which the employee is paid.
+        pay_rate:
+          oneOf:
+            - $ref: '#/components/schemas/PayRateV20231030'
+            - type: 'null'
+          description: Describes the amount and unit that determine the employees pay.
+        reduced_covid:
+          $ref: '#/components/schemas/ReducedCovidVMinimumVersion'
+      required:
+        - hours_per_week
+        - pay_frequency
+        - pay_rate
+        - reduced_covid
+      title: SalaryV20231030
+    EmployeeV20231030:
+      type: object
+      properties:
+        address:
+          oneOf:
+            - $ref: '#/components/schemas/AddressV20220801-Output'
+            - type: 'null'
+        earnings:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/EarningsV20231030'
+        email:
+          type:
+            - string
+            - 'null'
+          format: email
+        first_name:
+          type:
+            - string
+            - 'null'
+        hired_date:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: >-
+            This is the most recent hiring date of the employee. If the employee has been rehired, this date will be
+            updated to the most recent hiring date.
+        last_name:
+          type:
+            - string
+            - 'null'
+        on_leave_date:
+          type:
+            - string
+            - 'null'
+          format: date
+        original_hired_date:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: >-
+            This is the original hiring date of the employee. If the employee has been rehired, this date will not
+            change.
+        positions:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/PositionV20231030'
+        salary:
+          oneOf:
+            - $ref: '#/components/schemas/SalaryV20231030'
+            - type: 'null'
+        social_security_number:
+          type:
+            - string
+            - 'null'
+          description: The employee's obfuscated social security number
+        status:
+          oneOf:
+            - $ref: '#/components/schemas/EmployeeStatusOutputWrapperV20231030'
+            - type: 'null'
+        status_detail:
+          oneOf:
+            - $ref: '#/components/schemas/EmployeeStatusDetailOutputWrapperV20231030'
+            - type: 'null'
+        termination_date:
+          type:
+            - string
+            - 'null'
+          format: date
+      required:
+        - address
+        - earnings
+        - email
+        - first_name
+        - hired_date
+        - last_name
+        - on_leave_date
+        - original_hired_date
+        - positions
+        - salary
+        - social_security_number
+        - status
+        - status_detail
+        - termination_date
+      title: EmployeeV20231030
+    GovernmentIdTypeOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+        - us-fein
+        - other
+      description: A limited enum representation of the value, which will not be extended without a version bump.
+      title: GovernmentIdTypeOutputWrapperV20231030CanonicalValue
+    GovernmentIdTypeOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/GovernmentIdTypeOutputWrapperV20231030CanonicalValue'
+          description: A limited enum representation of the value, which will not be extended without a version bump.
+        raw_value:
+          type: string
+          description: >-
+            An unlimited string representation of the value, which may provide more detail when the canonical value is
+            "other".
+      required:
+        - canonical_value
+        - raw_value
+      title: GovernmentIdTypeOutputWrapperV20231030
+    _GovernmentId:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/GovernmentIdTypeOutputWrapperV20231030'
+      required:
+        - id
+        - type
+      title: _GovernmentId
+    EmployerV20231030:
+      type: object
+      properties:
+        address:
+          oneOf:
+            - $ref: '#/components/schemas/AddressV20220801-Output'
+            - type: 'null'
+        government_ids:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/_GovernmentId'
+        name:
+          type:
+            - string
+            - 'null'
+      required:
+        - address
+        - government_ids
+        - name
+      title: EmployerV20231030
+    GrossIncomeCalculationResultV20231030:
+      type: object
+      properties:
+        average_monthly_net_income:
+          type:
+            - number
+            - 'null'
+          format: double
+        estimated_gross_annual:
+          type:
+            - number
+            - 'null'
+          format: double
+        net_annual:
+          type:
+            - number
+            - 'null'
+          format: double
+      required:
+        - average_monthly_net_income
+        - estimated_gross_annual
+        - net_annual
+      title: GrossIncomeCalculationResultV20231030
+    FinancialInstitutionIncomeStreamPeriodV20231030:
+      type: object
+      properties:
+        amount:
+          type:
+            - number
+            - 'null'
+          format: double
+        amount_duration:
+          type: string
+        amount_type:
+          type: string
+        estimated_gross_income:
+          oneOf:
+            - $ref: '#/components/schemas/GrossIncomeCalculationResultV20231030'
+            - type: 'null'
+        id:
+          type: string
+        start_day:
+          type: string
+          format: date
+      required:
+        - amount
+        - amount_duration
+        - amount_type
+        - estimated_gross_income
+        - id
+        - start_day
+      title: FinancialInstitutionIncomeStreamPeriodV20231030
+    FinancialInstitutionIncomeStreamV20231030:
+      type: object
+      properties:
+        age_in_months:
+          type:
+            - integer
+            - 'null'
+        average_monthly_net_income:
+          type:
+            - number
+            - 'null'
+          format: double
+        confidence:
+          type: integer
+        confidence_level:
+          type: string
+        end_date:
+          type:
+            - string
+            - 'null'
+          format: date
+        estimated_gross_annual:
+          type:
+            - number
+            - 'null'
+          format: double
+        frequency_days:
+          type:
+            - integer
+            - 'null'
+        id:
+          type: string
+        name:
+          type: string
+        net_annual:
+          type:
+            - number
+            - 'null'
+          format: double
+        periods:
+          type: array
+          items:
+            $ref: '#/components/schemas/FinancialInstitutionIncomeStreamPeriodV20231030'
+        start_date:
+          type:
+            - string
+            - 'null'
+          format: date
+        status:
+          type: string
+      required:
+        - age_in_months
+        - average_monthly_net_income
+        - confidence
+        - confidence_level
+        - end_date
+        - estimated_gross_annual
+        - frequency_days
+        - id
+        - name
+        - net_annual
+        - periods
+        - start_date
+        - status
+      title: FinancialInstitutionIncomeStreamV20231030
+    FinancialInstitutionAccountSnapshotV20231030:
+      type: object
+      properties:
+        available_balance:
+          type:
+            - number
+            - 'null'
+          format: double
+        average_monthly_balance:
+          type:
+            - number
+            - 'null'
+          format: double
+        balance:
+          type:
+            - number
+            - 'null'
+          format: double
+        balance_date:
+          type:
+            - string
+            - 'null'
+          format: date
+        currency_code:
+          type:
+            - string
+            - 'null'
+        id:
+          type: string
+        tot_number_days_since_most_recent_insufficient_funds_fee_debit_tx_account:
+          type:
+            - integer
+            - 'null'
+        tot_number_insufficient_funds_fee_debit_tx_account:
+          type:
+            - integer
+            - 'null'
+        tot_number_insufficient_funds_fee_debit_tx_over_2_months_account:
+          type:
+            - integer
+            - 'null'
+      required:
+        - available_balance
+        - average_monthly_balance
+        - balance
+        - balance_date
+        - currency_code
+        - id
+        - tot_number_days_since_most_recent_insufficient_funds_fee_debit_tx_account
+        - tot_number_insufficient_funds_fee_debit_tx_account
+        - tot_number_insufficient_funds_fee_debit_tx_over_2_months_account
+      title: FinancialInstitutionAccountSnapshotV20231030
+    FinancialInstitutionAccountV20231030:
+      type: object
+      properties:
+        account_name:
+          type:
+            - string
+            - 'null'
+        account_type:
+          type:
+            - string
+            - 'null'
+        financial_institution_name:
+          type:
+            - string
+            - 'null'
+        income_streams:
+          type: array
+          items:
+            $ref: '#/components/schemas/FinancialInstitutionIncomeStreamV20231030'
+        number:
+          type:
+            - string
+            - 'null'
+        oldest_transaction_date:
+          type:
+            - string
+            - 'null'
+          format: date
+        owner_name:
+          type:
+            - string
+            - 'null'
+        snapshots:
+          type: array
+          items:
+            $ref: '#/components/schemas/FinancialInstitutionAccountSnapshotV20231030'
+      required:
+        - account_name
+        - account_type
+        - financial_institution_name
+        - income_streams
+        - number
+        - oldest_transaction_date
+        - owner_name
+        - snapshots
+      title: FinancialInstitutionAccountV20231030
+    CurrencyVMinimumVersion:
+      type: string
+      enum:
+        - USD
+      title: CurrencyVMinimumVersion
+    MoneyAmountVMinimumVersion:
+      type: object
+      properties:
+        amount:
+          type:
+            - string
+            - 'null'
+        currency:
+          oneOf:
+            - $ref: '#/components/schemas/CurrencyVMinimumVersion'
+            - type: 'null'
+      required:
+        - amount
+        - currency
+      title: MoneyAmountVMinimumVersion
+    _AnnualizedIncome:
+      type: object
+      properties:
+        base_amount:
+          oneOf:
+            - $ref: '#/components/schemas/MoneyAmountVMinimumVersion'
+            - type: 'null'
+          description: >-
+            Represents annualized income for recurring income, like salary. In rare cases due to data quality issues,
+            gross amount is returned without base amount or vice versa.
+        gross_amount:
+          oneOf:
+            - $ref: '#/components/schemas/MoneyAmountVMinimumVersion'
+            - type: 'null'
+          description: >-
+            Represents base annualized income plus variable income sources. In rare cases due to data quality issues,
+            gross amount is returned without base amount or vice versa.
+        short_employment_warning:
+          type: boolean
+          description: True if the employee recently started at this position, which could impact annualized income accuracy.
+        stale_data_warning:
+          type: boolean
+          description: True if the data on this report is not fresh, which could impact annualized income accuracy.
+        variable_income_warning:
+          type: boolean
+          description: True if the employees income has high variability, which could impact annualized income accuracy.
+      required:
+        - base_amount
+        - gross_amount
+        - short_employment_warning
+        - stale_data_warning
+        - variable_income_warning
+      title: _AnnualizedIncome
+    _IncomeVolatility:
+      type: object
+      properties:
+        gross_income_volatility:
+          type:
+            - string
+            - 'null'
+          description: Coefficient of variation of the aggregated per pay period gross earnings for a given list of paystubs.
+      required:
+        - gross_income_volatility
+      title: _IncomeVolatility
+    ReportIncomeAnalyticsV20231030:
+      type: object
+      properties:
+        annualized_income:
+          oneOf:
+            - $ref: '#/components/schemas/_AnnualizedIncome'
+            - type: 'null'
+        income_volatility:
+          oneOf:
+            - $ref: '#/components/schemas/_IncomeVolatility'
+            - type: 'null'
+      required:
+        - annualized_income
+        - income_volatility
+      title: ReportIncomeAnalyticsV20231030
+    PaystubV20231030:
+      type: object
+      properties:
+        base:
+          type:
+            - string
+            - 'null'
+          description: Pre-deduction base pay
+        bonus:
+          type:
+            - string
+            - 'null'
+          description: Pre-deduction bonus pay
+        commission:
+          type:
+            - string
+            - 'null'
+          description: Pre-deduction commission pay
+        gross:
+          type:
+            - string
+            - 'null'
+          description: Total pre-deduction earnings for this pay period
+        id:
+          type: string
+          description: ID for this paystub in Truework
+        net:
+          type:
+            - string
+            - 'null'
+          description: Total post-deduction earnings for this pay period
+        other:
+          type:
+            - string
+            - 'null'
+          description: Pre-deduction other pay
+        overtime:
+          type:
+            - string
+            - 'null'
+          description: Pre-deduction overtime pay
+        pay_date:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: Date of paycheck delivery
+        pay_period_end_date:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: Last day of pay period
+        pay_period_hours:
+          type:
+            - string
+            - 'null'
+          description: Hours worked in this pay period
+        pay_period_start_date:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: First day of pay period
+        reference_id:
+          type:
+            - string
+            - 'null'
+          description: ID for this paystub from the payroll provider
+      required:
+        - base
+        - bonus
+        - commission
+        - gross
+        - id
+        - net
+        - other
+        - overtime
+        - pay_date
+        - pay_period_end_date
+        - pay_period_hours
+        - pay_period_start_date
+        - reference_id
+      title: PaystubV20231030
+    RespondentV20231030:
+      type: object
+      properties:
+        email:
+          type:
+            - string
+            - 'null'
+        full_name:
+          type:
+            - string
+            - 'null'
+        title:
+          type:
+            - string
+            - 'null'
+      required:
+        - email
+        - full_name
+        - title
+      title: RespondentV20231030
+    VerificationTypeV20231030:
+      type: string
+      enum:
+        - employment-income
+        - employment
+        - tenant-screening
+        - assets
+        - self-employment
+      title: VerificationTypeV20231030
+    VerificationRequestV20231030:
+      type: object
+      properties:
+        created:
+          type: string
+          format: date-time
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/VerificationTypeV20231030'
+      required:
+        - created
+        - id
+        - type
+      title: VerificationRequestV20231030
+    OrderVerificationReportResourceV20231030:
+      type: object
+      properties:
+        additional_notes:
+          type:
+            - string
+            - 'null'
+        annotations:
+          oneOf:
+            - $ref: '#/components/schemas/OrderAnnotationsV20231030'
+            - type: 'null'
+          description: Consumer-stated information related to this report
+        applicant_documents:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/ApplicantDocumentMetadataV20220801'
+        completed:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: The date and time when the verification was completed
+        completed_by_method:
+          oneOf:
+            - $ref: '#/components/schemas/CompletedByMethodOutputWrapperV20231030'
+            - type: 'null'
+        created:
+          type: string
+          format: date-time
+        current_as_of:
+          type: string
+          format: date
+        disputes:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/DisputeV20231030'
+          description: Disputes that are currently open and relevant to this report
+        eligibilities:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/EligibilityV20231030'
+          description: Eligibilities for this report
+        employee:
+          oneOf:
+            - $ref: '#/components/schemas/EmployeeV20231030'
+            - type: 'null'
+        employer:
+          oneOf:
+            - $ref: '#/components/schemas/EmployerV20231030'
+            - type: 'null'
+        financial_institution_accounts:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/FinancialInstitutionAccountV20231030'
+        id:
+          type: string
+        income_analytics:
+          oneOf:
+            - $ref: '#/components/schemas/ReportIncomeAnalyticsV20231030'
+            - type: 'null'
+          description: >-
+            Calculated income features. Only returned if the `income_analytics` query parameter is provided and is
+            `true` and the employee status on the report is active.
+        paystubs:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/PaystubV20231030'
+          description: >-
+            Individual paystubs for each pay period. Paystubs are returned sorted in descending order from most recent
+            to least recent pay date. 
+        respondent:
+          oneOf:
+            - $ref: '#/components/schemas/RespondentV20231030'
+            - type: 'null'
+        verification_request:
+          $ref: '#/components/schemas/VerificationRequestV20231030'
+      required:
+        - additional_notes
+        - annotations
+        - applicant_documents
+        - completed
+        - completed_by_method
+        - created
+        - current_as_of
+        - disputes
+        - eligibilities
+        - employee
+        - employer
+        - financial_institution_accounts
+        - id
+        - income_analytics
+        - paystubs
+        - respondent
+        - verification_request
+      title: OrderVerificationReportResourceV20231030
+    ExternalStateOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+        - pending-approval
+        - action-required
+        - invalid
+        - processing
+        - completed
+        - canceled
+        - other
+      description: >-
+        The state helps convey where the verification request is in the Truework process. It will be returned in the
+        JSON objects returned from this endpoint.
+
+
+        The initial state of all Schemas is pending-approval, and will switch to processing once Truework begins to
+        process the request. However, it may switch back to pending-approval if it is pending approval by the target.
+
+
+        The states completed, canceled, invalid are all terminal states of a Verification. A Report is only available
+        when it is in the completed state. A Verification will enter the state canceled when either Truework or an API
+        user cancels the request. The invalid state indicates that there are issues with the data e.g. we could not
+        locate the employee at a given employer, or could not find the employer itself.
+
+
+
+        | VALUE            |
+        DESCRIPTION                                                                                             |
+
+        | ---------------- |
+        ------------------------------------------------------------------------------------------------------- |
+
+        | pending-approval | The initial state after creation; the Truework team has not started working on this request
+        yet         |
+
+        | action-required  | A user action is required to continue processing this request; visit the dashboard for more
+        information |
+
+        | invalid          | Contains invalid information that prevents the verification request from being processed by
+        Truework    |
+
+        | processing       | The Truework team is currently working on the verification
+        request                                      |
+
+        | completed        | The verification request has been completed and a report can be found from the reports
+        endpoint         |
+
+        | canceled         | Truework denied processing of the request or the verifier no longer wants the request to be
+        processed   |
+
+        | other            | No other value fits the state of this verification request |
+      title: ExternalStateOutputWrapperV20231030CanonicalValue
+    ExternalStateOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/ExternalStateOutputWrapperV20231030CanonicalValue'
+          description: >-
+            The state helps convey where the verification request is in the Truework process. It will be returned in the
+            JSON objects returned from this endpoint.
+
+
+            The initial state of all Schemas is pending-approval, and will switch to processing once Truework begins to
+            process the request. However, it may switch back to pending-approval if it is pending approval by the
+            target.
+
+
+            The states completed, canceled, invalid are all terminal states of a Verification. A Report is only
+            available when it is in the completed state. A Verification will enter the state canceled when either
+            Truework or an API user cancels the request. The invalid state indicates that there are issues with the data
+            e.g. we could not locate the employee at a given employer, or could not find the employer itself.
+
+
+
+            | VALUE            |
+            DESCRIPTION                                                                                             |
+
+            | ---------------- |
+            ------------------------------------------------------------------------------------------------------- |
+
+            | pending-approval | The initial state after creation; the Truework team has not started working on this
+            request yet         |
+
+            | action-required  | A user action is required to continue processing this request; visit the dashboard for
+            more information |
+
+            | invalid          | Contains invalid information that prevents the verification request from being
+            processed by Truework    |
+
+            | processing       | The Truework team is currently working on the verification
+            request                                      |
+
+            | completed        | The verification request has been completed and a report can be found from the reports
+            endpoint         |
+
+            | canceled         | Truework denied processing of the request or the verifier no longer wants the request
+            to be processed   |
+
+            | other            | No other value fits the state of this verification request |
+        raw_value:
+          type: string
+          description: >-
+            An unlimited string representation of the value, which may provide more detail when the canonical value is
+            "other".
+      required:
+        - canonical_value
+        - raw_value
+      title: ExternalStateOutputWrapperV20231030
+    CompanyOutputVMinimumVersion:
+      type: object
+      properties:
+        address:
+          type:
+            - string
+            - 'null'
+          description: Human readable address
+        city:
+          type:
+            - string
+            - 'null'
+        id:
+          type:
+            - integer
+            - 'null'
+        name:
+          type:
+            - string
+            - 'null'
+        phone_number:
+          type:
+            - string
+            - 'null'
+        state:
+          type:
+            - string
+            - 'null'
+        zip_code:
+          type:
+            - string
+            - 'null'
+      required:
+        - address
+        - city
+        - id
+        - name
+        - phone_number
+        - state
+        - zip_code
+      title: CompanyOutputVMinimumVersion
+    SubmissionTargetOutputVMinimumVersion:
+      type: object
+      properties:
+        company:
+          oneOf:
+            - $ref: '#/components/schemas/CompanyOutputVMinimumVersion'
+            - type: 'null'
+        contact_email:
+          type:
+            - string
+            - 'null'
+        date_of_birth:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: |-
+            Target's date of birth in format YYYY-MM-DD.
+            `date_of_birth` is required for employer search/synchronous requests
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type:
+            - string
+            - 'null'
+        social_security_number:
+          type:
+            - string
+            - 'null'
+          description: |
+            The target's obfuscated social security number
+      required:
+        - company
+        - contact_email
+        - date_of_birth
+        - first_name
+        - last_name
+        - phone_number
+        - social_security_number
+      title: SubmissionTargetOutputVMinimumVersion
+    TurnaroundTimeV20231030:
+      type: object
+      properties:
+        best_estimate:
+          type:
+            - string
+            - 'null'
+          description: The best estimate of turnaround time in hours
+        lower_bound:
+          type:
+            - string
+            - 'null'
+          description: The estimated lower bound in hours
+        upper_bound:
+          type:
+            - string
+            - 'null'
+          description: The estimated upper bound in hours
+      required:
+        - best_estimate
+        - lower_bound
+        - upper_bound
+      title: TurnaroundTimeV20231030
+    OrderVerificationResponseResourceV20231030:
+      type: object
+      properties:
+        additional_information:
+          type:
+            - string
+            - 'null'
+          description: >
+            Any additional information about the target that can help expedite the completion of the verification
+            request
+        applicant_documents:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/ApplicantDocumentMetadataV20220801'
+        cancellation_details:
+          type:
+            - string
+            - 'null'
+          description: |
+            The details for the cancellation; only present when state is canceled
+        cancellation_reason:
+          oneOf:
+            - $ref: '#/components/schemas/CancellationReasonOutputWrapperV20231030'
+            - type: 'null'
+        created:
+          type: string
+          format: date-time
+        date_of_completion:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: |
+            The date when this verification was completed in ISO 8601 format
+        documents:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/DocumentOutputResourceV20220801'
+          description: |
+            Supporting documentation files provided by the verifier for the verification
+        id:
+          type: string
+        loan_id:
+          type:
+            - string
+            - 'null'
+          description: |
+            The loan id associated with the verification request
+        metadata:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            type: string
+          description: >-
+            A single level key-value JSON object that can be used to store custom data on the verification request; keys
+            and values must be strings
+        permissible_purpose:
+          $ref: '#/components/schemas/PermissiblePurposeOutputWrapperV20231030'
+        reports:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/OrderVerificationReportResourceV20231030'
+        reseller_originating_party:
+          oneOf:
+            - $ref: '#/components/schemas/ResellerOriginatingPartyOutputV20231030'
+            - type: 'null'
+          description: >-
+            The originating party that requested the verification via a reseller. `reseller_originating_party` is
+            required for for companies that resell data provided by Truework.
+        state:
+          $ref: '#/components/schemas/ExternalStateOutputWrapperV20231030'
+        target:
+          $ref: '#/components/schemas/SubmissionTargetOutputVMinimumVersion'
+        turnaround_time:
+          $ref: '#/components/schemas/TurnaroundTimeV20231030'
+          description: >-
+            We use data from thousands of verification requests to estimate the duration between creation and completion
+            of a request. For a provided company, upper_bound and lower_bound are the time estimates (in hours) that
+            this particular request will take to be fully processed by Truework. May be an empty if an estimate does not
+            exist for the verification request.
+        type:
+          $ref: '#/components/schemas/VerificationTypeV20231030'
+        unverified_information:
+          oneOf:
+            - $ref: '#/components/schemas/OrderAnnotationsV20231030'
+            - type: 'null'
+          description: Consumer-stated information related to a verification that does not have any reports
+        use_case:
+          $ref: '#/components/schemas/UseCaseOutputWrapperV20231030'
+      required:
+        - additional_information
+        - applicant_documents
+        - cancellation_details
+        - cancellation_reason
+        - created
+        - date_of_completion
+        - documents
+        - id
+        - loan_id
+        - metadata
+        - permissible_purpose
+        - reports
+        - reseller_originating_party
+        - state
+        - target
+        - turnaround_time
+        - type
+        - unverified_information
+        - use_case
+      title: OrderVerificationResponseResourceV20231030
+    OrderResponseResourceV20231030:
+      type: object
+      properties:
+        employer_search:
+          oneOf:
+            - $ref: '#/components/schemas/EmployerSearchModeResourceV20231030'
+            - type: 'null'
+          description: Response object specific to Employer Search requests.
+        id:
+          type: string
+        loan_id:
+          type:
+            - string
+            - 'null'
+          description: |
+            The loan id associated with the verification request
+        reverification:
+          oneOf:
+            - $ref: '#/components/schemas/ReverificationModeResourceV20231030'
+            - type: 'null'
+          description: Response object specific to Reverification requests.
+        search_key:
+          type:
+            - string
+            - 'null'
+          description: A non-unique key that can be used to search for Orders
+        target_employer:
+          oneOf:
+            - $ref: '#/components/schemas/TargetEmployerModeResourceV20231030'
+            - type: 'null'
+          description: Response object specific to Target Employer requests.
+        truework_direct:
+          oneOf:
+            - $ref: '#/components/schemas/TrueworkDirectModeResourceV20231030'
+            - type: 'null'
+          description: Response object specific to Truework Direct requests.
+        truework_direct_session_link:
+          type:
+            - string
+            - 'null'
+          description: >-
+            The Truework Direct URL that is emailed to the applicant for eligible orders. Will only be present when the
+            order is using Truework Direct via email for fulfillment, and the session is prepared for input from the
+            applicant.
+        verification_requests:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/OrderVerificationResponseResourceV20231030'
+      required:
+        - employer_search
+        - id
+        - loan_id
+        - reverification
+        - search_key
+        - target_employer
+        - truework_direct
+        - truework_direct_session_link
+        - verification_requests
+      title: OrderResponseResourceV20231030
+    _InvalidRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+          default: Invalid field values provided
+      required:
+        - message
+      title: _InvalidRequestError
+    Error400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/_InvalidRequestError'
+      required:
+        - error
+      title: Error400
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+      title: Error
+    Error401:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+      title: Error401
+    Error403:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+      title: Error403
+    Error406:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+      title: Error406
+    Error429:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+      title: Error429
+    Error451:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+      title: Error451
+    Error500:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+      title: Error500
+    Error501:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+      title: Error501
+    OrdersEmployerSearchPostParametersAccept:
+      type: string
+      enum:
+        - application/json
+        - application/json; version=2023-10-30
+      default: application/json
+      title: OrdersEmployerSearchPostParametersAccept
+    EmployerSearchConfigV20231030-Input:
+      type: object
+      properties:
+        employer_filter:
+          $ref: '#/components/schemas/EmployerFilterV20231030'
+      title: EmployerSearchConfigV20231030-Input
+    OrderEmployerSearchVerificationTargetInputV20231030:
+      type: object
+      properties:
+        contact_email:
+          type:
+            - string
+            - 'null'
+        date_of_birth:
+          type: string
+          format: date
+          description: Target's date of birth in format YYYY-MM-DD.
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type:
+            - string
+            - 'null'
+        social_security_number:
+          type: string
+          description: |
+            The target's social security number
+      required:
+        - date_of_birth
+        - first_name
+        - last_name
+        - social_security_number
+      title: OrderEmployerSearchVerificationTargetInputV20231030
+    OrderEmployerSearchVerificationRequestV20231030:
+      type: object
+      properties:
+        additional_information:
+          type:
+            - string
+            - 'null'
+          description: >-
+            Any additional information about the target that can help expedite the completion of the verification
+            request
+        authorization_forms:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/AuthorizationFormV20220801'
+          description: |
+            Authorization form files provided by the verifier for the verification
+        loan_id:
+          type:
+            - string
+            - 'null'
+          description: The loan id associated with the verification request
+        metadata:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            type: string
+          description: >-
+            A single level key-value JSON object that can be used to store custom data on the verification request; keys
+            and values must be strings
+        permissible_purpose:
+          $ref: '#/components/schemas/PermissiblePurposeInputV20220801'
+        request_config:
+          $ref: '#/components/schemas/EmployerSearchConfigV20231030-Input'
+        reseller_originating_party:
+          oneOf:
+            - $ref: '#/components/schemas/ResellerOriginatingPartyInputV20220801'
+            - type: 'null'
+          description: >-
+            The originating party that requested the verification via a reseller. `reseller_originating_party` is
+            required for for companies that resell data provided by Truework.
+        search_key:
+          type:
+            - string
+            - 'null'
+          description: A non-unique key that can be used to search for Orders
+        target:
+          $ref: '#/components/schemas/OrderEmployerSearchVerificationTargetInputV20231030'
+          description: Information on the individual who is being verified
+        tenant_property_id:
+          type:
+            - string
+            - 'null'
+          description: The ID of the tenant property to be used for this verification request.
+        type:
+          $ref: '#/components/schemas/VerificationTypeVMinimumVersion'
+        use_case:
+          $ref: '#/components/schemas/UseCaseInputVMinimumVersion'
+      required:
+        - permissible_purpose
+        - target
+        - type
+        - use_case
+      title: OrderEmployerSearchVerificationRequestV20231030
+    OrdersTrueworkDirectPostParametersAccept:
+      type: string
+      enum:
+        - application/json
+        - application/json; version=2023-10-30
+      default: application/json
+      title: OrdersTrueworkDirectPostParametersAccept
+    ActionType:
+      type: string
+      enum:
+        - verify
+        - do-not-verify
+      description: >-
+        Action Truework should take for applicant's employment at this company.
+
+
+        | VALUE | DESCRIPTION |
+
+        | ----- | ----------- |
+
+        | verify | Truework should attempt to verify the applicant's employment at this company. |
+
+        | do-not-verify | Truework should attempt to avoid verifying the applicant's employment at this company, because
+        it has already been verified by other means. |
+      title: ActionType
+    CompanyByNameInputV20220801:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/ActionType'
+        address:
+          oneOf:
+            - $ref: '#/components/schemas/AddressV20220801-Input'
+            - type: 'null'
+        name:
+          type: string
+        phone_number:
+          type:
+            - string
+            - 'null'
+      required:
+        - name
+      title: CompanyByNameInputV20220801
+    SelfEmploymentInputV20231030:
+      type: object
+      properties:
+        business_name:
+          type:
+            - string
+            - 'null'
+          description: The business name for a self-employed (sole-proprietor) target.
+      title: SelfEmploymentInputV20231030
+    TrueworkDirectTargetInputV20231030:
+      type: object
+      properties:
+        authorization_forms:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/AuthorizationFormV20220801'
+          description: |
+            Authorization form files provided by the verifier for the verification
+        companies:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/CompanyByNameInputV20220801'
+        contact_email:
+          type: string
+        date_of_birth:
+          type: string
+          format: date
+          description: Target's date of birth in format YYYY-MM-DD.
+        first_name:
+          type: string
+        last_name:
+          type: string
+        metadata:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            type: string
+        permissible_purpose:
+          $ref: '#/components/schemas/PermissiblePurposeInputV20220801'
+        phone_number:
+          type:
+            - string
+            - 'null'
+        reseller_originating_party:
+          oneOf:
+            - $ref: '#/components/schemas/ResellerOriginatingPartyInputV20220801'
+            - type: 'null'
+        self_employment:
+          oneOf:
+            - $ref: '#/components/schemas/SelfEmploymentInputV20231030'
+            - type: 'null'
+          description: Self-employment details. When provided, the order will include a self-employment verification task.
+        social_security_number:
+          type: string
+          description: |
+            The target's social security number
+        type:
+          $ref: '#/components/schemas/VerificationTypeVMinimumVersion'
+        use_case:
+          $ref: '#/components/schemas/UseCaseInputVMinimumVersion'
+      required:
+        - contact_email
+        - date_of_birth
+        - first_name
+        - last_name
+        - permissible_purpose
+        - social_security_number
+        - type
+        - use_case
+      title: TrueworkDirectTargetInputV20231030
+    OrderTrueworkDirectPostRequestV20231030:
+      type: object
+      properties:
+        loan_id:
+          type:
+            - string
+            - 'null'
+          description: The loan id associated with the verification request
+        search_key:
+          type:
+            - string
+            - 'null'
+          description: A non-unique key that can be used to search for Orders
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrueworkDirectTargetInputV20231030'
+        tenant_property_id:
+          type:
+            - string
+            - 'null'
+          description: The ID of the tenant property to be used for this verification request.
+      required:
+        - targets
+      title: OrderTrueworkDirectPostRequestV20231030
+    OrdersOrderIdGetParametersAccept:
+      type: string
+      enum:
+        - application/json
+        - application/json; version=2023-10-30
+      default: application/json
+      title: OrdersOrderIdGetParametersAccept
+    Error404:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+      title: Error404
+    OrdersGetParametersAccept:
+      type: string
+      enum:
+        - application/json
+        - application/json; version=2023-10-30
+      default: application/json
+      title: OrdersGetParametersAccept
+    OrderListResponseResourceV20231030:
+      type: object
+      properties:
+        count:
+          type: integer
+        next:
+          type:
+            - string
+            - 'null'
+        previous:
+          type:
+            - string
+            - 'null'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderResponseResourceV20231030'
+      required:
+        - count
+        - next
+        - previous
+        - results
+      title: OrderListResponseResourceV20231030
+    OrdersOrderIdCancelPutParametersAccept:
+      type: string
+      enum:
+        - application/json
+        - application/json; version=2023-10-30
+      default: application/json
+      title: OrdersOrderIdCancelPutParametersAccept
+    CancellationReasonInputVMinimumVersion:
+      type: string
+      enum:
+        - immediate
+        - high-turnaround-time
+        - competitor
+        - wrong-info
+        - other
+      description: >-
+        | VALUE                |
+        DESCRIPTION                                                                                          |
+
+        | -------------------- |
+        ---------------------------------------------------------------------------------------------------- |
+
+        | immediate            | Can be used to cancel a request directly after submitting, before Truework has started
+        processing it |
+
+        | high-turnaround-time | The request is taking longer than
+        expected                                                           |
+
+        | competitor           | You preferred a competitor for this
+        request                                                          |
+
+        | wrong-info           | The request that is submitted contains information that is
+        wrong                                     |
+
+        | other                | No other reason in the list fits the cancellation
+        reason                                             |
+      title: CancellationReasonInputVMinimumVersion
+    OrderCancelPutRequestV20231030:
+      type: object
+      properties:
+        cancellation_details:
+          type:
+            - string
+            - 'null'
+          description: Free form text on the details; can be blank
+        cancellation_reason:
+          $ref: '#/components/schemas/CancellationReasonInputVMinimumVersion'
+      required:
+        - cancellation_reason
+      title: OrderCancelPutRequestV20231030
+    OrderVerificationCancelResponseResourceV20231030:
+      type: object
+      properties:
+        cancellation_details:
+          type:
+            - string
+            - 'null'
+          description: |
+            The details for the cancellation; only present when state is canceled
+        cancellation_reason:
+          oneOf:
+            - $ref: '#/components/schemas/CancellationReasonOutputWrapperV20231030'
+            - type: 'null'
+        created:
+          type: string
+          format: date-time
+        date_of_completion:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: |
+            The date when this verification was completed in ISO 8601 format
+        id:
+          type: string
+        loan_id:
+          type:
+            - string
+            - 'null'
+          description: |
+            The loan id associated with the verification request
+        state:
+          $ref: '#/components/schemas/ExternalStateOutputWrapperV20231030'
+        turnaround_time:
+          $ref: '#/components/schemas/TurnaroundTimeV20231030'
+      required:
+        - cancellation_details
+        - cancellation_reason
+        - created
+        - date_of_completion
+        - id
+        - loan_id
+        - state
+        - turnaround_time
+      title: OrderVerificationCancelResponseResourceV20231030
+    OrderCancelResponseResourceV20231030:
+      type: object
+      properties:
+        id:
+          type: string
+        loan_id:
+          type:
+            - string
+            - 'null'
+          description: |
+            The loan id associated with the verification request
+        verification_requests:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/OrderVerificationCancelResponseResourceV20231030'
+      required:
+        - id
+        - loan_id
+        - verification_requests
+      title: OrderCancelResponseResourceV20231030
+    ReportsVerificationReportIdGetParametersAccept:
+      type: string
+      enum:
+        - application/json
+        - application/pdf
+        - application/json; version=2023-10-30
+        - application/pdf; version=2023-10-30
+      default: application/json
+      title: ReportsVerificationReportIdGetParametersAccept
+    OrdersOrderIdEventsGetParametersAccept:
+      type: string
+      enum:
+        - application/json
+        - application/json; version=2023-10-30
+      default: application/json
+      title: OrdersOrderIdEventsGetParametersAccept
+    EventResourceV20231030:
+      type: object
+      properties:
+        created:
+          type: string
+          format: date-time
+          description: The date and time the event was created.
+        id:
+          type: string
+          description: The unique identifier for the event.
+        message:
+          type: string
+          description: A human readable message describing the event.
+        strategy:
+          type:
+            - string
+            - 'null'
+          description: The strategy category for the event, if applicable.
+        type:
+          type: string
+          description: The type of event.
+        verification_request_id:
+          type:
+            - string
+            - 'null'
+          description: The unique identifier for the verification request associated with this event, if applicable.
+      required:
+        - created
+        - id
+        - message
+        - strategy
+        - type
+        - verification_request_id
+      title: EventResourceV20231030
+    EventListResource:
+      type: object
+      properties:
+        count:
+          type: integer
+        next:
+          type:
+            - string
+            - 'null'
+        previous:
+          type:
+            - string
+            - 'null'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventResourceV20231030'
+      required:
+        - count
+        - next
+        - previous
+        - results
+      title: EventListResource
+    OrdersReverificationPostParametersAccept:
+      type: string
+      enum:
+        - application/json
+        - application/json; version=2023-10-30
+      default: application/json
+      title: OrdersReverificationPostParametersAccept
+    OrdersReverificationPostParametersRequestSync:
+      type: string
+      enum:
+        - sync
+        - async
+      default: async
+      title: OrdersReverificationPostParametersRequestSync
+    OrderReverificationRequestV20231030:
+      type: object
+      properties:
+        report_id:
+          type: string
+      required:
+        - report_id
+      title: OrderReverificationRequestV20231030
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      description: >-
+        Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+        Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`.
+        If your secret key is published, you should rotate your API keys.
+
+
+        Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+        **Examples**
+
+        - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+        - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.

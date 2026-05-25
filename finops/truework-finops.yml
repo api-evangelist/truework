@@ -1,0 +1,119 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Truework
+providerId: truework
+created: '2026-05-24'
+modified: '2026-05-24'
+reconciled: false
+tags:
+  - FinOps
+  - Cost Management
+  - FOCUS
+  - Verifications
+  - VOIE
+description: >
+  FOCUS-aligned FinOps definition for Truework's Verifications API. Truework's primary
+  charge unit is the completed verification, with sub-meters per verification method
+  (Instant Data, Payroll Credentials, Bank Credentials, Tax Credentials, Smart Outreach,
+  Document Upload). Per-unit rates are contract-driven (contact sales), not publicly
+  posted, so this file captures the metering surface and FOCUS mapping rather than rate cards.
+sources:
+  - https://www.truework.com/products/api
+  - https://www.truework.com/products
+  - https://www.truework.com/docs
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Truework
+serviceCategory: Identity and Verification
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+    - Usage
+    - Purchase
+    - Adjustment
+  primaryUnit: verification
+  secondaryUnits:
+    - qualification_check
+    - document_upload
+    - direct_session
+focusColumns:
+  ServiceName: Truework Verifications API
+  ServiceCategory: Identity and Verification
+  ProviderName: Truework
+  PublisherName: Truework
+  InvoiceIssuerName: Truework
+  PricingCategory: Usage-Based
+  PricingUnit: verification
+  BillingCurrency: USD
+meters:
+  - name: verifications_completed
+    unit: verification
+    aggregation: sum
+    dimensions:
+      - method
+      - verification_type
+      - tenant
+      - permissible_purpose
+  - name: verifications_instant
+    unit: verification
+    aggregation: sum
+    dimensions:
+      - tenant
+      - verification_type
+    description: Instant Data method, settled against Truework's internal employer dataset.
+  - name: verifications_payroll_credentials
+    unit: verification
+    aggregation: sum
+    dimensions:
+      - tenant
+      - verification_type
+  - name: verifications_bank_credentials
+    unit: verification
+    aggregation: sum
+    dimensions:
+      - tenant
+      - verification_type
+  - name: verifications_tax_credentials
+    unit: verification
+    aggregation: sum
+    dimensions:
+      - tenant
+      - verification_type
+  - name: verifications_smart_outreach
+    unit: verification
+    aggregation: sum
+    dimensions:
+      - tenant
+      - verification_type
+  - name: verifications_document_upload
+    unit: verification
+    aggregation: sum
+    dimensions:
+      - tenant
+      - verification_type
+  - name: truework_direct_sessions
+    unit: session
+    aggregation: sum
+    dimensions:
+      - tenant
+  - name: qualification_checks
+    unit: check
+    aggregation: sum
+    dimensions:
+      - tenant
+      - qualification_check_set
+discounts:
+  - name: volume-tier
+    description: Negotiated per-method volume tiers under master service agreements.
+    appliesTo:
+      - verifications_completed
+notes:
+  - Truework does not publish public per-unit pricing; rates are negotiated under MSA.
+  - Sandbox traffic against api.truework-sandbox.com is non-billable.

@@ -1,0 +1,1385 @@
+openapi: 3.1.0
+info:
+  title: Truework Qualifications & Tenant Properties API (Beta)
+  description: >
+    Public beta surfaces of the Truework API covering Qualification Checks (lightweight
+    income/employment knockout decisions against a borrower's verified employment data) and
+    Tenant Properties (provider-defined verification configuration knobs). These endpoints
+    are in public beta and the schema may evolve.
+  version: 2023-10-30-beta
+  contact:
+    name: Truework Implementations
+    email: implementations@truework.com
+    url: https://www.truework.com/docs
+  license:
+    name: Truework Terms of Service
+    url: https://www.truework.com/legal/terms
+paths:
+  /qualification-checks:
+    post:
+      operationId: create-new-qualification-check
+      summary: Create a qualification check request
+      description: >
+        Creates a new qualification check and returns a JSON object with the resulting evaluation.
+
+
+        <Warning>
+
+        This endpoint is in beta and is subject to change. Please contact
+        [implementations@truework.com](mailto:implementations@truework.com) for more information before integrating.
+
+        </Warning>
+      tags:
+        - subpackage_qualificationChecks
+      parameters:
+        - name: Authorization
+          in: header
+          description: >-
+            Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+            Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with
+            `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+
+            Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+            **Examples**
+
+            - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+            - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.
+          required: true
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: >-
+            Specify the content type and version that the API should use. It's recommended to include this to avoid
+            breaking changes.
+          required: false
+          schema:
+            $ref: '#/components/schemas/QualificationChecksPostParametersAccept'
+            default: application/json
+      responses:
+        '201':
+          description: Qualification Check Evaluation Created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QualificationCheckResponseResourceV20231030'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: The request's authorization is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error403'
+        '406':
+          description: An invalid API version was requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '451':
+          description: Frozen SSN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error451'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error501'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QualificationCheckCreatePostRequestV20231030'
+  /qualification-checks/{qualification_check_result_id}:
+    get:
+      operationId: get-one-qualification-check
+      summary: Get one qualification check result
+      description: >
+        Retrieves a qualification check result by id.
+
+
+        <Warning>
+
+        This endpoint is in beta and is subject to change. Please contact
+        [implementations@truework.com](mailto:implementations@truework.com) for more information before integrating.
+
+        </Warning>
+      tags:
+        - subpackage_qualificationChecks
+      parameters:
+        - name: qualification_check_result_id
+          in: path
+          description: Qualification Check Result ID
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: >-
+            Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+            Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with
+            `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+
+            Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+            **Examples**
+
+            - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+            - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.
+          required: true
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: >-
+            Specify the content type and version that the API should use. It's recommended to include this to avoid
+            breaking changes.
+          required: false
+          schema:
+            $ref: '#/components/schemas/QualificationChecksQualificationCheckResultIdGetParametersAccept'
+            default: application/json
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QualificationCheckResponseResourceV20231030'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: The request's authorization is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error403'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        '406':
+          description: An invalid API version was requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '451':
+          description: Frozen SSN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error451'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error501'
+  /qualification-check-sets:
+    get:
+      operationId: get-all-qualification-check-sets
+      summary: Get all qualification check sets
+      description: >
+        A qualification check set is a ruleset for evaluating income data.
+
+
+        <Warning>
+
+        This endpoint is in beta and is subject to change. Please contact
+        [implementations@truework.com](mailto:implementations@truework.com) for more information before integrating.
+
+        </Warning>
+      tags:
+        - subpackage_qualificationChecks
+      parameters:
+        - name: limit
+          in: query
+          description: Limit the number of results returned.
+          required: false
+          schema:
+            type: integer
+            default: 25
+        - name: offset
+          in: query
+          description: Offset the results by page
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: Authorization
+          in: header
+          description: >-
+            Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+            Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with
+            `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+
+            Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+            **Examples**
+
+            - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+            - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.
+          required: true
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: >-
+            Specify the content type and version that the API should use. It's recommended to include this to avoid
+            breaking changes.
+          required: false
+          schema:
+            $ref: '#/components/schemas/QualificationCheckSetsGetParametersAccept'
+            default: application/json
+      responses:
+        '200':
+          description: Qualification Check Sets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QualificationCheckSetListResourceV20231030'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: The request's authorization is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error403'
+        '406':
+          description: An invalid API version was requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '451':
+          description: Frozen SSN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error451'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error501'
+  /tenant-properties:
+    post:
+      operationId: create-new-tenant-property
+      summary: Create a tenant property
+      description: >
+        Creates a new tenant property and returns a JSON object with the resulting property.
+
+
+        <Warning>
+
+        This endpoint is in beta and is subject to change. Please contact
+        [implementations@truework.com](mailto:implementations@truework.com) for more information before integrating.
+
+        </Warning>
+      tags:
+        - subpackage_tenantProperties
+      parameters:
+        - name: Authorization
+          in: header
+          description: >-
+            Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+            Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with
+            `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+
+            Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+            **Examples**
+
+            - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+            - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.
+          required: true
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: >-
+            Specify the content type and version that the API should use. It's recommended to include this to avoid
+            breaking changes.
+          required: false
+          schema:
+            $ref: '#/components/schemas/TenantPropertiesPostParametersAccept'
+            default: application/json
+      responses:
+        '201':
+          description: Tenant property successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantPropertyResourceV20231030'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: The request's authorization is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error403'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        '406':
+          description: An invalid API version was requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '451':
+          description: Frozen SSN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error451'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error501'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TenantPropertyCreatePostRequestV20231030'
+    get:
+      operationId: get-all-tenant-properties
+      summary: Get all tenant properties
+      description: Retrieves all tenant properties
+      tags:
+        - subpackage_tenantProperties
+      parameters:
+        - name: limit
+          in: query
+          description: Limit the number of results returned.
+          required: false
+          schema:
+            type: integer
+            default: 25
+        - name: offset
+          in: query
+          description: Offset the results by page
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: Authorization
+          in: header
+          description: >-
+            Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+            Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with
+            `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+
+            Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+            **Examples**
+
+            - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+            - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.
+          required: true
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: >-
+            Specify the content type and version that the API should use. It's recommended to include this to avoid
+            breaking changes.
+          required: false
+          schema:
+            $ref: '#/components/schemas/TenantPropertiesGetParametersAccept'
+            default: application/json
+      responses:
+        '200':
+          description: Tenant Properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantPropertyListResourceV20231030'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: The request's authorization is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error403'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        '406':
+          description: An invalid API version was requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '451':
+          description: Frozen SSN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error451'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error501'
+  /tenant-properties/{tenant_property_id}:
+    get:
+      operationId: get-one-tenant-property
+      summary: Get one tenant property
+      description: Retrieves a tenant property by id.
+      tags:
+        - subpackage_tenantProperties
+      parameters:
+        - name: tenant_property_id
+          in: path
+          description: Tenant Property ID
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: >-
+            Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+            Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with
+            `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+
+            Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+            **Examples**
+
+            - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+            - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.
+          required: true
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: >-
+            Specify the content type and version that the API should use. It's recommended to include this to avoid
+            breaking changes.
+          required: false
+          schema:
+            $ref: '#/components/schemas/TenantPropertiesTenantPropertyIdGetParametersAccept'
+            default: application/json
+      responses:
+        '200':
+          description: Tenant Property
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantPropertyResourceV20231030'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: The request's authorization is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error403'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        '406':
+          description: An invalid API version was requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '451':
+          description: Frozen SSN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error451'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error501'
+    put:
+      operationId: update-one-tenant-property
+      summary: Update one tenant property
+      description: Updates a tenant property.
+      tags:
+        - subpackage_tenantProperties
+      parameters:
+        - name: tenant_property_id
+          in: path
+          description: Tenant Property ID
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: >-
+            Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+            Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with
+            `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+
+            Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+            **Examples**
+
+            - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+            - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.
+          required: true
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          description: >-
+            Specify the content type and version that the API should use. It's recommended to include this to avoid
+            breaking changes.
+          required: false
+          schema:
+            $ref: '#/components/schemas/TenantPropertiesTenantPropertyIdPutParametersAccept'
+            default: application/json
+      responses:
+        '200':
+          description: Tenant Property
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantPropertyResourceV20231030'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: The request's authorization is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error403'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        '406':
+          description: An invalid API version was requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error406'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '451':
+          description: Frozen SSN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error451'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error501'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TenantPropertyUpdatePutRequestV20231030'
+servers:
+  - url: https://api.truework-sandbox.com
+  - url: https://api.truework.com
+components:
+  schemas:
+    QualificationChecksPostParametersAccept:
+      type: string
+      enum:
+        - application/json
+        - application/json; version=2023-10-30
+      default: application/json
+      title: QualificationChecksPostParametersAccept
+    QualificationCheckKind:
+      type: string
+      enum:
+        - applicant
+        - guarantor
+      description: The kind of qualification check being requested, either for the applicant or guarantor.
+      title: QualificationCheckKind
+    PropertyDetailsInputRent:
+      oneOf:
+        - type: number
+          format: double
+        - type: string
+      description: The target rent amount for qualification, expressed in USD
+      title: PropertyDetailsInputRent
+    _PropertyDetails-Input:
+      type: object
+      properties:
+        rent:
+          $ref: '#/components/schemas/PropertyDetailsInputRent'
+          description: The target rent amount for qualification, expressed in USD
+      required:
+        - rent
+      title: _PropertyDetails-Input
+    QualificationCheckCreatePostRequestV20231030:
+      type: object
+      properties:
+        kind:
+          $ref: '#/components/schemas/QualificationCheckKind'
+        metadata:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            type: string
+          description: >-
+            A single level key-value JSON object that can be used to store custom data on the qualification check; keys
+            and values must be strings
+        order_id:
+          type:
+            - string
+            - 'null'
+        order_ids:
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+        property_details:
+          $ref: '#/components/schemas/_PropertyDetails-Input'
+        qualification_check_set_id:
+          type: string
+        report_ids:
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+      required:
+        - property_details
+        - qualification_check_set_id
+      title: QualificationCheckCreatePostRequestV20231030
+    _PropertyDetails-Output:
+      type: object
+      properties:
+        rent:
+          type: string
+          description: The target rent amount for qualification, expressed in USD
+      required:
+        - rent
+      title: _PropertyDetails-Output
+    _QualificationCheckSet:
+      type: object
+      properties:
+        applicant_rent_to_income_ratio:
+          type: string
+          description: The ratio of the specified rent to the monthly gross income of the applicant.
+        guarantor_rent_to_income_ratio:
+          type: string
+          description: The ratio of the specified rent to the monthly gross income of the guarantor.
+        id:
+          type: string
+        income_multiple:
+          type:
+            - string
+            - 'null'
+          description: >-
+            Deprecated. Please use applicant_rent_to_income_ratio. Threshold ratio for target rent to monthly gross
+            income. Must be greater than 0
+        name:
+          type: string
+      required:
+        - applicant_rent_to_income_ratio
+        - guarantor_rent_to_income_ratio
+        - id
+        - income_multiple
+        - name
+      title: _QualificationCheckSet
+    QualificationCheckIncomeFidelity:
+      type: string
+      enum:
+        - estimate
+        - source
+      description: >-
+        Whether or not the monthly gross income data was estimated using source data or provided directly from the
+        source
+      title: QualificationCheckIncomeFidelity
+    QualificationCheckOutcome:
+      type: string
+      enum:
+        - qualified
+        - not_qualified
+        - not_enough_information
+      description: The outcome of evaluating a specified set of qualification checks against specified report data
+      title: QualificationCheckOutcome
+    _SatisfiedDocumentIncomeRequirement:
+      type: object
+      properties:
+        end_date:
+          type:
+            - string
+            - 'null'
+          format: date
+        file_type:
+          type: string
+        start_date:
+          type:
+            - string
+            - 'null'
+          format: date
+      required:
+        - end_date
+        - file_type
+        - start_date
+      title: _SatisfiedDocumentIncomeRequirement
+    _QualificationCheckReportResult:
+      type: object
+      properties:
+        monthly_gross_income:
+          type:
+            - string
+            - 'null'
+          description: The monthly gross income for a specific report
+        monthly_gross_income_fidelity:
+          oneOf:
+            - $ref: '#/components/schemas/QualificationCheckIncomeFidelity'
+            - type: 'null'
+        report_id:
+          type: string
+        satisfied_document_income_requirements:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/_SatisfiedDocumentIncomeRequirement'
+      required:
+        - monthly_gross_income
+        - monthly_gross_income_fidelity
+        - report_id
+        - satisfied_document_income_requirements
+      title: _QualificationCheckReportResult
+    _QualificationCheckResult:
+      type: object
+      properties:
+        monthly_gross_income:
+          type:
+            - string
+            - 'null'
+          description: The monthly gross income calculated across all requested reports
+        monthly_gross_income_fidelity:
+          oneOf:
+            - $ref: '#/components/schemas/QualificationCheckIncomeFidelity'
+            - type: 'null'
+        outcome:
+          $ref: '#/components/schemas/QualificationCheckOutcome'
+        rent_to_income_ratio:
+          type:
+            - string
+            - 'null'
+          description: The ratio of the specified rent to the monthly gross income of the applicant
+        report_results:
+          type: array
+          items:
+            $ref: '#/components/schemas/_QualificationCheckReportResult'
+      required:
+        - monthly_gross_income
+        - monthly_gross_income_fidelity
+        - outcome
+        - rent_to_income_ratio
+        - report_results
+      title: _QualificationCheckResult
+    QualificationCheckResponseResourceV20231030:
+      type: object
+      properties:
+        created:
+          type: string
+          format: date-time
+        id:
+          type: string
+        kind:
+          $ref: '#/components/schemas/QualificationCheckKind'
+          description: The kind of qualification check that was performed, either for the applicant or guarantor
+        metadata:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            type: string
+          description: >-
+            A single level key-value JSON object that can be used to store custom data on the qualification check; keys
+            and values must be strings
+        property_details:
+          $ref: '#/components/schemas/_PropertyDetails-Output'
+          description: Details from the originally supplied property, including the rent target
+        qualification_check_set:
+          $ref: '#/components/schemas/_QualificationCheckSet'
+        result:
+          $ref: '#/components/schemas/_QualificationCheckResult'
+      required:
+        - created
+        - id
+        - kind
+        - metadata
+        - property_details
+        - qualification_check_set
+        - result
+      title: QualificationCheckResponseResourceV20231030
+    _InvalidRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+          default: Invalid field values provided
+      required:
+        - message
+      title: _InvalidRequestError
+    Error400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/_InvalidRequestError'
+      required:
+        - error
+      title: Error400
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+      title: Error
+    Error401:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+      title: Error401
+    Error403:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+      title: Error403
+    Error406:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+      title: Error406
+    Error429:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+      title: Error429
+    Error451:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+      title: Error451
+    Error500:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+      title: Error500
+    Error501:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+      title: Error501
+    QualificationChecksQualificationCheckResultIdGetParametersAccept:
+      type: string
+      enum:
+        - application/json
+        - application/json; version=2023-10-30
+      default: application/json
+      title: QualificationChecksQualificationCheckResultIdGetParametersAccept
+    Error404:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+      title: Error404
+    QualificationCheckSetsGetParametersAccept:
+      type: string
+      enum:
+        - application/json
+        - application/json; version=2023-10-30
+      default: application/json
+      title: QualificationCheckSetsGetParametersAccept
+    QualificationCheckSetResourceV20231030:
+      type: object
+      properties:
+        applicant_rent_to_income_ratio:
+          type: string
+          description: The ratio of the specified rent to the monthly gross income of the applicant.
+        description:
+          type:
+            - string
+            - 'null'
+        guarantor_rent_to_income_ratio:
+          type: string
+          description: The ratio of the specified rent to the monthly gross income of the guarantor.
+        id:
+          type: string
+        income_multiple:
+          type: string
+          description: >-
+            Deprecated. Please use applicant_rent_to_income_ratio. Threshold ratio for target rent to monthly gross
+            income. Must be greater than 0.
+        name:
+          type: string
+      required:
+        - applicant_rent_to_income_ratio
+        - description
+        - guarantor_rent_to_income_ratio
+        - id
+        - income_multiple
+        - name
+      title: QualificationCheckSetResourceV20231030
+    QualificationCheckSetListResourceV20231030:
+      type: object
+      properties:
+        count:
+          type: integer
+        next:
+          type:
+            - string
+            - 'null'
+        previous:
+          type:
+            - string
+            - 'null'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/QualificationCheckSetResourceV20231030'
+      required:
+        - count
+        - next
+        - previous
+        - results
+      title: QualificationCheckSetListResourceV20231030
+    TenantPropertiesPostParametersAccept:
+      type: string
+      enum:
+        - application/json
+        - application/json; version=2023-10-30
+      default: application/json
+      title: TenantPropertiesPostParametersAccept
+    TenantPropertyCreatePostRequestV20231030:
+      type: object
+      properties:
+        address_line_1:
+          type:
+            - string
+            - 'null'
+        address_line_2:
+          type:
+            - string
+            - 'null'
+        address_line_3:
+          type:
+            - string
+            - 'null'
+        city:
+          type:
+            - string
+            - 'null'
+        name:
+          type: string
+        postal_code:
+          type:
+            - string
+            - 'null'
+        state:
+          type:
+            - string
+            - 'null'
+      required:
+        - name
+      title: TenantPropertyCreatePostRequestV20231030
+    TenantPropertyResourceV20231030:
+      type: object
+      properties:
+        address_line_1:
+          type:
+            - string
+            - 'null'
+        address_line_2:
+          type:
+            - string
+            - 'null'
+        address_line_3:
+          type:
+            - string
+            - 'null'
+        city:
+          type:
+            - string
+            - 'null'
+        id:
+          type: string
+        name:
+          type: string
+        postal_code:
+          type:
+            - string
+            - 'null'
+        state:
+          type:
+            - string
+            - 'null'
+        status:
+          type: string
+      required:
+        - address_line_1
+        - address_line_2
+        - address_line_3
+        - city
+        - id
+        - name
+        - postal_code
+        - state
+        - status
+      title: TenantPropertyResourceV20231030
+    TenantPropertiesTenantPropertyIdGetParametersAccept:
+      type: string
+      enum:
+        - application/json
+        - application/json; version=2023-10-30
+      default: application/json
+      title: TenantPropertiesTenantPropertyIdGetParametersAccept
+    TenantPropertiesGetParametersAccept:
+      type: string
+      enum:
+        - application/json
+        - application/json; version=2023-10-30
+      default: application/json
+      title: TenantPropertiesGetParametersAccept
+    TenantPropertyListResourceV20231030:
+      type: object
+      properties:
+        count:
+          type: integer
+        next:
+          type:
+            - string
+            - 'null'
+        previous:
+          type:
+            - string
+            - 'null'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TenantPropertyResourceV20231030'
+      required:
+        - count
+        - next
+        - previous
+        - results
+      title: TenantPropertyListResourceV20231030
+    TenantPropertiesTenantPropertyIdPutParametersAccept:
+      type: string
+      enum:
+        - application/json
+        - application/json; version=2023-10-30
+      default: application/json
+      title: TenantPropertiesTenantPropertyIdPutParametersAccept
+    TenantPropertyUpdatePutRequestV20231030:
+      type: object
+      properties:
+        address_line_1:
+          type:
+            - string
+            - 'null'
+        address_line_2:
+          type:
+            - string
+            - 'null'
+        address_line_3:
+          type:
+            - string
+            - 'null'
+        city:
+          type:
+            - string
+            - 'null'
+        name:
+          type: string
+        postal_code:
+          type:
+            - string
+            - 'null'
+        state:
+          type:
+            - string
+            - 'null'
+      required:
+        - name
+      title: TenantPropertyUpdatePutRequestV20231030
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      description: >-
+        Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+
+        Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`.
+        If your secret key is published, you should rotate your API keys.
+
+
+        Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+
+        **Examples**
+
+        - For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`
+
+        - For the "try it now" `token` field, input only the token itself, omitting `Bearer `.

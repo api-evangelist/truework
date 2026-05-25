@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.com/schemas/truework/truework-report-schema.json",
+  "title": "Truework Verification Report",
+  "description": "Schema for the Truework verification report resource returned by GET /reports/{verification_report_id} (API version 2023-10-30). Reports contain the consolidated employment and income data Truework obtained for the subject.",
+  "type": "object",
+  "definitions": {
+    "VerificationReport": {
+      "type": "object",
+      "required": ["id", "verification_request_id", "type", "employments"],
+      "properties": {
+        "id": { "type": "string", "description": "Verification report identifier." },
+        "verification_request_id": {
+          "type": "string",
+          "description": "Verification request this report belongs to."
+        },
+        "order_id": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": ["employment", "income", "employment-and-income"],
+          "description": "Whether this report covers employment, income, or both."
+        },
+        "method": {
+          "type": "string",
+          "description": "Verification method that produced this report.",
+          "enum": ["instant", "payroll-credentials", "bank-credentials", "tax-credentials", "smart-outreach", "document-upload"]
+        },
+        "subject": {
+          "type": "object",
+          "properties": {
+            "first_name": { "type": "string" },
+            "last_name": { "type": "string" }
+          }
+        },
+        "employments": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Employment" }
+        },
+        "documents": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Document" }
+        },
+        "completed_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Employment": {
+      "type": "object",
+      "description": "A single employment record verified for the subject.",
+      "required": ["employer", "status"],
+      "properties": {
+        "employer": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "address": { "type": "string" }
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "inactive", "on-leave"]
+        },
+        "position": { "type": "string" },
+        "hire_date": { "type": "string", "format": "date" },
+        "termination_date": { "type": "string", "format": "date" },
+        "pay_rate": {
+          "type": "object",
+          "properties": {
+            "amount": { "type": "number" },
+            "currency": { "type": "string" },
+            "period": {
+              "type": "string",
+              "enum": ["hourly", "weekly", "bi-weekly", "semi-monthly", "monthly", "annually"]
+            }
+          }
+        },
+        "income": {
+          "type": "object",
+          "description": "Year-to-date and historical earnings broken down by pay period.",
+          "properties": {
+            "ytd_gross": { "type": "number" },
+            "annual_gross": { "type": "number" },
+            "pay_stubs": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/PayStub" }
+            }
+          }
+        }
+      }
+    },
+    "PayStub": {
+      "type": "object",
+      "properties": {
+        "pay_date": { "type": "string", "format": "date" },
+        "gross": { "type": "number" },
+        "net": { "type": "number" },
+        "hours_worked": { "type": "number" }
+      }
+    },
+    "Document": {
+      "type": "object",
+      "description": "Source document captured during verification (pay stub, W-2, etc.).",
+      "properties": {
+        "id": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": ["pay-stub", "w2", "1099", "bank-statement", "voe-letter", "other"]
+        },
+        "url": { "type": "string", "format": "uri" }
+      }
+    }
+  },
+  "oneOf": [
+    { "$ref": "#/definitions/VerificationReport" }
+  ]
+}

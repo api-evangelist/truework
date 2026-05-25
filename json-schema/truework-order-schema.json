@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.com/schemas/truework/truework-order-schema.json",
+  "title": "Truework Order",
+  "description": "Schema for the Truework verification order resource (API version 2023-10-30). An order groups one or more verification requests created via /orders/target-employer, /orders/employer-search, /orders/truework-direct, or /orders/reverification.",
+  "type": "object",
+  "definitions": {
+    "Order": {
+      "type": "object",
+      "description": "A Truework verification order returned by POST /orders/* and GET /orders/{order_id}.",
+      "required": ["id", "state", "verification_requests", "created_at"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the order."
+        },
+        "state": {
+          "type": "string",
+          "description": "Lifecycle state of the order.",
+          "enum": ["pending-approval", "processing", "action-required", "completed", "canceled", "invalid"]
+        },
+        "verification_requests": {
+          "type": "array",
+          "description": "Verification requests grouped under this order.",
+          "items": { "$ref": "#/definitions/VerificationRequest" }
+        },
+        "request_config": {
+          "$ref": "#/definitions/RequestConfig"
+        },
+        "external_id": {
+          "type": "string",
+          "description": "Caller-provided external identifier for cross-referencing."
+        },
+        "permissible_purpose": {
+          "type": "string",
+          "description": "FCRA permissible purpose under which the verification is being run."
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "RFC 3339 timestamp at which the order was created."
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "VerificationRequest": {
+      "type": "object",
+      "description": "A single verification request inside an order. One order can hold multiple verification requests routed through different methods.",
+      "required": ["id", "state", "type"],
+      "properties": {
+        "id": { "type": "string" },
+        "state": {
+          "type": "string",
+          "enum": ["pending-approval", "processing", "action-required", "completed", "canceled", "invalid"]
+        },
+        "type": {
+          "type": "string",
+          "description": "Verification type — VOE (employment), VOI (income), or VOIE (both).",
+          "enum": ["employment", "income", "employment-and-income"]
+        },
+        "target": { "$ref": "#/definitions/Target" },
+        "employer": { "$ref": "#/definitions/Employer" },
+        "method": {
+          "type": "string",
+          "description": "Verification method used to fulfill this request.",
+          "enum": ["instant", "payroll-credentials", "bank-credentials", "tax-credentials", "smart-outreach", "document-upload"]
+        },
+        "report_id": {
+          "type": "string",
+          "description": "Identifier of the resulting verification report (when complete)."
+        }
+      }
+    },
+    "Target": {
+      "type": "object",
+      "description": "Subject of the verification — typically the borrower/applicant.",
+      "required": ["first_name", "last_name", "social_security_number"],
+      "properties": {
+        "first_name": { "type": "string" },
+        "last_name": { "type": "string" },
+        "middle_name": { "type": "string" },
+        "social_security_number": { "type": "string", "description": "9-digit US SSN of the subject." },
+        "email": { "type": "string", "format": "email" },
+        "phone_number": { "type": "string" },
+        "date_of_birth": { "type": "string", "format": "date" }
+      }
+    },
+    "Employer": {
+      "type": "object",
+      "description": "Employer the subject is being verified against.",
+      "properties": {
+        "name": { "type": "string" },
+        "address": { "type": "string" },
+        "company_id": { "type": "string", "description": "Identifier from the Truework employer database." }
+      }
+    },
+    "RequestConfig": {
+      "type": "object",
+      "description": "Per-order configuration controlling which verification methods Truework may orchestrate.",
+      "properties": {
+        "allowed_methods": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "fallback": { "type": "boolean" }
+      }
+    }
+  },
+  "oneOf": [
+    { "$ref": "#/definitions/Order" }
+  ]
+}

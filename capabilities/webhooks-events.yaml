@@ -1,0 +1,55 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Truework Webhooks — Order & Verification Events
+  description: 'Truework webhook receiver capability. Validates the X-Truework-Token header against the per-instance webhook token and routes order.completed and verification_request.state.change events to downstream handlers.'
+  tags:
+  - Truework
+  - Webhooks
+  - Events
+  created: '2026-05-24'
+  modified: '2026-05-24'
+binds:
+- namespace: env
+  keys:
+    TRUEWORK_WEBHOOK_TOKEN: TRUEWORK_WEBHOOK_TOKEN
+capability:
+  exposes:
+  - type: rest
+    namespace: webhooks-events-rest
+    port: 8082
+    description: HTTP webhook receiver for Truework. Validates X-Truework-Token before dispatch.
+    resources:
+    - path: /webhooks/truework
+      name: webhook-receiver
+      description: Generic Truework webhook receiver endpoint.
+      operations:
+      - method: POST
+        name: receivewebhook
+        description: Receive a Truework webhook (order.completed or verification_request.state.change).
+        inputParameters:
+        - name: x-truework-token
+          in: header
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: webhooks-events-mcp
+    port: 9094
+    transport: http
+    description: MCP introspection adapter for Truework webhook events.
+    tools:
+    - name: truework-describe-webhook-events
+      description: Describe the set of Truework webhook events and their payload schemas.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      outputParameters:
+      - type: object
+        mapping: $.

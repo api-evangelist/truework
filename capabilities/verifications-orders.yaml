@@ -1,0 +1,256 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Truework Verifications API — Orders
+  description: 'Truework Verifications API — Orders. 6 operations covering the order lifecycle: create target-employer, employer-search, Truework Direct, reverification, retrieve, list, cancel. Self-contained Naftiko capability covering one Truework business surface.'
+  tags:
+  - Truework
+  - Verifications
+  - Orders
+  - VOIE
+  created: '2026-05-24'
+  modified: '2026-05-24'
+binds:
+- namespace: env
+  keys:
+    TRUEWORK_API_KEY: TRUEWORK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: verifications-orders
+    baseUri: https://api.truework.com
+    description: Truework Verifications — Orders. Self-contained, no shared references.
+    resources:
+    - name: orders-target-employer
+      path: /orders/target-employer
+      operations:
+      - name: createtargetemployerorder
+        method: POST
+        description: Create a target employer order.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: orders-employer-search
+      path: /orders/employer-search
+      operations:
+      - name: createemployersearchorder
+        method: POST
+        description: Create a synchronous employer search order.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: orders-truework-direct
+      path: /orders/truework-direct
+      operations:
+      - name: createtruewordkdirectorder
+        method: POST
+        description: Create a Truework Direct (Truework.js) order and session token.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: orders-reverification
+      path: /orders/reverification
+      operations:
+      - name: createreverificationorder
+        method: POST
+        description: Reverify a previously completed report.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: orders
+      path: /orders
+      operations:
+      - name: listorders
+        method: GET
+        description: List all orders.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: order-by-id
+      path: /orders/{order_id}
+      operations:
+      - name: getorder
+        method: GET
+        description: Retrieve a single order by id.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: order_id
+          in: path
+          type: string
+          required: true
+    - name: order-cancel
+      path: /orders/{order_id}/cancel
+      operations:
+      - name: cancelorder
+        method: POST
+        description: Cancel an order and every verification inside it.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: order_id
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      key: Authorization
+      value: 'Bearer {{env.TRUEWORK_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: verifications-orders-rest
+    port: 8080
+    description: REST adapter for Truework Verifications — Orders. One Spectral-compliant resource per consumed operation.
+    resources:
+    - path: /v1/orders/target-employer
+      name: orders-target-employer
+      description: REST surface for /orders/target-employer.
+      operations:
+      - method: POST
+        name: createtargetemployerorder
+        description: Create a target employer order.
+        call: verifications-orders.createtargetemployerorder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orders
+      name: orders
+      description: REST surface for /orders list.
+      operations:
+      - method: GET
+        name: listorders
+        description: List orders.
+        call: verifications-orders.listorders
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: verifications-orders-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Truework Verifications — Orders. One tool per consumed operation.
+    tools:
+    - name: truework-create-target-employer-order
+      description: Create a target employer verification order.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: verifications-orders.createtargetemployerorder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: truework-create-employer-search-order
+      description: Create a synchronous employer search verification order.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: verifications-orders.createemployersearchorder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: truework-create-truework-direct-order
+      description: Create a Truework Direct (borrower-driven) verification order.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: verifications-orders.createtruewordkdirectorder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: truework-create-reverification-order
+      description: Create a reverification order for a prior verification report.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: verifications-orders.createreverificationorder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: truework-list-orders
+      description: List Truework orders.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: verifications-orders.listorders
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: truework-get-order
+      description: Retrieve a single Truework order by id.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: verifications-orders.getorder
+      with:
+        order_id: tools.order_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: truework-cancel-order
+      description: Cancel a Truework order and all of its verifications.
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: verifications-orders.cancelorder
+      with:
+        order_id: tools.order_id
+      outputParameters:
+      - type: object
+        mapping: $.

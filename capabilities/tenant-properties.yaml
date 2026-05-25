@@ -1,0 +1,138 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Truework Beta API — Tenant Properties
+  description: 'Truework Beta API — Tenant Properties. 4 operations covering create, list, retrieve, and update of provider-defined tenant configuration properties. Beta surface; schema may evolve.'
+  tags:
+  - Truework
+  - Tenant
+  - Configuration
+  - Beta
+  created: '2026-05-24'
+  modified: '2026-05-24'
+binds:
+- namespace: env
+  keys:
+    TRUEWORK_API_KEY: TRUEWORK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: tenant-properties
+    baseUri: https://api.truework.com
+    description: Truework Tenant Properties beta API.
+    resources:
+    - name: tenant-properties
+      path: /tenant-properties
+      operations:
+      - name: createtenantproperty
+        method: POST
+        description: Create a tenant property.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+      - name: listtenantproperties
+        method: GET
+        description: List tenant properties.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tenant-property-by-id
+      path: /tenant-properties/{tenant_property_id}
+      operations:
+      - name: gettenantproperty
+        method: GET
+        description: Retrieve a tenant property by id.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tenant_property_id
+          in: path
+          type: string
+          required: true
+      - name: updatetenantproperty
+        method: PATCH
+        description: Update an existing tenant property.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tenant_property_id
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: bearer
+      key: Authorization
+      value: 'Bearer {{env.TRUEWORK_API_KEY}}'
+      placement: header
+  exposes:
+  - type: mcp
+    namespace: tenant-properties-mcp
+    port: 9093
+    transport: http
+    description: MCP adapter for Truework Tenant Properties.
+    tools:
+    - name: truework-create-tenant-property
+      description: Create a Truework tenant property.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: tenant-properties.createtenantproperty
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: truework-list-tenant-properties
+      description: List Truework tenant properties.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: tenant-properties.listtenantproperties
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: truework-get-tenant-property
+      description: Retrieve a Truework tenant property by id.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: tenant-properties.gettenantproperty
+      with:
+        tenant_property_id: tools.tenant_property_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: truework-update-tenant-property
+      description: Update an existing Truework tenant property.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: tenant-properties.updatetenantproperty
+      with:
+        tenant_property_id: tools.tenant_property_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

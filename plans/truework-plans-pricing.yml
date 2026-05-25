@@ -1,0 +1,100 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Truework
+providerId: truework
+created: '2026-05-24'
+modified: '2026-05-24'
+reconciled: false
+tags:
+  - Verifications
+  - VOIE
+  - Mortgage
+  - Lending
+description: >
+  Plans and commercial offering for Truework. Truework does not publish per-unit verification
+  pricing publicly — the company sells through Sales/Demo motions and orchestrates pricing
+  across six verification methods (Instant Data, Payroll Credentials, Bank Credentials, Tax
+  Credentials, Smart Outreach, Document Upload) plus LOS and POS integration packages. This
+  file records the publicly-known commercial surface; specific per-verification pricing must
+  be obtained via implementations@truework.com.
+sources:
+  - https://www.truework.com/products/api
+  - https://www.truework.com/products
+  - https://www.truework.com/verifications
+  - https://help.truework.com
+plans:
+  - id: truework-verifications-platform
+    name: Truework Verifications Platform
+    type: contact-sales
+    description: >
+      Unified income and employment verification platform spanning all six verification
+      methods (Instant Data, Payroll Credentials, Bank Credentials, Tax Credentials, Smart
+      Outreach, Document Upload). Smart orchestration routes each verification to the
+      method most likely to complete. Coverage stated by Truework at over 97% of U.S.
+      workers. Pricing via contact-sales.
+    entries:
+      - label: Verification
+        name: verification
+        type: contact-sales
+        metric: verification
+        timeFrame: usage
+        geo: US
+        unit: 1
+        price: contact
+        userMultiplied: false
+        description: Per-verification pricing varies by method (instant vs outreach vs credentials) and contract.
+    elements:
+      - name: Six verification methods orchestrated automatically
+      - name: GSE-ready unified reporting (Day 1 Certainty, AIM, GUS)
+      - name: Tenant-controlled verification method gating via request_config
+      - name: Sandbox environment with deterministic test SSN fixtures
+      - name: Webhook delivery with 48h retry and X-Truework-Token signing
+      - name: Dated API versioning (current 2023-10-30) with pinned API keys
+      - name: Truework Direct (Truework.js) borrower-driven verification widget
+      - name: Public beta Qualification Checks for knockout decisioning
+  - id: truework-api
+    name: Truework API
+    type: contact-sales
+    description: >
+      Direct REST API integration for custom workflows. Includes Bearer-token API keys
+      (tw_sk_*), sandbox (tw_sk_test_*) and production environments, webhooks, and
+      Truework.js publishable keys (tw_pk_*) for the embedded Truework Direct widget.
+    entries:
+      - label: API access
+        name: api-access
+        type: contact-sales
+        metric: api
+        timeFrame: month
+        geo: US
+        unit: 1
+        price: contact
+        userMultiplied: false
+    elements:
+      - name: REST API over https://api.truework.com
+      - name: Bearer-token auth with rotatable secret keys
+      - name: Up to 10 webhook destinations per account
+      - name: Publishable keys for Truework.js Direct widget
+      - name: 10 req/s per IP and per account rate-limit envelope
+  - id: truework-los-pos-integrations
+    name: LOS / POS Integrations
+    type: packaged
+    description: >
+      Pre-built integrations with mortgage loan-origination systems (Encompass, Empower)
+      and point-of-sale systems (Blend, nCino). Bundled with the verification platform;
+      no separate developer integration required for lenders running these systems.
+    entries:
+      - label: Integration package
+        name: integration-package
+        type: contact-sales
+        metric: integration
+        timeFrame: month
+        geo: US
+        unit: 1
+        price: contact
+        userMultiplied: false
+    elements:
+      - name: ICE Mortgage Technology Encompass
+      - name: Dark Matter Empower
+      - name: Blend POS
+      - name: nCino POS
