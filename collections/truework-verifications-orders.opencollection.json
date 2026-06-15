@@ -1,0 +1,359 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Truework Verifications API",
+    "version": "Sun Oct 29 2023 20:00:00 GMT-0400 (Eastern Daylight Time)"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a target employer order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.truework-sandbox.com/orders/target-employer",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new order and verification. Returns a JSON object representing the newly created order and verification.\n\nA target employer verification is distinct in that it _requires_ a target employer in the request body for processing.\n\n## Verification processing\n\nTarget employer verifications are processed _asynchronously_: they will be created and returned in the response body without any [reports](api.yaml/paths/~1verification-requests~1{verification_id}~1report/get). Truework will then send a"
+        },
+        {
+          "info": {
+            "name": "Create an employer search order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.truework-sandbox.com/orders/employer-search",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case of a list, subfields apply to each individual object. If omitted, all fields are included."
+              },
+              {
+                "name": "include_income_analytics",
+                "value": "",
+                "type": "query",
+                "description": "Whether to calculate income analytics for the nested reports in each verification."
+              },
+              {
+                "name": "include_report_annotations",
+                "value": "",
+                "type": "query",
+                "description": "Include potentially unverified data in the response, including report annotations and unparsed documents."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "POST requests create both an order and a verification. Returns a JSON object representing the newly created order and verification.\n\n## Verification processing\n\nEmployer search verifications are processed _synchronously_: Truework will attempt to process the verification during the initial POST request. If successful, the `201` response will include a `reports` key, which will contain the requested data.\n\nIt is recommended to set a timeout on synchronous requests, to account for potential latenc"
+        },
+        {
+          "info": {
+            "name": "Create a Truework Direct order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.truework-sandbox.com/orders/truework-direct",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "POST requests create an order with a Truework Direct session token, used for instantiating the Truework.js widget."
+        },
+        {
+          "info": {
+            "name": "Get one order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.truework-sandbox.com/orders/:order_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "include_report_annotations",
+                "value": "",
+                "type": "query",
+                "description": "Include potentially unverified data in the response, including report annotations and unparsed documents."
+              }
+            ]
+          },
+          "docs": "Retrieves an order by id.\n"
+        },
+        {
+          "info": {
+            "name": "Get all orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.truework-sandbox.com/orders",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of results returned"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset the results by page"
+              },
+              {
+                "name": "search_key",
+                "value": "",
+                "type": "query",
+                "description": "Filter by search_key value passed in on Order creation"
+              },
+              {
+                "name": "include_report_annotations",
+                "value": "",
+                "type": "query",
+                "description": "Opt-in to including annotations on reports"
+              },
+              {
+                "name": "verification_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by associated verification_id"
+              }
+            ]
+          },
+          "docs": "An order is a consolidation of multiple verifications."
+        },
+        {
+          "info": {
+            "name": "Cancel an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.truework-sandbox.com/orders/:order_id/cancel",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancels all verification requests on an order, provided each request is not already in a terminal state.\n"
+        },
+        {
+          "info": {
+            "name": "Get order events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.truework-sandbox.com/orders/:order_id/events",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of results returned"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset the results by page"
+              }
+            ]
+          },
+          "docs": "Returns all events associated with an order."
+        },
+        {
+          "info": {
+            "name": "Reverify a report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.truework-sandbox.com/orders/reverification",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Request-Sync",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reverifies a report, provided no more than 90 days have passed since completion of the verification."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get one report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.truework-sandbox.com/reports/:verification_report_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "verification_report_id",
+                "value": "",
+                "type": "path",
+                "description": "Report ID"
+              },
+              {
+                "name": "include_income_analytics",
+                "value": "",
+                "type": "query",
+                "description": "Whether to calculate income analytics for the nested reports in each verification."
+              },
+              {
+                "name": "include_report_annotations",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include annotations for the nested reports in each verification."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case of a list, subfields apply to each individual object. If omitted, all fields are included."
+              }
+            ]
+          },
+          "docs": "Retrieves a report for a given report ID.\nIf you don't have the report id, it is recommended to use the embedded reports key on a completed verification object returned from `GET /orders`.\nYou can get the report in PDF format by adding `Accept: application/pdf` to your headers. When testing, please use the generated curl command\nwith `--output <PDF filename>` specified.\n\n<Info>\nOnly completed Reports will be returned. Any other request will fail with either 400 or 404, and provide more informati"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

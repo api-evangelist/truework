@@ -1,293 +1,276 @@
 aid: truework
 url: https://raw.githubusercontent.com/api-evangelist/truework/refs/heads/main/apis.yml
 apis:
-- aid: truework:truework-verifications-api
-  name: Truework Verifications API
-  tags:
-  - Verifications
-  - VOIE
-  - Orders
-  - Reports
-  - Mortgage
-  humanURL: https://www.truework.com/docs/api-reference
-  baseURL: https://api.truework.com
-  properties:
-  - url: https://www.truework.com/docs/api-reference
-    type: Documentation
-  - url: https://www.truework.com/docs/api-reference/versions/2023-10-30
-    type: Documentation
-  - url: openapi/truework-verifications-orders-openapi.yml
-    type: OpenAPI
-  - url: json-schema/truework-order-schema.json
-    type: JSONSchema
-  - url: json-schema/truework-report-schema.json
-    type: JSONSchema
-  - url: json-ld/truework-context.jsonld
-    type: JSONLD
-  - type: NaftikoCapability
-    url: capabilities/verifications-orders.yaml
-  - type: NaftikoCapability
-    url: capabilities/verifications-reports.yaml
-  description: >
-    Truework Verifications API for orders, reports, and order events. Submit a verification
-    of income and employment (VOIE) order against a known target employer, run a synchronous
-    employer search, kick off a Truework Direct (Truework.js) borrower-driven verification,
-    retrieve completed verification reports, list and cancel orders, and replay the order
-    event log. Six verification methods are orchestrated automatically: Instant Data,
-    Payroll Credentials, Bank Credentials, Tax Credentials, Smart Outreach, and Document
-    Upload. Current API version is 2023-10-30; pinned per API key via the Accept header.
-- aid: truework:truework-qualifications-api
-  name: Truework Qualifications API (Beta)
-  tags:
-  - Qualifications
-  - Decisioning
-  - Beta
-  - VOIE
-  humanURL: https://www.truework.com/docs/api-reference
-  baseURL: https://api.truework.com
-  properties:
-  - url: https://www.truework.com/docs/api-reference
-    type: Documentation
-  - url: openapi/truework-beta-openapi.yml
-    type: OpenAPI
-  - type: NaftikoCapability
-    url: capabilities/qualifications-checks.yaml
-  description: >
-    Public beta surface for running qualification checks against a borrower's verified
-    employment and income data. Create a qualification check, retrieve a check result, and
-    list the qualification check sets defined for a tenant. Useful for low-latency knockout
-    decisions (e.g. "minimum gross monthly income") layered on top of full verification
-    reports.
-- aid: truework:truework-tenant-properties-api
-  name: Truework Tenant Properties API (Beta)
-  tags:
-  - Configuration
-  - Tenant
-  - Beta
-  humanURL: https://www.truework.com/docs/api-reference
-  baseURL: https://api.truework.com
-  properties:
-  - url: https://www.truework.com/docs/api-reference
-    type: Documentation
-  - url: openapi/truework-beta-openapi.yml
-    type: OpenAPI
-  - type: NaftikoCapability
-    url: capabilities/tenant-properties.yaml
-  description: >
-    Public beta surface for programmatically managing tenant-scoped configuration properties
-    on Truework. Create, list, retrieve, and update tenant properties that govern
-    verification behavior (allowed methods, branding, callback expectations) across the
-    account.
-- aid: truework:truework-webhooks
-  name: Truework Webhooks
-  tags:
-  - Webhooks
-  - Events
-  humanURL: https://www.truework.com/docs/api-reference/webhooks
-  properties:
-  - url: https://www.truework.com/docs/api-reference/webhooks
-    type: Documentation
-  - url: https://www.truework.com/docs/api-reference/webhooks/security
-    type: Documentation
-  - url: openapi/truework-webhooks-openapi.yml
-    type: OpenAPI
-  - type: NaftikoCapability
-    url: capabilities/webhooks-events.yaml
-  description: >
-    Truework emits two webhook event types — `order.completed` when every verification on
-    an order is finished, and `verification_request.state.change` as individual
-    verifications transition through pending-approval, processing, action-required,
-    completed, canceled, and invalid. Each webhook destination is associated with a token
-    delivered in the `X-Truework-Token` header so receivers can authenticate the call.
-    Failed deliveries are retried periodically for up to 48 hours. Accounts may register up
-    to 10 webhook destinations.
-- aid: truework:truework-js
-  name: Truework.js (Truework Direct)
-  tags:
-  - JavaScript
-  - SDK
-  - Embedded
-  humanURL: https://www.truework.com/docs/guides/truework-direct/truework-js-reference
-  baseURL: https://js.truework.com/v1
-  properties:
-  - url: https://www.truework.com/docs/guides/truework-direct/truework-js-reference
-    type: Documentation
-  - url: https://www.truework.com/docs/guides/truework-direct/getting-started
-    type: Documentation
-  - url: https://github.com/truework/truework.js-examples
-    type: CodeExamples
-  description: >
-    Truework.js is the client-side JavaScript library that powers Truework Direct, the
-    borrower-driven (consumer-permissioned) verification flow. The host page loads
-    `https://js.truework.com/v1` and initializes the widget with a session token created
-    server-side via POST /orders/truework-direct, then handles `onComplete`, `onClose`, and
-    `onError` callbacks. Publishable keys (`tw_pk_*` / `tw_pk_test_*`) authenticate the
-    client.
+  - aid: truework:truework-verifications-api
+    name: Truework Verifications API
+    tags:
+      - Verifications
+      - VOIE
+      - Orders
+      - Reports
+      - Mortgage
+    humanURL: https://www.truework.com/docs/api-reference
+    baseURL: https://api.truework.com
+    properties:
+      - url: https://www.truework.com/docs/api-reference
+        type: Documentation
+      - url: https://www.truework.com/docs/api-reference/versions/2023-10-30
+        type: Documentation
+      - url: openapi/truework-verifications-orders-openapi.yml
+        type: OpenAPI
+      - url: json-schema/truework-order-schema.json
+        type: JSONSchema
+      - url: json-schema/truework-report-schema.json
+        type: JSONSchema
+      - url: json-ld/truework-context.jsonld
+        type: JSONLD
+    description: >
+      Truework Verifications API for orders, reports, and order events. Submit a verification of income and employment
+      (VOIE) order against a known target employer, run a synchronous employer search, kick off a Truework Direct
+      (Truework.js) borrower-driven verification, retrieve completed verification reports, list and cancel orders, and
+      replay the order event log. Six verification methods are orchestrated automatically: Instant Data, Payroll
+      Credentials, Bank Credentials, Tax Credentials, Smart Outreach, and Document Upload. Current API version is
+      2023-10-30; pinned per API key via the Accept header.
+  - aid: truework:truework-qualifications-api
+    name: Truework Qualifications API (Beta)
+    tags:
+      - Qualifications
+      - Decisioning
+      - Beta
+      - VOIE
+    humanURL: https://www.truework.com/docs/api-reference
+    baseURL: https://api.truework.com
+    properties:
+      - url: https://www.truework.com/docs/api-reference
+        type: Documentation
+      - url: openapi/truework-beta-openapi.yml
+        type: OpenAPI
+    description: >
+      Public beta surface for running qualification checks against a borrower's verified employment and income data.
+      Create a qualification check, retrieve a check result, and list the qualification check sets defined for a tenant.
+      Useful for low-latency knockout decisions (e.g. "minimum gross monthly income") layered on top of full
+      verification reports.
+  - aid: truework:truework-tenant-properties-api
+    name: Truework Tenant Properties API (Beta)
+    tags:
+      - Configuration
+      - Tenant
+      - Beta
+    humanURL: https://www.truework.com/docs/api-reference
+    baseURL: https://api.truework.com
+    properties:
+      - url: https://www.truework.com/docs/api-reference
+        type: Documentation
+      - url: openapi/truework-beta-openapi.yml
+        type: OpenAPI
+    description: >
+      Public beta surface for programmatically managing tenant-scoped configuration properties on Truework. Create,
+      list, retrieve, and update tenant properties that govern verification behavior (allowed methods, branding,
+      callback expectations) across the account.
+  - aid: truework:truework-webhooks
+    name: Truework Webhooks
+    tags:
+      - Webhooks
+      - Events
+    humanURL: https://www.truework.com/docs/api-reference/webhooks
+    properties:
+      - url: https://www.truework.com/docs/api-reference/webhooks
+        type: Documentation
+      - url: https://www.truework.com/docs/api-reference/webhooks/security
+        type: Documentation
+      - url: openapi/truework-webhooks-openapi.yml
+        type: OpenAPI
+    description: >
+      Truework emits two webhook event types — `order.completed` when every verification on an order is finished, and
+      `verification_request.state.change` as individual verifications transition through pending-approval, processing,
+      action-required, completed, canceled, and invalid. Each webhook destination is associated with a token delivered
+      in the `X-Truework-Token` header so receivers can authenticate the call. Failed deliveries are retried
+      periodically for up to 48 hours. Accounts may register up to 10 webhook destinations.
+  - aid: truework:truework-js
+    name: Truework.js (Truework Direct)
+    tags:
+      - JavaScript
+      - SDK
+      - Embedded
+    humanURL: https://www.truework.com/docs/guides/truework-direct/truework-js-reference
+    baseURL: https://js.truework.com/v1
+    properties:
+      - url: https://www.truework.com/docs/guides/truework-direct/truework-js-reference
+        type: Documentation
+      - url: https://www.truework.com/docs/guides/truework-direct/getting-started
+        type: Documentation
+      - url: https://github.com/truework/truework.js-examples
+        type: CodeExamples
+    description: >
+      Truework.js is the client-side JavaScript library that powers Truework Direct, the borrower-driven
+      (consumer-permissioned) verification flow. The host page loads `https://js.truework.com/v1` and initializes the
+      widget with a session token created server-side via POST /orders/truework-direct, then handles `onComplete`,
+      `onClose`, and `onError` callbacks. Publishable keys (`tw_pk_*` / `tw_pk_test_*`) authenticate the client.
 name: Truework
 tags:
-- Verifications
-- Income Verification
-- Employment Verification
-- VOIE
-- Mortgage
-- Lending
-- Credit Unions
-- Identity
-- KYC
-- Fintech
+  - Verifications
+  - Income Verification
+  - Employment Verification
+  - VOIE
+  - Mortgage
+  - Lending
+  - Credit Unions
+  - Identity
+  - KYC
+  - Fintech
 kind: contract
 image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 common:
-- type: Portal
-  url: https://www.truework.com
-- type: Documentation
-  url: https://www.truework.com/docs
-- type: Documentation
-  url: https://www.truework.com/docs/api-reference
-  name: API Reference
-- type: Documentation
-  url: https://www.truework.com/docs/api-reference/versions/2023-10-30
-  name: API Version 2023-10-30
-- type: Documentation
-  url: https://www.truework.com/docs/api-reference/versions
-  name: Versioning
-- type: Versioning
-  url: https://www.truework.com/docs/api-reference/versions
-- type: Authentication
-  url: https://www.truework.com/docs/api-reference/authentication
-- type: RateLimits
-  url: https://www.truework.com/docs/api-reference/limits
-- type: Errors
-  url: https://www.truework.com/docs/api-reference/versions/2023-10-30
-- type: Sandbox
-  url: https://www.truework.com/docs/api-reference/sandbox
-  name: Sandbox Environment
-- type: Documentation
-  url: https://www.truework.com/docs/api-reference/sandbox/test-cases
-  name: Sandbox Test Cases
-- type: Documentation
-  url: https://www.truework.com/docs/api-reference/monitoring
-  name: Monitoring
-- type: Webhooks
-  url: https://www.truework.com/docs/api-reference/webhooks
-- type: Documentation
-  url: https://www.truework.com/docs/api-reference/webhooks/security
-  name: Webhook Security
-- type: Documentation
-  url: https://www.truework.com/docs/guides
-  name: Guides
-- type: GettingStarted
-  url: https://www.truework.com/docs/guides/api/getting-started
-- type: Documentation
-  url: https://www.truework.com/docs/guides/methods
-  name: Verification Methods
-- type: Documentation
-  url: https://www.truework.com/docs/guides/workflows
-  name: API Workflows
-- type: Documentation
-  url: https://www.truework.com/docs/guides/truework-direct/getting-started
-  name: Truework Direct
-- type: Documentation
-  url: https://www.truework.com/docs/guides/truework-direct/truework-js-reference
-  name: Truework.js Reference
-- type: Documentation
-  url: https://www.truework.com/docs/guides/mortgage/mortgage-intro
-  name: Mortgage Solutions
-- type: Documentation
-  url: https://www.truework.com/docs/guides/mortgage/mortgage-los
-  name: LOS Integrations
-- type: Documentation
-  url: https://www.truework.com/docs/guides/mortgage/mortgage-pos
-  name: POS Integrations
-- type: Portal
-  url: https://www.truework.com/products/api
-  name: Truework API Product Page
-- type: Portal
-  url: https://www.truework.com/products
-  name: Products
-- type: SignUp
-  url: https://app.truework.com/requester/signup
-- type: Login
-  url: https://app.truework.com/requester/login
-- type: Sandbox
-  url: https://api.truework-sandbox.com
-  name: Sandbox API
-- type: StatusPage
-  url: https://truework.statuspage.io
-- type: Support
-  url: https://help.truework.com
-  name: Help Center
-- type: Documentation
-  url: https://www.truework.com/legal/terms
-  name: Terms of Service
-- type: PrivacyPolicy
-  url: https://www.truework.com/legal/privacy
-- type: GitHubOrganization
-  url: https://github.com/truework
-- type: SDK
-  url: https://github.com/truework/truework.js-examples
-  name: Truework.js Examples
-- type: Tool
-  url: https://github.com/truework/gretchen
-  name: gretchen
-- type: Tool
-  url: https://github.com/truework/mounty
-  name: mounty
-- type: LinkedIn
-  url: https://www.linkedin.com/company/truework
-- type: Blog
-  url: https://www.truework.com/resource-center/blog
-- type: Plans
-  url: plans/truework-plans-pricing.yml
-- type: RateLimits
-  url: rate-limits/truework-rate-limits.yml
-- type: FinOps
-  url: finops/truework-finops.yml
-- type: Features
-  data:
-  - Six verification methods orchestrated automatically — Instant Data, Payroll Credentials, Bank Credentials, Tax Credentials, Smart Outreach, Document Upload
-  - Coverage of over 97% of U.S. workers from a single platform
-  - Truework Direct (Truework.js) borrower-driven verification widget loaded from https://js.truework.com/v1
-  - Dated API versioning (current 2023-10-30) with per-key version pinning via the Accept header
-  - Bearer-token API keys, prefixed tw_sk_ (production) and tw_sk_test_ (sandbox)
-  - Publishable keys (tw_pk_, tw_pk_test_) for client-side Truework.js
-  - Sandbox environment at https://api.truework-sandbox.com with deterministic test SSN fixtures
-  - Webhook delivery with 48-hour retry and X-Truework-Token header authentication
-  - Up to 10 webhook destinations per account
-  - 10 req/s per source IP and 10 req/s per account rate envelope, with 429 on overage
-  - Order lifecycle states pending-approval, processing, action-required, completed, canceled, invalid
-  - Asynchronous target-employer orders plus synchronous employer-search orders
-  - Reverification endpoint POST /orders/reverification for refreshing prior reports
-  - Beta Qualification Checks for low-latency knockout decisioning on verified income/employment
-  - Beta Tenant Properties for tenant-scoped verification configuration
-  - GSE-ready unified reporting (Day 1 Certainty, AIM, GUS) for mortgage lenders
-  - LOS integrations (Encompass, Empower) and POS integrations (Blend, nCino)
-  - Public OpenAPI specs published from truework.docs.buildwithfern.com
-  sources:
-  - https://www.truework.com/docs
-  - https://www.truework.com/docs/api-reference
-  - https://www.truework.com/docs/api-reference/limits
-  - https://www.truework.com/docs/api-reference/webhooks
-  - https://www.truework.com/products/api
-  - https://www.truework.com/products
-  updated: '2026-05-24'
+  - type: Portal
+    url: https://www.truework.com
+  - type: Documentation
+    url: https://www.truework.com/docs
+  - type: Documentation
+    url: https://www.truework.com/docs/api-reference
+    name: API Reference
+  - type: Documentation
+    url: https://www.truework.com/docs/api-reference/versions/2023-10-30
+    name: API Version 2023-10-30
+  - type: Documentation
+    url: https://www.truework.com/docs/api-reference/versions
+    name: Versioning
+  - type: Versioning
+    url: https://www.truework.com/docs/api-reference/versions
+  - type: Authentication
+    url: https://www.truework.com/docs/api-reference/authentication
+  - type: RateLimits
+    url: https://www.truework.com/docs/api-reference/limits
+  - type: Errors
+    url: https://www.truework.com/docs/api-reference/versions/2023-10-30
+  - type: Sandbox
+    url: https://www.truework.com/docs/api-reference/sandbox
+    name: Sandbox Environment
+  - type: Documentation
+    url: https://www.truework.com/docs/api-reference/sandbox/test-cases
+    name: Sandbox Test Cases
+  - type: Documentation
+    url: https://www.truework.com/docs/api-reference/monitoring
+    name: Monitoring
+  - type: Webhooks
+    url: https://www.truework.com/docs/api-reference/webhooks
+  - type: Documentation
+    url: https://www.truework.com/docs/api-reference/webhooks/security
+    name: Webhook Security
+  - type: Documentation
+    url: https://www.truework.com/docs/guides
+    name: Guides
+  - type: GettingStarted
+    url: https://www.truework.com/docs/guides/api/getting-started
+  - type: Documentation
+    url: https://www.truework.com/docs/guides/methods
+    name: Verification Methods
+  - type: Documentation
+    url: https://www.truework.com/docs/guides/workflows
+    name: API Workflows
+  - type: Documentation
+    url: https://www.truework.com/docs/guides/truework-direct/getting-started
+    name: Truework Direct
+  - type: Documentation
+    url: https://www.truework.com/docs/guides/truework-direct/truework-js-reference
+    name: Truework.js Reference
+  - type: Documentation
+    url: https://www.truework.com/docs/guides/mortgage/mortgage-intro
+    name: Mortgage Solutions
+  - type: Documentation
+    url: https://www.truework.com/docs/guides/mortgage/mortgage-los
+    name: LOS Integrations
+  - type: Documentation
+    url: https://www.truework.com/docs/guides/mortgage/mortgage-pos
+    name: POS Integrations
+  - type: Portal
+    url: https://www.truework.com/products/api
+    name: Truework API Product Page
+  - type: Portal
+    url: https://www.truework.com/products
+    name: Products
+  - type: SignUp
+    url: https://app.truework.com/requester/signup
+  - type: Login
+    url: https://app.truework.com/requester/login
+  - type: Sandbox
+    url: https://api.truework-sandbox.com
+    name: Sandbox API
+  - type: StatusPage
+    url: https://truework.statuspage.io
+  - type: Support
+    url: https://help.truework.com
+    name: Help Center
+  - type: Documentation
+    url: https://www.truework.com/legal/terms
+    name: Terms of Service
+  - type: PrivacyPolicy
+    url: https://www.truework.com/legal/privacy
+  - type: GitHubOrganization
+    url: https://github.com/truework
+  - type: SDK
+    url: https://github.com/truework/truework.js-examples
+    name: Truework.js Examples
+  - type: Tool
+    url: https://github.com/truework/gretchen
+    name: gretchen
+  - type: Tool
+    url: https://github.com/truework/mounty
+    name: mounty
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/truework
+  - type: Blog
+    url: https://www.truework.com/resource-center/blog
+  - type: Plans
+    url: plans/truework-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/truework-rate-limits.yml
+  - type: FinOps
+    url: finops/truework-finops.yml
+  - type: Features
+    data:
+      - >-
+        Six verification methods orchestrated automatically — Instant Data, Payroll Credentials, Bank Credentials, Tax
+        Credentials, Smart Outreach, Document Upload
+      - Coverage of over 97% of U.S. workers from a single platform
+      - Truework Direct (Truework.js) borrower-driven verification widget loaded from https://js.truework.com/v1
+      - Dated API versioning (current 2023-10-30) with per-key version pinning via the Accept header
+      - Bearer-token API keys, prefixed tw_sk_ (production) and tw_sk_test_ (sandbox)
+      - Publishable keys (tw_pk_, tw_pk_test_) for client-side Truework.js
+      - Sandbox environment at https://api.truework-sandbox.com with deterministic test SSN fixtures
+      - Webhook delivery with 48-hour retry and X-Truework-Token header authentication
+      - Up to 10 webhook destinations per account
+      - 10 req/s per source IP and 10 req/s per account rate envelope, with 429 on overage
+      - Order lifecycle states pending-approval, processing, action-required, completed, canceled, invalid
+      - Asynchronous target-employer orders plus synchronous employer-search orders
+      - Reverification endpoint POST /orders/reverification for refreshing prior reports
+      - Beta Qualification Checks for low-latency knockout decisioning on verified income/employment
+      - Beta Tenant Properties for tenant-scoped verification configuration
+      - GSE-ready unified reporting (Day 1 Certainty, AIM, GUS) for mortgage lenders
+      - LOS integrations (Encompass, Empower) and POS integrations (Blend, nCino)
+      - Public OpenAPI specs published from truework.docs.buildwithfern.com
+    sources:
+      - https://www.truework.com/docs
+      - https://www.truework.com/docs/api-reference
+      - https://www.truework.com/docs/api-reference/limits
+      - https://www.truework.com/docs/api-reference/webhooks
+      - https://www.truework.com/products/api
+      - https://www.truework.com/products
+    updated: '2026-05-24'
 created: '2026-05-24T00:00:00.000Z'
 modified: '2026-05-24'
 position: Consuming
 description: >
-  Truework operates a unified income and employment verification platform for mortgage
-  lenders, credit unions, and fintechs. The Truework API orchestrates six verification
-  methods — Instant Data, Payroll Credentials, Bank Credentials, Tax Credentials, Smart
-  Outreach, and Document Upload — behind a single REST surface (api.truework.com),
-  asynchronous webhooks, and the Truework.js / Truework Direct widget for
-  consumer-permissioned verifications. The platform claims coverage of more than 97% of
-  U.S. workers and 75% completion rates versus a ~48% industry average. Core resources are
-  Orders, Verification Requests, Reports, and Order Events, with beta surfaces for
-  Qualification Checks and Tenant Properties.
+  Truework operates a unified income and employment verification platform for mortgage lenders, credit unions, and
+  fintechs. The Truework API orchestrates six verification methods — Instant Data, Payroll Credentials, Bank
+  Credentials, Tax Credentials, Smart Outreach, and Document Upload — behind a single REST surface (api.truework.com),
+  asynchronous webhooks, and the Truework.js / Truework Direct widget for consumer-permissioned verifications. The
+  platform claims coverage of more than 97% of U.S. workers and 75% completion rates versus a ~48% industry average.
+  Core resources are Orders, Verification Requests, Reports, and Order Events, with beta surfaces for Qualification
+  Checks and Tenant Properties.
 maintainers:
-- FN: Kin Lane
-  email: info@apievangelist.com
-  X: apievangelist
-  url: https://apievangelist.com
+  - FN: Kin Lane
+    email: info@apievangelist.com
+    X: apievangelist
+    url: https://apievangelist.com
 specificationVersion: '0.16'

@@ -1,0 +1,237 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Truework Qualifications & Tenant Properties API (Beta)",
+    "version": "2023-10-30-beta"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_qualificationChecks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a qualification check request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.truework-sandbox.com/qualification-checks",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new qualification check and returns a JSON object with the resulting evaluation.\n\n<Warning>\nThis endpoint is in beta and is subject to change. Please contact [implementations@truework.com](mailto:implementations@truework.com) for more information before integrating.\n</Warning>\n"
+        },
+        {
+          "info": {
+            "name": "Get one qualification check result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.truework-sandbox.com/qualification-checks/:qualification_check_result_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "qualification_check_result_id",
+                "value": "",
+                "type": "path",
+                "description": "Qualification Check Result ID"
+              }
+            ]
+          },
+          "docs": "Retrieves a qualification check result by id.\n\n<Warning>\nThis endpoint is in beta and is subject to change. Please contact [implementations@truework.com](mailto:implementations@truework.com) for more information before integrating.\n</Warning>\n"
+        },
+        {
+          "info": {
+            "name": "Get all qualification check sets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.truework-sandbox.com/qualification-check-sets",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of results returned."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset the results by page"
+              }
+            ]
+          },
+          "docs": "A qualification check set is a ruleset for evaluating income data.\n\n<Warning>\nThis endpoint is in beta and is subject to change. Please contact [implementations@truework.com](mailto:implementations@truework.com) for more information before integrating.\n</Warning>\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "subpackage_tenantProperties",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all tenant properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.truework-sandbox.com/tenant-properties",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of results returned."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset the results by page"
+              }
+            ]
+          },
+          "docs": "Retrieves all tenant properties"
+        },
+        {
+          "info": {
+            "name": "Create a tenant property",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.truework-sandbox.com/tenant-properties",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new tenant property and returns a JSON object with the resulting property.\n\n<Warning>\nThis endpoint is in beta and is subject to change. Please contact [implementations@truework.com](mailto:implementations@truework.com) for more information before integrating.\n</Warning>\n"
+        },
+        {
+          "info": {
+            "name": "Get one tenant property",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.truework-sandbox.com/tenant-properties/:tenant_property_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenant_property_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant Property ID"
+              }
+            ]
+          },
+          "docs": "Retrieves a tenant property by id."
+        },
+        {
+          "info": {
+            "name": "Update one tenant property",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.truework-sandbox.com/tenant-properties/:tenant_property_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tenant_property_id",
+                "value": "",
+                "type": "path",
+                "description": "Tenant Property ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a tenant property."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

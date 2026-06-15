@@ -1,0 +1,20 @@
+{
+  "item": [],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://your-webhook-handler.example.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4c03b63b-ae3e-4b8b-bde6-ee2222ee8234",
+    "name": "Truework Webhooks",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Webhook event reference for Truework. Subscribers receive `order.completed` events when every verification on an order has finished, and `verification_request.state.change` events as individual verifications transition through their state machine (pending-approval, processing, action-required, completed, canceled, invalid). Each webhook instance is associated with a token delivered in the `X-Truework-Token` header so handlers can authenticate the call.\n\n\nContact Support:\n Name: Truework Implementations\n Email: implementations@truework.com",
+      "type": "text/plain"
+    }
+  }
+}
