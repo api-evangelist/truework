@@ -3,13 +3,12 @@
   "feeds": [
     {
       "source": "https://www.truework.com/resource-center/blog",
-      "error": "HTTPError"
-    },
-    {
-      "source": "https://www.linkedin.com/company/truework",
-      "error": "HTTPError"
+      "feed_url": "",
+      "saved": 0,
+      "method": "agent-scrape"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 1,
+  "fetched": "2026-06-27T13:17:40Z",
+  "agent_pulled": "2026-06-27"
 }

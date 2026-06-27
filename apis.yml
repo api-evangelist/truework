@@ -141,7 +141,7 @@ common:
     url: https://www.truework.com/docs/api-reference/authentication
   - type: RateLimits
     url: https://www.truework.com/docs/api-reference/limits
-  - type: Errors
+  - type: ErrorCodes
     url: https://www.truework.com/docs/api-reference/versions/2023-10-30
   - type: Sandbox
     url: https://www.truework.com/docs/api-reference/sandbox
@@ -189,7 +189,7 @@ common:
   - type: Portal
     url: https://www.truework.com/products
     name: Products
-  - type: SignUp
+  - type: Signup
     url: https://app.truework.com/requester/signup
   - type: Login
     url: https://app.truework.com/requester/login
@@ -208,13 +208,13 @@ common:
     url: https://www.truework.com/legal/privacy
   - type: GitHubOrganization
     url: https://github.com/truework
-  - type: SDK
+  - type: SDKs
     url: https://github.com/truework/truework.js-examples
     name: Truework.js Examples
-  - type: Tool
+  - type: Tools
     url: https://github.com/truework/gretchen
     name: gretchen
-  - type: Tool
+  - type: Tools
     url: https://github.com/truework/mounty
     name: mounty
   - type: LinkedIn
