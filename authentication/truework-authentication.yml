@@ -1,0 +1,24 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/truework-beta-openapi.yml, openapi/truework-verifications-orders-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: Bearer
+  type: http
+  scheme: bearer
+  description: |-
+    Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.
+
+
+    Production API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.
+
+    Truework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.
+
+
+    **Examples**
+    - For Authoriz
+  sources:
+  - openapi/truework-beta-openapi.yml
+  - openapi/truework-verifications-orders-openapi.yml
