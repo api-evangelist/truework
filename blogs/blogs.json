@@ -2,13 +2,11 @@
   "repo": "truework",
   "feeds": [
     {
-      "source": "https://www.truework.com/resource-center/blog",
-      "feed_url": "",
-      "saved": 0,
-      "method": "agent-scrape"
+      "source": "https://www.linkedin.com/company/truework",
+      "error": "HTTPError"
     }
   ],
   "post_count": 1,
-  "fetched": "2026-06-27T13:17:40Z",
-  "agent_pulled": "2026-06-27"
+  "fetched": "2026-07-11T11:50:51Z",
+  "agent_pulled": "2026-07-04"
 }
