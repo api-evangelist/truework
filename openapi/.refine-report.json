@@ -1,0 +1,20 @@
+{
+  "provider": "truework",
+  "sources": [
+    "truework-subpackage-orders-api-openapi.yml",
+    "truework-subpackage-qualificationchecks-api-openapi.yml",
+    "truework-subpackage-reports-api-openapi.yml",
+    "truework-subpackage-tenantproperties-api-openapi.yml"
+  ],
+  "outputs": [
+    "truework-subpackage-orders-api-openapi.yml",
+    "truework-subpackage-qualificationchecks-api-openapi.yml",
+    "truework-subpackage-reports-api-openapi.yml",
+    "truework-subpackage-tenantproperties-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

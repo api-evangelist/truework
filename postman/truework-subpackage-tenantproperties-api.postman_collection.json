@@ -1,0 +1,2212 @@
+{
+  "info": {
+    "_postman_id": "51ee7c53-db0c-40c1-9161-ae39c116879f",
+    "name": "Truework Qualifications & Tenant Properties API (Beta) subpackage_orders subpackage_tenantProperties API",
+    "description": "Public beta surfaces of the Truework API covering Qualification Checks (lightweight income/employment knockout decisions against a borrower's verified employment data) and Tenant Properties (provider-defined verification configuration knobs). These endpoints are in public beta and the schema may evolve.\n\n\nContact Support:\n Name: Truework Implementations\n Email: implementations@truework.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:20:12.000Z",
+    "updatedAt": "2026-07-28T03:20:12.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-51ee7c53-db0c-40c1-9161-ae39c116879f"
+  },
+  "item": [
+    {
+      "name": "tenant-properties",
+      "item": [
+        {
+          "name": "{tenant_property_id}",
+          "item": [
+            {
+              "name": "Get one tenant property",
+              "id": "2f0565a9-8908-46c3-bba8-f6ede1946701",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "7edb76fe-ff55-4d90-8e3e-bf705c155292",
+                      "key": "tenant_property_id",
+                      "value": "<string>",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "description": "Retrieves a tenant property by id."
+              },
+              "response": [
+                {
+                  "id": "4bfa45fd-b8f3-4d44-b46e-e27276510efe",
+                  "name": "Tenant Property",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\",\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-4bfa45fd-b8f3-4d44-b46e-e27276510efe"
+                },
+                {
+                  "id": "d7319937-1643-4423-8392-dc2c4addcd7c",
+                  "name": "Bad Request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"Invalid field values provided\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-d7319937-1643-4423-8392-dc2c4addcd7c"
+                },
+                {
+                  "id": "24dbf3e5-0c46-40c9-8236-694f37722ed6",
+                  "name": "The request's authorization is missing, invalid, or expired",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-24dbf3e5-0c46-40c9-8236-694f37722ed6"
+                },
+                {
+                  "id": "f9a14063-bd1d-4602-96aa-8a081bd61828",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-f9a14063-bd1d-4602-96aa-8a081bd61828"
+                },
+                {
+                  "id": "a27ee350-35f2-4bdb-8de7-fa84c1919066",
+                  "name": "Not Found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-a27ee350-35f2-4bdb-8de7-fa84c1919066"
+                },
+                {
+                  "id": "5f49db40-c9d6-4061-957e-546d0e605378",
+                  "name": "An invalid API version was requested",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Acceptable",
+                  "code": 406,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-5f49db40-c9d6-4061-957e-546d0e605378"
+                },
+                {
+                  "id": "65b55c3b-1fe2-43f4-b154-b426d172b400",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-65b55c3b-1fe2-43f4-b154-b426d172b400"
+                },
+                {
+                  "id": "18b2acb1-db69-45eb-889b-853c96d02922",
+                  "name": "Frozen SSN",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-18b2acb1-db69-45eb-889b-853c96d02922"
+                },
+                {
+                  "id": "469b1058-9a29-43ec-a187-ea9704ffb9f7",
+                  "name": "Internal Server Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-469b1058-9a29-43ec-a187-ea9704ffb9f7"
+                },
+                {
+                  "id": "4c1a45fb-216c-4ca0-ac76-16312c799c9f",
+                  "name": "Not Implemented",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Implemented",
+                  "code": 501,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-4c1a45fb-216c-4ca0-ac76-16312c799c9f"
+                }
+              ],
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-2f0565a9-8908-46c3-bba8-f6ede1946701"
+            },
+            {
+              "name": "Update one tenant property",
+              "id": "e6ecbe62-77e4-4a94-808e-271963f4f32c",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "c45b4304-a270-49eb-94c5-c6aa8f39d3c6",
+                      "key": "tenant_property_id",
+                      "value": "<string>",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "description": "Updates a tenant property."
+              },
+              "response": [
+                {
+                  "id": "19a4b08f-6f98-4323-a9bc-08a8af8e7393",
+                  "name": "Tenant Property",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\",\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-19a4b08f-6f98-4323-a9bc-08a8af8e7393"
+                },
+                {
+                  "id": "69397fd9-5324-4028-a632-389665fc922c",
+                  "name": "Bad Request",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"Invalid field values provided\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-69397fd9-5324-4028-a632-389665fc922c"
+                },
+                {
+                  "id": "b6147738-9a14-4fe9-ac62-afd5994a4795",
+                  "name": "The request's authorization is missing, invalid, or expired",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-b6147738-9a14-4fe9-ac62-afd5994a4795"
+                },
+                {
+                  "id": "8cef28e1-b88e-4053-bb07-39d983a6c88c",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-8cef28e1-b88e-4053-bb07-39d983a6c88c"
+                },
+                {
+                  "id": "780d86bf-5ba8-41c4-bd0c-e40de92ce14b",
+                  "name": "Not Found",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-780d86bf-5ba8-41c4-bd0c-e40de92ce14b"
+                },
+                {
+                  "id": "e90d8c81-f250-4dbb-9065-b146b1933dfc",
+                  "name": "An invalid API version was requested",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Acceptable",
+                  "code": 406,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-e90d8c81-f250-4dbb-9065-b146b1933dfc"
+                },
+                {
+                  "id": "868c8954-d2b9-4806-b885-2c80a8ae7472",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-868c8954-d2b9-4806-b885-2c80a8ae7472"
+                },
+                {
+                  "id": "69ee41a9-d55a-4b57-ad1e-455196ae06e2",
+                  "name": "Frozen SSN",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-69ee41a9-d55a-4b57-ad1e-455196ae06e2"
+                },
+                {
+                  "id": "2ee43b66-2f5c-4393-a4f5-b703420d8d78",
+                  "name": "Internal Server Error",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-2ee43b66-2f5c-4393-a4f5-b703420d8d78"
+                },
+                {
+                  "id": "22857d92-e8e3-490b-8437-31535321f4df",
+                  "name": "Not Implemented",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/tenant-properties/:tenant_property_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tenant-properties",
+                        ":tenant_property_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "tenant_property_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Implemented",
+                  "code": 501,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:13.000Z",
+                  "updatedAt": "2026-07-28T03:20:13.000Z",
+                  "uid": "35240-22857d92-e8e3-490b-8437-31535321f4df"
+                }
+              ],
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-e6ecbe62-77e4-4a94-808e-271963f4f32c"
+            }
+          ],
+          "id": "e03bc122-895b-4380-b6bd-fe5126698d02",
+          "createdAt": "2026-07-28T03:20:13.000Z",
+          "updatedAt": "2026-07-28T03:20:13.000Z",
+          "uid": "35240-e03bc122-895b-4380-b6bd-fe5126698d02"
+        },
+        {
+          "name": "Create a tenant property",
+          "id": "0c3adfe6-db80-4b57-813f-1b489fb97751",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tenant-properties",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tenant-properties"
+              ]
+            },
+            "description": "Creates a new tenant property and returns a JSON object with the resulting property.\n\n<Warning>\nThis endpoint is in beta and is subject to change. Please contact [implementations@truework.com](mailto:implementations@truework.com) for more information before integrating.\n</Warning>\n"
+          },
+          "response": [
+            {
+              "id": "b3638e8c-b218-4d19-81e2-3bdb40440f76",
+              "name": "Tenant property successfully created.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\",\n  \"status\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-b3638e8c-b218-4d19-81e2-3bdb40440f76"
+            },
+            {
+              "id": "404c11c3-ca49-44d4-8116-35d438e26bf7",
+              "name": "Bad Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid field values provided\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-404c11c3-ca49-44d4-8116-35d438e26bf7"
+            },
+            {
+              "id": "86182186-4d9a-4ac9-99a3-76405eef01f3",
+              "name": "The request's authorization is missing, invalid, or expired",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-86182186-4d9a-4ac9-99a3-76405eef01f3"
+            },
+            {
+              "id": "82a7eacc-0a9b-4713-85ba-a6cb3675630b",
+              "name": "Forbidden",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-82a7eacc-0a9b-4713-85ba-a6cb3675630b"
+            },
+            {
+              "id": "ecac52ee-6387-4a0b-b902-57d53defd897",
+              "name": "Not Found",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-ecac52ee-6387-4a0b-b902-57d53defd897"
+            },
+            {
+              "id": "5b3ebcb8-703c-4da4-af3a-0b41e5fe14ee",
+              "name": "An invalid API version was requested",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ]
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-5b3ebcb8-703c-4da4-af3a-0b41e5fe14ee"
+            },
+            {
+              "id": "b08535fd-7b4b-4e3d-b2bf-b855767ce705",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-b08535fd-7b4b-4e3d-b2bf-b855767ce705"
+            },
+            {
+              "id": "359e3a61-f12a-450b-93d0-fa8e71163950",
+              "name": "Frozen SSN",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-359e3a61-f12a-450b-93d0-fa8e71163950"
+            },
+            {
+              "id": "2edb4b09-c347-4c0c-ad29-a196e33b3bc6",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-2edb4b09-c347-4c0c-ad29-a196e33b3bc6"
+            },
+            {
+              "id": "c1acf979-fa2c-4ff9-9680-648e230d6d88",
+              "name": "Not Implemented",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ]
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-c1acf979-fa2c-4ff9-9680-648e230d6d88"
+            }
+          ],
+          "createdAt": "2026-07-28T03:20:13.000Z",
+          "updatedAt": "2026-07-28T03:20:13.000Z",
+          "uid": "35240-0c3adfe6-db80-4b57-813f-1b489fb97751"
+        },
+        {
+          "name": "Get all tenant properties",
+          "id": "ac79f56c-5e54-490d-a703-6064a1c19046",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tenant-properties?limit=25&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tenant-properties"
+              ],
+              "query": [
+                {
+                  "description": "Limit the number of results returned.",
+                  "key": "limit",
+                  "value": "25"
+                },
+                {
+                  "description": "Offset the results by page",
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "Retrieves all tenant properties"
+          },
+          "response": [
+            {
+              "id": "fdcf9be0-8250-4351-9c44-a3eef7c5f9a1",
+              "name": "Tenant Properties",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"count\": \"<integer>\",\n  \"next\": \"<string,null>\",\n  \"previous\": \"<string,null>\",\n  \"results\": [\n    {\n      \"address_line_1\": \"<string,null>\",\n      \"address_line_2\": \"<string,null>\",\n      \"address_line_3\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"postal_code\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"status\": \"<string>\"\n    },\n    {\n      \"address_line_1\": \"<string,null>\",\n      \"address_line_2\": \"<string,null>\",\n      \"address_line_3\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"postal_code\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"status\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-fdcf9be0-8250-4351-9c44-a3eef7c5f9a1"
+            },
+            {
+              "id": "b10bfaff-a1ca-4a1b-9392-b11e05cbff19",
+              "name": "Bad Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid field values provided\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-b10bfaff-a1ca-4a1b-9392-b11e05cbff19"
+            },
+            {
+              "id": "167d975b-b987-40fd-88b9-13aa2fe7a4c0",
+              "name": "The request's authorization is missing, invalid, or expired",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-167d975b-b987-40fd-88b9-13aa2fe7a4c0"
+            },
+            {
+              "id": "9b24481a-90b9-48ff-9993-9673c7be181c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-9b24481a-90b9-48ff-9993-9673c7be181c"
+            },
+            {
+              "id": "ec2a54b9-5ee5-4578-9afa-33aa8c61ea93",
+              "name": "Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-ec2a54b9-5ee5-4578-9afa-33aa8c61ea93"
+            },
+            {
+              "id": "1b7ac782-1ace-433d-9489-bb198d609a5a",
+              "name": "An invalid API version was requested",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-1b7ac782-1ace-433d-9489-bb198d609a5a"
+            },
+            {
+              "id": "949ac2fc-39db-46b2-b8c9-29043595cdaf",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-949ac2fc-39db-46b2-b8c9-29043595cdaf"
+            },
+            {
+              "id": "02ed3c33-2c37-45c9-8658-c9396269e724",
+              "name": "Frozen SSN",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-02ed3c33-2c37-45c9-8658-c9396269e724"
+            },
+            {
+              "id": "c7b59c69-de39-49d6-a390-03ea892b54e6",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-c7b59c69-de39-49d6-a390-03ea892b54e6"
+            },
+            {
+              "id": "92523451-b097-4469-be90-c3acb8c4a390",
+              "name": "Not Implemented",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tenant-properties?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:13.000Z",
+              "updatedAt": "2026-07-28T03:20:13.000Z",
+              "uid": "35240-92523451-b097-4469-be90-c3acb8c4a390"
+            }
+          ],
+          "createdAt": "2026-07-28T03:20:13.000Z",
+          "updatedAt": "2026-07-28T03:20:13.000Z",
+          "uid": "35240-ac79f56c-5e54-490d-a703-6064a1c19046"
+        }
+      ],
+      "id": "99b6394a-ade7-4c7b-bbae-92225f547d7e",
+      "createdAt": "2026-07-28T03:20:13.000Z",
+      "updatedAt": "2026-07-28T03:20:13.000Z",
+      "uid": "35240-99b6394a-ade7-4c7b-bbae-92225f547d7e"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.truework-sandbox.com"
+    }
+  ]
+}

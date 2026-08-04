@@ -1,0 +1,693 @@
+{
+  "info": {
+    "_postman_id": "4c56439e-9043-4ae0-943b-4c921714324e",
+    "name": "Truework Qualifications & Tenant Properties API (Beta) subpackage_orders subpackage_reports API",
+    "description": "Public beta surfaces of the Truework API covering Qualification Checks (lightweight income/employment knockout decisions against a borrower's verified employment data) and Tenant Properties (provider-defined verification configuration knobs). These endpoints are in public beta and the schema may evolve.\n\n\nContact Support:\n Name: Truework Implementations\n Email: implementations@truework.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:20:11.000Z",
+    "updatedAt": "2026-07-28T03:20:11.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-4c56439e-9043-4ae0-943b-4c921714324e"
+  },
+  "item": [
+    {
+      "name": "reports",
+      "item": [
+        {
+          "name": "{verification_report_id}",
+          "item": [
+            {
+              "name": "Get one report",
+              "id": "2b15b725-a6d4-4154-bd79-643f50a59928",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/reports/:verification_report_id?include_income_analytics=false&include_report_annotations=false&fields=<string,null>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "reports",
+                    ":verification_report_id"
+                  ],
+                  "query": [
+                    {
+                      "description": "Whether to calculate income analytics for the nested reports in each verification.",
+                      "key": "include_income_analytics",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Whether to include annotations for the nested reports in each verification.",
+                      "key": "include_report_annotations",
+                      "value": "false"
+                    },
+                    {
+                      "description": "Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case of a list, subfields apply to each individual object. If omitted, all fields are included.",
+                      "key": "fields",
+                      "value": "<string,null>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "ce837123-3f18-412a-9fb5-e024ff4505c2",
+                      "key": "verification_report_id",
+                      "value": "<string>",
+                      "description": "(Required) Report ID"
+                    }
+                  ]
+                },
+                "description": "Retrieves a report for a given report ID.\nIf you don't have the report id, it is recommended to use the embedded reports key on a completed verification object returned from `GET /orders`.\nYou can get the report in PDF format by adding `Accept: application/pdf` to your headers. When testing, please use the generated curl command\nwith `--output <PDF filename>` specified.\n\n<Info>\nOnly completed Reports will be returned. Any other request will fail with either 400 or 404, and provide more information as an attached error message.\n</Info>\n"
+              },
+              "response": [
+                {
+                  "id": "fb3db401-13ff-40f6-bee0-2343bbbd9766",
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reports/:verification_report_id?include_income_analytics=false&include_report_annotations=false&fields=<string,null>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reports",
+                        ":verification_report_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to calculate income analytics for the nested reports in each verification.",
+                          "key": "include_income_analytics",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include annotations for the nested reports in each verification.",
+                          "key": "include_report_annotations",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case of a list, subfields apply to each individual object. If omitted, all fields are included.",
+                          "key": "fields",
+                          "value": "<string,null>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "verification_report_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"additional_notes\": \"<string,null>\",\n  \"annotations\": {\n    \"applicant\": {\n      \"employee\": {\n        \"positions\": null,\n        \"salary\": {\n          \"pay_rate\": {\n            \"amount\": \"<string,null>\",\n            \"unit\": {\n              \"canonical_value\": \"quarterly\",\n              \"raw_value\": \"<string>\"\n            }\n          }\n        },\n        \"status\": {\n          \"canonical_value\": \"unknown\",\n          \"raw_value\": \"<string>\"\n        },\n        \"status_detail\": {\n          \"canonical_value\": \"not-payroll\",\n          \"raw_value\": \"<string>\"\n        }\n      },\n      \"employer\": {\n        \"email\": \"<string,null-email>\",\n        \"name\": \"<string,null>\",\n        \"phone_number\": \"<string,null>\"\n      }\n    },\n    \"verifier\": {\n      \"employee\": {\n        \"positions\": null,\n        \"salary\": {\n          \"pay_rate\": {\n            \"amount\": \"<string,null>\",\n            \"unit\": {\n              \"canonical_value\": \"thirteen-monthly\",\n              \"raw_value\": \"<string>\"\n            }\n          }\n        },\n        \"status\": {\n          \"canonical_value\": \"non-employee\",\n          \"raw_value\": \"<string>\"\n        },\n        \"status_detail\": {\n          \"canonical_value\": \"sick-leave\",\n          \"raw_value\": \"<string>\"\n        }\n      },\n      \"employer\": {\n        \"email\": \"<string,null-email>\",\n        \"name\": \"<string,null>\",\n        \"phone_number\": \"<string,null>\"\n      }\n    }\n  },\n  \"applicant_documents\": null,\n  \"completed\": \"<string,null-date-time>\",\n  \"completed_by_method\": {\n    \"canonical_value\": \"third-party-providers\",\n    \"raw_value\": \"<string>\"\n  },\n  \"created\": \"<dateTime>\",\n  \"current_as_of\": \"<date>\",\n  \"disputes\": [\n    {\n      \"created\": \"<dateTime>\",\n      \"description\": \"<string,null>\",\n      \"id\": \"<string>\",\n      \"reference_id\": \"<string,null>\"\n    },\n    {\n      \"created\": \"<dateTime>\",\n      \"description\": \"<string,null>\",\n      \"id\": \"<string>\",\n      \"reference_id\": \"<string,null>\"\n    }\n  ],\n  \"eligibilities\": null,\n  \"employee\": {\n    \"address\": {\n      \"address\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"country_code\": \"<string,null>\",\n      \"country_subdivision_code\": \"<string,null>\",\n      \"extended_address\": \"<string,null>\",\n      \"postal_code\": \"<string,null>\"\n    },\n    \"earnings\": null,\n    \"email\": \"<string,null-email>\",\n    \"first_name\": \"<string,null>\",\n    \"hired_date\": \"<string,null-date>\",\n    \"last_name\": \"<string,null>\",\n    \"on_leave_date\": \"<string,null-date>\",\n    \"original_hired_date\": \"<string,null-date>\",\n    \"positions\": null,\n    \"salary\": {\n      \"hours_per_week\": \"<string,null>\",\n      \"pay_frequency\": {\n        \"canonical_value\": \"hourly\",\n        \"raw_value\": \"<string>\"\n      },\n      \"pay_rate\": {\n        \"amount\": \"<string,null>\",\n        \"unit\": {\n          \"canonical_value\": \"daily\",\n          \"raw_value\": \"<string>\"\n        }\n      },\n      \"reduced_covid\": \"unknown\"\n    },\n    \"social_security_number\": \"<string,null>\",\n    \"status\": {\n      \"canonical_value\": \"inactive\",\n      \"raw_value\": \"<string>\"\n    },\n    \"status_detail\": {\n      \"canonical_value\": \"casual\",\n      \"raw_value\": \"<string>\"\n    },\n    \"termination_date\": \"<string,null-date>\"\n  },\n  \"employer\": {\n    \"address\": {\n      \"address\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"country_code\": \"<string,null>\",\n      \"country_subdivision_code\": \"<string,null>\",\n      \"extended_address\": \"<string,null>\",\n      \"postal_code\": \"<string,null>\"\n    },\n    \"government_ids\": [\n      {\n        \"id\": \"<string>\",\n        \"type\": {\n          \"canonical_value\": \"us-fein\",\n          \"raw_value\": \"<string>\"\n        }\n      },\n      {\n        \"id\": \"<string>\",\n        \"type\": {\n          \"canonical_value\": \"us-fein\",\n          \"raw_value\": \"<string>\"\n        }\n      }\n    ],\n    \"name\": \"<string,null>\"\n  },\n  \"financial_institution_accounts\": null,\n  \"id\": \"<string>\",\n  \"income_analytics\": {\n    \"annualized_income\": {\n      \"base_amount\": {\n        \"amount\": \"<string,null>\",\n        \"currency\": \"USD\"\n      },\n      \"gross_amount\": {\n        \"amount\": \"<string,null>\",\n        \"currency\": \"USD\"\n      },\n      \"short_employment_warning\": \"<boolean>\",\n      \"stale_data_warning\": \"<boolean>\",\n      \"variable_income_warning\": \"<boolean>\"\n    },\n    \"income_volatility\": {\n      \"gross_income_volatility\": \"<string,null>\"\n    }\n  },\n  \"paystubs\": [\n    {\n      \"base\": \"<string,null>\",\n      \"bonus\": \"<string,null>\",\n      \"commission\": \"<string,null>\",\n      \"gross\": \"<string,null>\",\n      \"id\": \"<string>\",\n      \"net\": \"<string,null>\",\n      \"other\": \"<string,null>\",\n      \"overtime\": \"<string,null>\",\n      \"pay_date\": \"<string,null-date>\",\n      \"pay_period_end_date\": \"<string,null-date>\",\n      \"pay_period_hours\": \"<string,null>\",\n      \"pay_period_start_date\": \"<string,null-date>\",\n      \"reference_id\": \"<string,null>\"\n    },\n    {\n      \"base\": \"<string,null>\",\n      \"bonus\": \"<string,null>\",\n      \"commission\": \"<string,null>\",\n      \"gross\": \"<string,null>\",\n      \"id\": \"<string>\",\n      \"net\": \"<string,null>\",\n      \"other\": \"<string,null>\",\n      \"overtime\": \"<string,null>\",\n      \"pay_date\": \"<string,null-date>\",\n      \"pay_period_end_date\": \"<string,null-date>\",\n      \"pay_period_hours\": \"<string,null>\",\n      \"pay_period_start_date\": \"<string,null-date>\",\n      \"reference_id\": \"<string,null>\"\n    }\n  ],\n  \"respondent\": {\n    \"email\": \"<string,null>\",\n    \"full_name\": \"<string,null>\",\n    \"title\": \"<string,null>\"\n  },\n  \"verification_request\": {\n    \"created\": \"<dateTime>\",\n    \"id\": \"<string>\",\n    \"type\": \"employment-income\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:11.000Z",
+                  "updatedAt": "2026-07-28T03:20:11.000Z",
+                  "uid": "35240-fb3db401-13ff-40f6-bee0-2343bbbd9766"
+                },
+                {
+                  "id": "0b3c8792-e681-46dc-b094-e7fbe9c85fcc",
+                  "name": "Bad Request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reports/:verification_report_id?include_income_analytics=false&include_report_annotations=false&fields=<string,null>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reports",
+                        ":verification_report_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to calculate income analytics for the nested reports in each verification.",
+                          "key": "include_income_analytics",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include annotations for the nested reports in each verification.",
+                          "key": "include_report_annotations",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case of a list, subfields apply to each individual object. If omitted, all fields are included.",
+                          "key": "fields",
+                          "value": "<string,null>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "verification_report_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"Invalid field values provided\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:11.000Z",
+                  "updatedAt": "2026-07-28T03:20:11.000Z",
+                  "uid": "35240-0b3c8792-e681-46dc-b094-e7fbe9c85fcc"
+                },
+                {
+                  "id": "1ef3cb94-61eb-440e-9d97-81704bf27f1f",
+                  "name": "The request's authorization is missing, invalid, or expired",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reports/:verification_report_id?include_income_analytics=false&include_report_annotations=false&fields=<string,null>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reports",
+                        ":verification_report_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to calculate income analytics for the nested reports in each verification.",
+                          "key": "include_income_analytics",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include annotations for the nested reports in each verification.",
+                          "key": "include_report_annotations",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case of a list, subfields apply to each individual object. If omitted, all fields are included.",
+                          "key": "fields",
+                          "value": "<string,null>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "verification_report_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:11.000Z",
+                  "updatedAt": "2026-07-28T03:20:11.000Z",
+                  "uid": "35240-1ef3cb94-61eb-440e-9d97-81704bf27f1f"
+                },
+                {
+                  "id": "80d3494d-4ff2-43bd-9ba5-c2a1103a8d47",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reports/:verification_report_id?include_income_analytics=false&include_report_annotations=false&fields=<string,null>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reports",
+                        ":verification_report_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to calculate income analytics for the nested reports in each verification.",
+                          "key": "include_income_analytics",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include annotations for the nested reports in each verification.",
+                          "key": "include_report_annotations",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case of a list, subfields apply to each individual object. If omitted, all fields are included.",
+                          "key": "fields",
+                          "value": "<string,null>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "verification_report_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:11.000Z",
+                  "updatedAt": "2026-07-28T03:20:11.000Z",
+                  "uid": "35240-80d3494d-4ff2-43bd-9ba5-c2a1103a8d47"
+                },
+                {
+                  "id": "ba9a1d7c-3811-45b6-b3cc-3ea3a26b2633",
+                  "name": "Not Found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reports/:verification_report_id?include_income_analytics=false&include_report_annotations=false&fields=<string,null>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reports",
+                        ":verification_report_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to calculate income analytics for the nested reports in each verification.",
+                          "key": "include_income_analytics",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include annotations for the nested reports in each verification.",
+                          "key": "include_report_annotations",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case of a list, subfields apply to each individual object. If omitted, all fields are included.",
+                          "key": "fields",
+                          "value": "<string,null>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "verification_report_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:11.000Z",
+                  "updatedAt": "2026-07-28T03:20:11.000Z",
+                  "uid": "35240-ba9a1d7c-3811-45b6-b3cc-3ea3a26b2633"
+                },
+                {
+                  "id": "2fb12493-1631-475f-a58b-6c45cf19d214",
+                  "name": "An invalid API version was requested",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reports/:verification_report_id?include_income_analytics=false&include_report_annotations=false&fields=<string,null>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reports",
+                        ":verification_report_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to calculate income analytics for the nested reports in each verification.",
+                          "key": "include_income_analytics",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include annotations for the nested reports in each verification.",
+                          "key": "include_report_annotations",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case of a list, subfields apply to each individual object. If omitted, all fields are included.",
+                          "key": "fields",
+                          "value": "<string,null>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "verification_report_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Acceptable",
+                  "code": 406,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:11.000Z",
+                  "updatedAt": "2026-07-28T03:20:11.000Z",
+                  "uid": "35240-2fb12493-1631-475f-a58b-6c45cf19d214"
+                },
+                {
+                  "id": "3918c63e-f414-41bd-b13c-cc27a4b456bb",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reports/:verification_report_id?include_income_analytics=false&include_report_annotations=false&fields=<string,null>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reports",
+                        ":verification_report_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to calculate income analytics for the nested reports in each verification.",
+                          "key": "include_income_analytics",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include annotations for the nested reports in each verification.",
+                          "key": "include_report_annotations",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case of a list, subfields apply to each individual object. If omitted, all fields are included.",
+                          "key": "fields",
+                          "value": "<string,null>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "verification_report_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:11.000Z",
+                  "updatedAt": "2026-07-28T03:20:11.000Z",
+                  "uid": "35240-3918c63e-f414-41bd-b13c-cc27a4b456bb"
+                },
+                {
+                  "id": "30f23f89-f9c2-4c3a-a103-ea4f02a8be0b",
+                  "name": "Frozen SSN",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reports/:verification_report_id?include_income_analytics=false&include_report_annotations=false&fields=<string,null>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reports",
+                        ":verification_report_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to calculate income analytics for the nested reports in each verification.",
+                          "key": "include_income_analytics",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include annotations for the nested reports in each verification.",
+                          "key": "include_report_annotations",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case of a list, subfields apply to each individual object. If omitted, all fields are included.",
+                          "key": "fields",
+                          "value": "<string,null>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "verification_report_id"
+                        }
+                      ]
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:11.000Z",
+                  "updatedAt": "2026-07-28T03:20:11.000Z",
+                  "uid": "35240-30f23f89-f9c2-4c3a-a103-ea4f02a8be0b"
+                },
+                {
+                  "id": "92a62739-5359-4a8a-bbef-ded59d2c2c61",
+                  "name": "Internal Server Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reports/:verification_report_id?include_income_analytics=false&include_report_annotations=false&fields=<string,null>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reports",
+                        ":verification_report_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to calculate income analytics for the nested reports in each verification.",
+                          "key": "include_income_analytics",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include annotations for the nested reports in each verification.",
+                          "key": "include_report_annotations",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case of a list, subfields apply to each individual object. If omitted, all fields are included.",
+                          "key": "fields",
+                          "value": "<string,null>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "verification_report_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:11.000Z",
+                  "updatedAt": "2026-07-28T03:20:11.000Z",
+                  "uid": "35240-92a62739-5359-4a8a-bbef-ded59d2c2c61"
+                },
+                {
+                  "id": "97d20831-f1da-4226-a535-9c2809d71395",
+                  "name": "Not Implemented",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reports/:verification_report_id?include_income_analytics=false&include_report_annotations=false&fields=<string,null>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reports",
+                        ":verification_report_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Whether to calculate income analytics for the nested reports in each verification.",
+                          "key": "include_income_analytics",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Whether to include annotations for the nested reports in each verification.",
+                          "key": "include_report_annotations",
+                          "value": "false"
+                        },
+                        {
+                          "description": "Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case of a list, subfields apply to each individual object. If omitted, all fields are included.",
+                          "key": "fields",
+                          "value": "<string,null>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "verification_report_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Implemented",
+                  "code": 501,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:11.000Z",
+                  "updatedAt": "2026-07-28T03:20:11.000Z",
+                  "uid": "35240-97d20831-f1da-4226-a535-9c2809d71395"
+                }
+              ],
+              "createdAt": "2026-07-28T03:20:11.000Z",
+              "updatedAt": "2026-07-28T03:20:11.000Z",
+              "uid": "35240-2b15b725-a6d4-4154-bd79-643f50a59928"
+            }
+          ],
+          "id": "7c3c4dd6-dfaf-4807-abb8-88206da02009",
+          "createdAt": "2026-07-28T03:20:11.000Z",
+          "updatedAt": "2026-07-28T03:20:11.000Z",
+          "uid": "35240-7c3c4dd6-dfaf-4807-abb8-88206da02009"
+        }
+      ],
+      "id": "5ab6e908-8072-4f4f-a78e-309a9dbc75f1",
+      "createdAt": "2026-07-28T03:20:11.000Z",
+      "updatedAt": "2026-07-28T03:20:11.000Z",
+      "uid": "35240-5ab6e908-8072-4f4f-a78e-309a9dbc75f1"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.truework-sandbox.com"
+    }
+  ]
+}

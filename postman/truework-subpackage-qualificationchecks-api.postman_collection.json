@@ -1,0 +1,1499 @@
+{
+  "info": {
+    "_postman_id": "468b33ee-7284-426c-8da7-2da7aebdfa11",
+    "name": "Truework Qualifications & Tenant Properties API (Beta) subpackage_orders subpackage_qualificationChecks API",
+    "description": "Public beta surfaces of the Truework API covering Qualification Checks (lightweight income/employment knockout decisions against a borrower's verified employment data) and Tenant Properties (provider-defined verification configuration knobs). These endpoints are in public beta and the schema may evolve.\n\n\nContact Support:\n Name: Truework Implementations\n Email: implementations@truework.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:20:10.000Z",
+    "updatedAt": "2026-07-28T03:20:10.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-468b33ee-7284-426c-8da7-2da7aebdfa11"
+  },
+  "item": [
+    {
+      "name": "qualification-checks",
+      "item": [
+        {
+          "name": "{qualification_check_result_id}",
+          "item": [
+            {
+              "name": "Get one qualification check result",
+              "id": "79af86be-d6db-49f1-82fa-393de8ef2c82",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-checks/:qualification_check_result_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-checks",
+                    ":qualification_check_result_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "09189a64-0712-4224-9ca8-a96b0b138302",
+                      "key": "qualification_check_result_id",
+                      "value": "<string>",
+                      "description": "(Required) Qualification Check Result ID"
+                    }
+                  ]
+                },
+                "description": "Retrieves a qualification check result by id.\n\n<Warning>\nThis endpoint is in beta and is subject to change. Please contact [implementations@truework.com](mailto:implementations@truework.com) for more information before integrating.\n</Warning>\n"
+              },
+              "response": [
+                {
+                  "id": "a0cc3b8b-89d2-42a1-824f-a0245c6ed9c5",
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/qualification-checks/:qualification_check_result_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "qualification-checks",
+                        ":qualification_check_result_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "qualification_check_result_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"created\": \"<dateTime>\",\n  \"id\": \"<string>\",\n  \"kind\": \"guarantor\",\n  \"metadata\": null,\n  \"property_details\": {\n    \"rent\": \"<string>\"\n  },\n  \"qualification_check_set\": {\n    \"applicant_rent_to_income_ratio\": \"<string>\",\n    \"guarantor_rent_to_income_ratio\": \"<string>\",\n    \"id\": \"<string>\",\n    \"income_multiple\": \"<string,null>\",\n    \"name\": \"<string>\"\n  },\n  \"result\": {\n    \"monthly_gross_income\": \"<string,null>\",\n    \"monthly_gross_income_fidelity\": \"source\",\n    \"outcome\": \"qualified\",\n    \"rent_to_income_ratio\": \"<string,null>\",\n    \"report_results\": [\n      {\n        \"monthly_gross_income\": \"<string,null>\",\n        \"monthly_gross_income_fidelity\": \"estimate\",\n        \"report_id\": \"<string>\",\n        \"satisfied_document_income_requirements\": [\n          {\n            \"end_date\": \"<string,null-date>\",\n            \"file_type\": \"<string>\",\n            \"start_date\": \"<string,null-date>\"\n          },\n          {\n            \"end_date\": \"<string,null-date>\",\n            \"file_type\": \"<string>\",\n            \"start_date\": \"<string,null-date>\"\n          }\n        ]\n      },\n      {\n        \"monthly_gross_income\": \"<string,null>\",\n        \"monthly_gross_income_fidelity\": \"source\",\n        \"report_id\": \"<string>\",\n        \"satisfied_document_income_requirements\": null\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:10.000Z",
+                  "updatedAt": "2026-07-28T03:20:10.000Z",
+                  "uid": "35240-a0cc3b8b-89d2-42a1-824f-a0245c6ed9c5"
+                },
+                {
+                  "id": "c03e6e87-d4cb-48ef-9b81-1b8158586a5c",
+                  "name": "Bad Request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/qualification-checks/:qualification_check_result_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "qualification-checks",
+                        ":qualification_check_result_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "qualification_check_result_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"Invalid field values provided\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:10.000Z",
+                  "updatedAt": "2026-07-28T03:20:10.000Z",
+                  "uid": "35240-c03e6e87-d4cb-48ef-9b81-1b8158586a5c"
+                },
+                {
+                  "id": "31cf0f97-4d0b-444f-87e1-2218683a5df0",
+                  "name": "The request's authorization is missing, invalid, or expired",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/qualification-checks/:qualification_check_result_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "qualification-checks",
+                        ":qualification_check_result_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "qualification_check_result_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:10.000Z",
+                  "updatedAt": "2026-07-28T03:20:10.000Z",
+                  "uid": "35240-31cf0f97-4d0b-444f-87e1-2218683a5df0"
+                },
+                {
+                  "id": "7f5ae02f-1a5c-4838-9965-ac7e4395adad",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/qualification-checks/:qualification_check_result_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "qualification-checks",
+                        ":qualification_check_result_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "qualification_check_result_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:10.000Z",
+                  "updatedAt": "2026-07-28T03:20:10.000Z",
+                  "uid": "35240-7f5ae02f-1a5c-4838-9965-ac7e4395adad"
+                },
+                {
+                  "id": "376621e8-34a0-43b9-9d42-28cb1163176a",
+                  "name": "Not Found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/qualification-checks/:qualification_check_result_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "qualification-checks",
+                        ":qualification_check_result_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "qualification_check_result_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:10.000Z",
+                  "updatedAt": "2026-07-28T03:20:10.000Z",
+                  "uid": "35240-376621e8-34a0-43b9-9d42-28cb1163176a"
+                },
+                {
+                  "id": "88e1cd4c-3fed-434b-a48f-aef1b710338a",
+                  "name": "An invalid API version was requested",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/qualification-checks/:qualification_check_result_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "qualification-checks",
+                        ":qualification_check_result_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "qualification_check_result_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Acceptable",
+                  "code": 406,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:10.000Z",
+                  "updatedAt": "2026-07-28T03:20:10.000Z",
+                  "uid": "35240-88e1cd4c-3fed-434b-a48f-aef1b710338a"
+                },
+                {
+                  "id": "1b25e206-f269-4192-9493-58474affb46b",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/qualification-checks/:qualification_check_result_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "qualification-checks",
+                        ":qualification_check_result_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "qualification_check_result_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:10.000Z",
+                  "updatedAt": "2026-07-28T03:20:10.000Z",
+                  "uid": "35240-1b25e206-f269-4192-9493-58474affb46b"
+                },
+                {
+                  "id": "979ac88a-a81d-4b20-9ffd-00aa46847943",
+                  "name": "Frozen SSN",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/qualification-checks/:qualification_check_result_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "qualification-checks",
+                        ":qualification_check_result_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "qualification_check_result_id"
+                        }
+                      ]
+                    }
+                  },
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:10.000Z",
+                  "updatedAt": "2026-07-28T03:20:10.000Z",
+                  "uid": "35240-979ac88a-a81d-4b20-9ffd-00aa46847943"
+                },
+                {
+                  "id": "d267e900-3c9c-4afe-9969-96975e60d18a",
+                  "name": "Internal Server Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/qualification-checks/:qualification_check_result_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "qualification-checks",
+                        ":qualification_check_result_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "qualification_check_result_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:10.000Z",
+                  "updatedAt": "2026-07-28T03:20:10.000Z",
+                  "uid": "35240-d267e900-3c9c-4afe-9969-96975e60d18a"
+                },
+                {
+                  "id": "b9dc3f14-d33c-44f9-8d50-93342e5521ff",
+                  "name": "Not Implemented",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/qualification-checks/:qualification_check_result_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "qualification-checks",
+                        ":qualification_check_result_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "qualification_check_result_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Implemented",
+                  "code": 501,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:20:10.000Z",
+                  "updatedAt": "2026-07-28T03:20:10.000Z",
+                  "uid": "35240-b9dc3f14-d33c-44f9-8d50-93342e5521ff"
+                }
+              ],
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-79af86be-d6db-49f1-82fa-393de8ef2c82"
+            }
+          ],
+          "id": "fa1bda53-1c4e-4e3d-9d43-a7a2c9bd140a",
+          "createdAt": "2026-07-28T03:20:10.000Z",
+          "updatedAt": "2026-07-28T03:20:10.000Z",
+          "uid": "35240-fa1bda53-1c4e-4e3d-9d43-a7a2c9bd140a"
+        },
+        {
+          "name": "Create a qualification check request",
+          "id": "0d9db6a5-8afc-49de-8198-60aad649d487",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"property_details\": {\n    \"rent\": \"<double>\"\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": null,\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/qualification-checks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "qualification-checks"
+              ]
+            },
+            "description": "Creates a new qualification check and returns a JSON object with the resulting evaluation.\n\n<Warning>\nThis endpoint is in beta and is subject to change. Please contact [implementations@truework.com](mailto:implementations@truework.com) for more information before integrating.\n</Warning>\n"
+          },
+          "response": [
+            {
+              "id": "7260ad90-14f7-4b6d-a35b-76eb0bf62a6e",
+              "name": "Qualification Check Evaluation Created.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": \"<double>\"\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": null,\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-checks",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-checks"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"created\": \"<dateTime>\",\n  \"id\": \"<string>\",\n  \"kind\": \"guarantor\",\n  \"metadata\": null,\n  \"property_details\": {\n    \"rent\": \"<string>\"\n  },\n  \"qualification_check_set\": {\n    \"applicant_rent_to_income_ratio\": \"<string>\",\n    \"guarantor_rent_to_income_ratio\": \"<string>\",\n    \"id\": \"<string>\",\n    \"income_multiple\": \"<string,null>\",\n    \"name\": \"<string>\"\n  },\n  \"result\": {\n    \"monthly_gross_income\": \"<string,null>\",\n    \"monthly_gross_income_fidelity\": \"source\",\n    \"outcome\": \"qualified\",\n    \"rent_to_income_ratio\": \"<string,null>\",\n    \"report_results\": [\n      {\n        \"monthly_gross_income\": \"<string,null>\",\n        \"monthly_gross_income_fidelity\": \"estimate\",\n        \"report_id\": \"<string>\",\n        \"satisfied_document_income_requirements\": [\n          {\n            \"end_date\": \"<string,null-date>\",\n            \"file_type\": \"<string>\",\n            \"start_date\": \"<string,null-date>\"\n          },\n          {\n            \"end_date\": \"<string,null-date>\",\n            \"file_type\": \"<string>\",\n            \"start_date\": \"<string,null-date>\"\n          }\n        ]\n      },\n      {\n        \"monthly_gross_income\": \"<string,null>\",\n        \"monthly_gross_income_fidelity\": \"source\",\n        \"report_id\": \"<string>\",\n        \"satisfied_document_income_requirements\": null\n      }\n    ]\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-7260ad90-14f7-4b6d-a35b-76eb0bf62a6e"
+            },
+            {
+              "id": "c247dedd-a3fb-47bd-a0bc-2097e1cc1165",
+              "name": "Bad Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": \"<double>\"\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": null,\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-checks",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-checks"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid field values provided\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-c247dedd-a3fb-47bd-a0bc-2097e1cc1165"
+            },
+            {
+              "id": "fbfdd26e-49da-4810-a45c-0bd6c13cd651",
+              "name": "The request's authorization is missing, invalid, or expired",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": \"<double>\"\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": null,\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-checks",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-checks"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-fbfdd26e-49da-4810-a45c-0bd6c13cd651"
+            },
+            {
+              "id": "d5b2d3e9-e44d-41f8-9994-a4738362be69",
+              "name": "Forbidden",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": \"<double>\"\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": null,\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-checks",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-checks"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-d5b2d3e9-e44d-41f8-9994-a4738362be69"
+            },
+            {
+              "id": "51089ffa-f5f3-4bf5-8010-eb73afa2719a",
+              "name": "An invalid API version was requested",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": \"<double>\"\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": null,\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-checks",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-checks"
+                  ]
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-51089ffa-f5f3-4bf5-8010-eb73afa2719a"
+            },
+            {
+              "id": "e767e231-685f-4c4c-a9d9-a86630778643",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": \"<double>\"\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": null,\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-checks",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-checks"
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-e767e231-685f-4c4c-a9d9-a86630778643"
+            },
+            {
+              "id": "561a35e8-c28b-4f4c-bbf4-3476e6d54a6c",
+              "name": "Frozen SSN",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": \"<double>\"\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": null,\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-checks",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-checks"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-561a35e8-c28b-4f4c-bbf4-3476e6d54a6c"
+            },
+            {
+              "id": "6349d2a0-500d-4804-b84c-a2e132fe1b29",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": \"<double>\"\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": null,\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-checks",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-checks"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-6349d2a0-500d-4804-b84c-a2e132fe1b29"
+            },
+            {
+              "id": "05387c8e-09cb-4e48-864b-aea682bb470e",
+              "name": "Not Implemented",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": \"<double>\"\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": null,\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-checks",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-checks"
+                  ]
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-05387c8e-09cb-4e48-864b-aea682bb470e"
+            }
+          ],
+          "createdAt": "2026-07-28T03:20:10.000Z",
+          "updatedAt": "2026-07-28T03:20:10.000Z",
+          "uid": "35240-0d9db6a5-8afc-49de-8198-60aad649d487"
+        }
+      ],
+      "id": "be893f1c-983a-4942-b94b-f7469d1d0544",
+      "createdAt": "2026-07-28T03:20:10.000Z",
+      "updatedAt": "2026-07-28T03:20:10.000Z",
+      "uid": "35240-be893f1c-983a-4942-b94b-f7469d1d0544"
+    },
+    {
+      "name": "qualification-check-sets",
+      "item": [
+        {
+          "name": "Get all qualification check sets",
+          "id": "228ab5a6-6d39-4fee-a42b-d6d3e8eadb6f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/qualification-check-sets?limit=25&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "qualification-check-sets"
+              ],
+              "query": [
+                {
+                  "description": "Limit the number of results returned.",
+                  "key": "limit",
+                  "value": "25"
+                },
+                {
+                  "description": "Offset the results by page",
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "A qualification check set is a ruleset for evaluating income data.\n\n<Warning>\nThis endpoint is in beta and is subject to change. Please contact [implementations@truework.com](mailto:implementations@truework.com) for more information before integrating.\n</Warning>\n"
+          },
+          "response": [
+            {
+              "id": "74b2125a-2884-4cd3-8e9c-52501cd0240d",
+              "name": "Qualification Check Sets",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-check-sets?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"count\": \"<integer>\",\n  \"next\": \"<string,null>\",\n  \"previous\": \"<string,null>\",\n  \"results\": [\n    {\n      \"applicant_rent_to_income_ratio\": \"<string>\",\n      \"description\": \"<string,null>\",\n      \"guarantor_rent_to_income_ratio\": \"<string>\",\n      \"id\": \"<string>\",\n      \"income_multiple\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"applicant_rent_to_income_ratio\": \"<string>\",\n      \"description\": \"<string,null>\",\n      \"guarantor_rent_to_income_ratio\": \"<string>\",\n      \"id\": \"<string>\",\n      \"income_multiple\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-74b2125a-2884-4cd3-8e9c-52501cd0240d"
+            },
+            {
+              "id": "77780370-e9bf-4ab5-be4e-d4411682538f",
+              "name": "Bad Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-check-sets?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid field values provided\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-77780370-e9bf-4ab5-be4e-d4411682538f"
+            },
+            {
+              "id": "a167264b-314c-4337-8e64-2bf4ec4b15bd",
+              "name": "The request's authorization is missing, invalid, or expired",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-check-sets?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-a167264b-314c-4337-8e64-2bf4ec4b15bd"
+            },
+            {
+              "id": "985c3bc5-72e1-4d2b-ba97-7fc35796f35c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-check-sets?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-985c3bc5-72e1-4d2b-ba97-7fc35796f35c"
+            },
+            {
+              "id": "09061676-8a05-498c-abdc-b8b15aa5f981",
+              "name": "An invalid API version was requested",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-check-sets?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-09061676-8a05-498c-abdc-b8b15aa5f981"
+            },
+            {
+              "id": "f481bd79-207e-44ec-bb3d-96c877434620",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-check-sets?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-f481bd79-207e-44ec-bb3d-96c877434620"
+            },
+            {
+              "id": "f32921a7-3ee1-470e-80e9-8be5347544ef",
+              "name": "Frozen SSN",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-check-sets?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-f32921a7-3ee1-470e-80e9-8be5347544ef"
+            },
+            {
+              "id": "b2e324e1-b6c5-41fd-abc2-7419249989ec",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-check-sets?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-b2e324e1-b6c5-41fd-abc2-7419249989ec"
+            },
+            {
+              "id": "aee5fa20-e33f-4519-942c-53641361e0e0",
+              "name": "Not Implemented",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/qualification-check-sets?limit=25&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "query": [
+                    {
+                      "description": "Limit the number of results returned.",
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Offset the results by page",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-07-28T03:20:10.000Z",
+              "updatedAt": "2026-07-28T03:20:10.000Z",
+              "uid": "35240-aee5fa20-e33f-4519-942c-53641361e0e0"
+            }
+          ],
+          "createdAt": "2026-07-28T03:20:10.000Z",
+          "updatedAt": "2026-07-28T03:20:10.000Z",
+          "uid": "35240-228ab5a6-6d39-4fee-a42b-d6d3e8eadb6f"
+        }
+      ],
+      "id": "e2a51c43-5f13-4244-a66c-4d7162941e77",
+      "createdAt": "2026-07-28T03:20:10.000Z",
+      "updatedAt": "2026-07-28T03:20:10.000Z",
+      "uid": "35240-e2a51c43-5f13-4244-a66c-4d7162941e77"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.truework-sandbox.com"
+    }
+  ]
+}
