@@ -1,0 +1,1728 @@
+{
+  "item": [
+    {
+      "id": "d0ab9cb2-f642-4547-af4c-459cf08d5e89",
+      "name": "subpackage_qualificationChecks",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "414acb3e-df4f-40ff-aaf0-6c785e50fb29",
+          "name": "Create a qualification check request",
+          "request": {
+            "name": "Create a qualification check request",
+            "description": {
+              "content": "Creates a new qualification check and returns a JSON object with the resulting evaluation.\n\n<Warning>\nThis endpoint is in beta and is subject to change. Please contact [implementations@truework.com](mailto:implementations@truework.com) for more information before integrating.\n</Warning>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "qualification-checks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"property_details\": {\n    \"rent\": \"<double>\"\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\"\n  },\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c0c72942-1670-47e2-a524-cbf2152348e8",
+              "name": "Qualification Check Evaluation Created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": 2389.1959823482357\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created\": \"1964-09-18T12:04:10.545Z\",\n  \"id\": \"string\",\n  \"kind\": \"applicant\",\n  \"metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"property_details\": {\n    \"rent\": \"string\"\n  },\n  \"qualification_check_set\": {\n    \"applicant_rent_to_income_ratio\": \"string\",\n    \"guarantor_rent_to_income_ratio\": \"string\",\n    \"id\": \"string\",\n    \"income_multiple\": \"string\",\n    \"name\": \"string\"\n  },\n  \"result\": {\n    \"monthly_gross_income\": \"string\",\n    \"monthly_gross_income_fidelity\": \"estimate\",\n    \"outcome\": \"not_qualified\",\n    \"rent_to_income_ratio\": \"string\",\n    \"report_results\": [\n      {\n        \"monthly_gross_income\": \"string\",\n        \"monthly_gross_income_fidelity\": \"source\",\n        \"report_id\": \"string\",\n        \"satisfied_document_income_requirements\": [\n          {\n            \"end_date\": \"1967-05-08\",\n            \"file_type\": \"string\",\n            \"start_date\": \"1966-03-12\"\n          },\n          {\n            \"end_date\": \"2012-07-11\",\n            \"file_type\": \"string\",\n            \"start_date\": \"2018-10-29\"\n          }\n        ]\n      },\n      {\n        \"monthly_gross_income\": \"string\",\n        \"monthly_gross_income_fidelity\": \"source\",\n        \"report_id\": \"string\",\n        \"satisfied_document_income_requirements\": [\n          {\n            \"end_date\": \"1963-12-15\",\n            \"file_type\": \"string\",\n            \"start_date\": \"2002-10-26\"\n          },\n          {\n            \"end_date\": \"2022-04-14\",\n            \"file_type\": \"string\",\n            \"start_date\": \"2024-03-10\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01030bd9-d1fc-42f5-99b2-50be8416abe5",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": 2389.1959823482357\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid field values provided\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d9579e9-75ed-4982-b208-813a08fbed75",
+              "name": "The request's authorization is missing, invalid, or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": 2389.1959823482357\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5adbc9b1-98e7-4378-8a6a-a2eacebc1bbc",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": 2389.1959823482357\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfad7b86-a862-4bea-88cc-610bf12ee774",
+              "name": "An invalid API version was requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": 2389.1959823482357\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d577059-cd47-4a7e-a05a-82a69cb429f2",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": 2389.1959823482357\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c558612d-6280-4e05-8527-fea71999a9f0",
+              "name": "Frozen SSN",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": 2389.1959823482357\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 451,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "816c8ff0-119c-4693-b42f-bcc356e935cc",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": 2389.1959823482357\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2dcc363e-fa6a-4c33-b43f-cea2401608e5",
+              "name": "Not Implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property_details\": {\n    \"rent\": 2389.1959823482357\n  },\n  \"qualification_check_set_id\": \"<string>\",\n  \"kind\": \"applicant\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"order_id\": \"<string,null>\",\n  \"order_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"report_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "707b27c2-e220-4560-a0f5-96f91c367512",
+          "name": "Get one qualification check result",
+          "request": {
+            "name": "Get one qualification check result",
+            "description": {
+              "content": "Retrieves a qualification check result by id.\n\n<Warning>\nThis endpoint is in beta and is subject to change. Please contact [implementations@truework.com](mailto:implementations@truework.com) for more information before integrating.\n</Warning>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "qualification-checks",
+                ":qualification_check_result_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualification_check_result_id",
+                  "description": "(Required) Qualification Check Result ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7afcbd19-8540-482f-a79a-9694e2ad9faa",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks",
+                    ":qualification_check_result_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualification_check_result_id",
+                      "description": "(Required) Qualification Check Result ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created\": \"1964-09-18T12:04:10.545Z\",\n  \"id\": \"string\",\n  \"kind\": \"applicant\",\n  \"metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"property_details\": {\n    \"rent\": \"string\"\n  },\n  \"qualification_check_set\": {\n    \"applicant_rent_to_income_ratio\": \"string\",\n    \"guarantor_rent_to_income_ratio\": \"string\",\n    \"id\": \"string\",\n    \"income_multiple\": \"string\",\n    \"name\": \"string\"\n  },\n  \"result\": {\n    \"monthly_gross_income\": \"string\",\n    \"monthly_gross_income_fidelity\": \"estimate\",\n    \"outcome\": \"not_qualified\",\n    \"rent_to_income_ratio\": \"string\",\n    \"report_results\": [\n      {\n        \"monthly_gross_income\": \"string\",\n        \"monthly_gross_income_fidelity\": \"source\",\n        \"report_id\": \"string\",\n        \"satisfied_document_income_requirements\": [\n          {\n            \"end_date\": \"1967-05-08\",\n            \"file_type\": \"string\",\n            \"start_date\": \"1966-03-12\"\n          },\n          {\n            \"end_date\": \"2012-07-11\",\n            \"file_type\": \"string\",\n            \"start_date\": \"2018-10-29\"\n          }\n        ]\n      },\n      {\n        \"monthly_gross_income\": \"string\",\n        \"monthly_gross_income_fidelity\": \"source\",\n        \"report_id\": \"string\",\n        \"satisfied_document_income_requirements\": [\n          {\n            \"end_date\": \"1963-12-15\",\n            \"file_type\": \"string\",\n            \"start_date\": \"2002-10-26\"\n          },\n          {\n            \"end_date\": \"2022-04-14\",\n            \"file_type\": \"string\",\n            \"start_date\": \"2024-03-10\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8166d182-a9cb-4956-adba-f3904ff7f44f",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks",
+                    ":qualification_check_result_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualification_check_result_id",
+                      "description": "(Required) Qualification Check Result ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid field values provided\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32d41b76-5c43-4709-8ceb-41dbcb66a0aa",
+              "name": "The request's authorization is missing, invalid, or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks",
+                    ":qualification_check_result_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualification_check_result_id",
+                      "description": "(Required) Qualification Check Result ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd63b818-319a-4056-a19c-ce50d4030a1a",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks",
+                    ":qualification_check_result_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualification_check_result_id",
+                      "description": "(Required) Qualification Check Result ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48104cf0-163b-4687-b919-d66f24b375cc",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks",
+                    ":qualification_check_result_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualification_check_result_id",
+                      "description": "(Required) Qualification Check Result ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c018b28c-636c-4a61-aa68-a57e3153bb12",
+              "name": "An invalid API version was requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks",
+                    ":qualification_check_result_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualification_check_result_id",
+                      "description": "(Required) Qualification Check Result ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ebfddde-322e-464b-aaf4-f3151f700a01",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks",
+                    ":qualification_check_result_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualification_check_result_id",
+                      "description": "(Required) Qualification Check Result ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "68fce530-ef45-4846-b37b-272e9faab632",
+              "name": "Frozen SSN",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks",
+                    ":qualification_check_result_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualification_check_result_id",
+                      "description": "(Required) Qualification Check Result ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "code": 451,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "988e1bc9-a5cb-4f08-9e47-34abc1e33d84",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks",
+                    ":qualification_check_result_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualification_check_result_id",
+                      "description": "(Required) Qualification Check Result ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "125d0299-54e4-4920-ace7-86b2802ea077",
+              "name": "Not Implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-checks",
+                    ":qualification_check_result_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualification_check_result_id",
+                      "description": "(Required) Qualification Check Result ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "575cf97c-1f2f-42a8-8767-6a7b727cd0a9",
+          "name": "Get all qualification check sets",
+          "request": {
+            "name": "Get all qualification check sets",
+            "description": {
+              "content": "A qualification check set is a ruleset for evaluating income data.\n\n<Warning>\nThis endpoint is in beta and is subject to change. Please contact [implementations@truework.com](mailto:implementations@truework.com) for more information before integrating.\n</Warning>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "qualification-check-sets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Limit the number of results returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Offset the results by page"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1c3c9f70-73be-4550-8371-b930307fbb23",
+              "name": "Qualification Check Sets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 6267,\n  \"next\": \"string\",\n  \"previous\": \"string\",\n  \"results\": [\n    {\n      \"applicant_rent_to_income_ratio\": \"string\",\n      \"description\": \"string\",\n      \"guarantor_rent_to_income_ratio\": \"string\",\n      \"id\": \"string\",\n      \"income_multiple\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"applicant_rent_to_income_ratio\": \"string\",\n      \"description\": \"string\",\n      \"guarantor_rent_to_income_ratio\": \"string\",\n      \"id\": \"string\",\n      \"income_multiple\": \"string\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6e4cce6-e6b5-4555-b850-84623bec0bba",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid field values provided\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1d17062-a66b-4a0f-9bcd-9cec383a04a8",
+              "name": "The request's authorization is missing, invalid, or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b896dcdd-89f3-49fe-b78c-d3b66dba3927",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3b50d81-32ea-470b-9e52-50d9fb4974b4",
+              "name": "An invalid API version was requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9383f1bb-bd25-4a86-a650-7d736df7325e",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "966be95e-4cf0-4667-92ec-2471df35f354",
+              "name": "Frozen SSN",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "code": 451,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8421b251-5481-4bdf-9730-a2f6ddcd16ad",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d8e4a81-81aa-4d28-9a64-e9fbe94213ec",
+              "name": "Not Implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qualification-check-sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.truework-sandbox.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9391ad86-d107-4d45-af14-48d657437c9b",
+    "name": "Truework Qualifications & Tenant Properties API (Beta) subpackage_orders subpackage_qualificationChecks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public beta surfaces of the Truework API covering Qualification Checks (lightweight income/employment knockout decisions against a borrower's verified employment data) and Tenant Properties (provider-defined verification configuration knobs). These endpoints are in public beta and the schema may evolve.\n\n\nContact Support:\n Name: Truework Implementations\n Email: implementations@truework.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,784 @@
+{
+  "item": [
+    {
+      "id": "2ec5bbe9-8189-417a-b158-b2c88e89cd94",
+      "name": "subpackage_reports",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3afa77c8-9bfa-4f4f-9f53-8dfd17227cd3",
+          "name": "Get one report",
+          "request": {
+            "name": "Get one report",
+            "description": {
+              "content": "Retrieves a report for a given report ID.\nIf you don't have the report id, it is recommended to use the embedded reports key on a completed verification object returned from `GET /orders`.\nYou can get the report in PDF format by adding `Accept: application/pdf` to your headers. When testing, please use the generated curl command\nwith `--output <PDF filename>` specified.\n\n<Info>\nOnly completed Reports will be returned. Any other request will fail with either 400 or 404, and provide more information as an attached error message.\n</Info>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                ":verification_report_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_income_analytics",
+                  "value": "false",
+                  "description": "Whether to calculate income analytics for the nested reports in each verification."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_report_annotations",
+                  "value": "false",
+                  "description": "Whether to include annotations for the nested reports in each verification."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string,null>",
+                  "description": "Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case of a list, subfields apply to each individual object. If omitted, all fields are included."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "verification_report_id",
+                  "description": "(Required) Report ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1f589584-c79a-49e9-aa51-988e969ba7cf",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":verification_report_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_income_analytics",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_report_annotations",
+                      "value": "false"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string,null>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "verification_report_id",
+                      "description": "(Required) Report ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"additional_notes\": \"string\",\n  \"annotations\": {\n    \"applicant\": {\n      \"employee\": {\n        \"positions\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"salary\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"status_detail\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"employer\": {\n        \"email\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"verifier\": {\n      \"employee\": {\n        \"positions\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"salary\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"status_detail\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"employer\": {\n        \"email\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    }\n  },\n  \"applicant_documents\": [\n    {\n      \"detections\": [\n        {\n          \"count\": 4161,\n          \"outcome\": {\n            \"canonical_value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"raw_value\": \"string\"\n          },\n          \"type\": {\n            \"canonical_value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"raw_value\": \"string\"\n          }\n        },\n        {\n          \"count\": 8161,\n          \"outcome\": {\n            \"canonical_value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"raw_value\": \"string\"\n          },\n          \"type\": {\n            \"canonical_value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"raw_value\": \"string\"\n          }\n        }\n      ],\n      \"id\": \"string\",\n      \"url\": \"https://rCGKiHSjIoc.afpcxJoPD9KBt6bW,XPG,1YQMWeQx,pVj\"\n    },\n    {\n      \"detections\": [\n        {\n          \"count\": 4754,\n          \"outcome\": {\n            \"canonical_value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"raw_value\": \"string\"\n          },\n          \"type\": {\n            \"canonical_value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"raw_value\": \"string\"\n          }\n        },\n        {\n          \"count\": 4737,\n          \"outcome\": {\n            \"canonical_value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"raw_value\": \"string\"\n          },\n          \"type\": {\n            \"canonical_value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"raw_value\": \"string\"\n          }\n        }\n      ],\n      \"id\": \"string\",\n      \"url\": \"http://gtjMbzNmJAmKNfmxoZ.jkwPGYi8,lswhgdSS.rrf+xjybEUk4VckObqw6uAmVLWioT7uyg\"\n    }\n  ],\n  \"completed\": \"1984-01-29T12:51:38.027Z\",\n  \"completed_by_method\": {\n    \"canonical_value\": \"other\",\n    \"raw_value\": \"string\"\n  },\n  \"created\": \"2022-04-24T05:57:33.960Z\",\n  \"current_as_of\": \"1968-07-12\",\n  \"disputes\": [\n    {\n      \"created\": \"1953-01-29T13:25:25.395Z\",\n      \"description\": \"string\",\n      \"id\": \"string\",\n      \"reference_id\": \"string\"\n    },\n    {\n      \"created\": \"1959-11-09T16:23:56.123Z\",\n      \"description\": \"string\",\n      \"id\": \"string\",\n      \"reference_id\": \"string\"\n    }\n  ],\n  \"eligibilities\": [\n    {\n      \"is_eligible\": false,\n      \"provider\": {\n        \"canonical_value\": \"other\",\n        \"raw_value\": \"string\"\n      },\n      \"reference_id\": \"string\",\n      \"type\": {\n        \"canonical_value\": \"d1c\",\n        \"raw_value\": \"string\"\n      }\n    },\n    {\n      \"is_eligible\": true,\n      \"provider\": {\n        \"canonical_value\": \"argyle\",\n        \"raw_value\": \"string\"\n      },\n      \"reference_id\": \"string\",\n      \"type\": {\n        \"canonical_value\": \"d1c\",\n        \"raw_value\": \"string\"\n      }\n    }\n  ],\n  \"employee\": {\n    \"address\": {\n      \"address\": \"string\",\n      \"city\": \"string\",\n      \"country_code\": \"string\",\n      \"country_subdivision_code\": \"string\",\n      \"extended_address\": \"string\",\n      \"postal_code\": \"string\"\n    },\n    \"earnings\": [\n      {\n        \"base\": \"string\",\n        \"bonus\": \"string\",\n        \"commission\": \"string\",\n        \"other\": \"string\",\n        \"overtime\": \"string\",\n        \"total\": \"string\",\n        \"year\": \"string\"\n      },\n      {\n        \"base\": \"string\",\n        \"bonus\": \"string\",\n        \"commission\": \"string\",\n        \"other\": \"string\",\n        \"overtime\": \"string\",\n        \"total\": \"string\",\n        \"year\": \"string\"\n      }\n    ],\n    \"email\": \"AlxnuWVyGZY4@zGSyBaQIwIvGrSqmTo.semv\",\n    \"first_name\": \"string\",\n    \"hired_date\": \"1970-09-13\",\n    \"last_name\": \"string\",\n    \"on_leave_date\": \"1958-01-17\",\n    \"original_hired_date\": \"2010-03-25\",\n    \"positions\": [\n      {\n        \"employment_type\": {\n          \"canonical_value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"raw_value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"end_date\": \"1992-11-05\",\n        \"start_date\": \"1995-06-05\",\n        \"title\": \"string\"\n      },\n      {\n        \"employment_type\": {\n          \"canonical_value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"raw_value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"end_date\": \"1971-01-18\",\n        \"start_date\": \"1991-09-26\",\n        \"title\": \"string\"\n      }\n    ],\n    \"salary\": {\n      \"hours_per_week\": \"string\",\n      \"pay_frequency\": {\n        \"canonical_value\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"raw_value\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"pay_rate\": {\n        \"amount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"unit\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"reduced_covid\": \"unknown\"\n    },\n    \"social_security_number\": \"string\",\n    \"status\": {\n      \"canonical_value\": \"inactive\",\n      \"raw_value\": \"string\"\n    },\n    \"status_detail\": {\n      \"canonical_value\": \"on-sabbatical\",\n      \"raw_value\": \"string\"\n    },\n    \"termination_date\": \"1989-03-05\"\n  },\n  \"employer\": {\n    \"address\": {\n      \"address\": \"string\",\n      \"city\": \"string\",\n      \"country_code\": \"string\",\n      \"country_subdivision_code\": \"string\",\n      \"extended_address\": \"string\",\n      \"postal_code\": \"string\"\n    },\n    \"government_ids\": [\n      {\n        \"id\": \"string\",\n        \"type\": {\n          \"canonical_value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"raw_value\": \"string\"\n        }\n      },\n      {\n        \"id\": \"string\",\n        \"type\": {\n          \"canonical_value\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"raw_value\": \"string\"\n        }\n      }\n    ],\n    \"name\": \"string\"\n  },\n  \"financial_institution_accounts\": [\n    {\n      \"account_name\": \"string\",\n      \"account_type\": \"string\",\n      \"financial_institution_name\": \"string\",\n      \"income_streams\": [\n        {\n          \"age_in_months\": 4205,\n          \"average_monthly_net_income\": 2510.242549683862,\n          \"confidence\": 9544,\n          \"confidence_level\": \"string\",\n          \"end_date\": \"1966-04-13\",\n          \"estimated_gross_annual\": 2735.860640135066,\n          \"frequency_days\": 8855,\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"net_annual\": 4002.5449819925484,\n          \"periods\": [\n            {\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount_duration\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"estimated_gross_income\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"start_day\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount_duration\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"estimated_gross_income\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"start_day\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"start_date\": \"1954-06-19\",\n          \"status\": \"string\"\n        },\n        {\n          \"age_in_months\": 662,\n          \"average_monthly_net_income\": 1050.921930444021,\n          \"confidence\": 6163,\n          \"confidence_level\": \"string\",\n          \"end_date\": \"2017-05-16\",\n          \"estimated_gross_annual\": 2577.559410656304,\n          \"frequency_days\": 6422,\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"net_annual\": 2992.4993663101773,\n          \"periods\": [\n            {\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount_duration\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"estimated_gross_income\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"start_day\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount_duration\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"estimated_gross_income\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"start_day\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"start_date\": \"1981-12-28\",\n          \"status\": \"string\"\n        }\n      ],\n      \"number\": \"string\",\n      \"oldest_transaction_date\": \"1978-11-30\",\n      \"owner_name\": \"string\",\n      \"snapshots\": [\n        {\n          \"available_balance\": 3322.7764064550115,\n          \"average_monthly_balance\": 2982.6517364774472,\n          \"balance\": 4912.138343720491,\n          \"balance_date\": \"1991-02-18\",\n          \"currency_code\": \"string\",\n          \"id\": \"string\",\n          \"tot_number_days_since_most_recent_insufficient_funds_fee_debit_tx_account\": 8436,\n          \"tot_number_insufficient_funds_fee_debit_tx_account\": 4904,\n          \"tot_number_insufficient_funds_fee_debit_tx_over_2_months_account\": 4131\n        },\n        {\n          \"available_balance\": 1485.2212976541912,\n          \"average_monthly_balance\": 7002.492050204227,\n          \"balance\": 3722.6819885918094,\n          \"balance_date\": \"1957-06-16\",\n          \"currency_code\": \"string\",\n          \"id\": \"string\",\n          \"tot_number_days_since_most_recent_insufficient_funds_fee_debit_tx_account\": 3205,\n          \"tot_number_insufficient_funds_fee_debit_tx_account\": 1699,\n          \"tot_number_insufficient_funds_fee_debit_tx_over_2_months_account\": 5730\n        }\n      ]\n    },\n    {\n      \"account_name\": \"string\",\n      \"account_type\": \"string\",\n      \"financial_institution_name\": \"string\",\n      \"income_streams\": [\n        {\n          \"age_in_months\": 4423,\n          \"average_monthly_net_income\": 3990.022609648609,\n          \"confidence\": 504,\n          \"confidence_level\": \"string\",\n          \"end_date\": \"1953-02-25\",\n          \"estimated_gross_annual\": 2811.774537644346,\n          \"frequency_days\": 9941,\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"net_annual\": 7608.816182698723,\n          \"periods\": [\n            {\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount_duration\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"estimated_gross_income\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"start_day\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount_duration\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"estimated_gross_income\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"start_day\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"start_date\": \"1974-07-15\",\n          \"status\": \"string\"\n        },\n        {\n          \"age_in_months\": 6612,\n          \"average_monthly_net_income\": 8222.065632476855,\n          \"confidence\": 9226,\n          \"confidence_level\": \"string\",\n          \"end_date\": \"1990-02-24\",\n          \"estimated_gross_annual\": 6580.1391073388295,\n          \"frequency_days\": 783,\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"net_annual\": 9060.842593512549,\n          \"periods\": [\n            {\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount_duration\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"estimated_gross_income\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"start_day\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount_duration\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount_type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"estimated_gross_income\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"start_day\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"start_date\": \"1978-10-03\",\n          \"status\": \"string\"\n        }\n      ],\n      \"number\": \"string\",\n      \"oldest_transaction_date\": \"2018-03-29\",\n      \"owner_name\": \"string\",\n      \"snapshots\": [\n        {\n          \"available_balance\": 9702.264688054194,\n          \"average_monthly_balance\": 6450.137040876898,\n          \"balance\": 973.2312279895139,\n          \"balance_date\": \"1988-05-30\",\n          \"currency_code\": \"string\",\n          \"id\": \"string\",\n          \"tot_number_days_since_most_recent_insufficient_funds_fee_debit_tx_account\": 1533,\n          \"tot_number_insufficient_funds_fee_debit_tx_account\": 5928,\n          \"tot_number_insufficient_funds_fee_debit_tx_over_2_months_account\": 4945\n        },\n        {\n          \"available_balance\": 8408.688813914267,\n          \"average_monthly_balance\": 5487.749716257754,\n          \"balance\": 3073.0784732136685,\n          \"balance_date\": \"2004-02-24\",\n          \"currency_code\": \"string\",\n          \"id\": \"string\",\n          \"tot_number_days_since_most_recent_insufficient_funds_fee_debit_tx_account\": 3267,\n          \"tot_number_insufficient_funds_fee_debit_tx_account\": 315,\n          \"tot_number_insufficient_funds_fee_debit_tx_over_2_months_account\": 8466\n        }\n      ]\n    }\n  ],\n  \"id\": \"string\",\n  \"income_analytics\": {\n    \"annualized_income\": {\n      \"base_amount\": {\n        \"amount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"currency\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"gross_amount\": {\n        \"amount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"currency\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"short_employment_warning\": true,\n      \"stale_data_warning\": false,\n      \"variable_income_warning\": false\n    },\n    \"income_volatility\": {\n      \"gross_income_volatility\": \"string\"\n    }\n  },\n  \"paystubs\": [\n    {\n      \"base\": \"string\",\n      \"bonus\": \"string\",\n      \"commission\": \"string\",\n      \"gross\": \"string\",\n      \"id\": \"string\",\n      \"net\": \"string\",\n      \"other\": \"string\",\n      \"overtime\": \"string\",\n      \"pay_date\": \"2026-04-04\",\n      \"pay_period_end_date\": \"2010-04-28\",\n      \"pay_period_hours\": \"string\",\n      \"pay_period_start_date\": \"2009-05-17\",\n      \"reference_id\": \"string\"\n    },\n    {\n      \"base\": \"string\",\n      \"bonus\": \"string\",\n      \"commission\": \"string\",\n      \"gross\": \"string\",\n      \"id\": \"string\",\n      \"net\": \"string\",\n      \"other\": \"string\",\n      \"overtime\": \"string\",\n      \"pay_date\": \"2009-04-26\",\n      \"pay_period_end_date\": \"1991-02-17\",\n      \"pay_period_hours\": \"string\",\n      \"pay_period_start_date\": \"1998-12-19\",\n      \"reference_id\": \"string\"\n    }\n  ],\n  \"respondent\": {\n    \"email\": \"string\",\n    \"full_name\": \"string\",\n    \"title\": \"string\"\n  },\n  \"verification_request\": {\n    \"created\": \"2001-04-26T13:11:53.767Z\",\n    \"id\": \"string\",\n    \"type\": \"assets\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "484c8a0b-3a7d-43a5-a860-ac4d1a125e45",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":verification_report_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_income_analytics",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_report_annotations",
+                      "value": "false"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string,null>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "verification_report_id",
+                      "description": "(Required) Report ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid field values provided\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0f39040-5e4a-4c69-85d2-702b4d0e68b8",
+              "name": "The request's authorization is missing, invalid, or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":verification_report_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_income_analytics",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_report_annotations",
+                      "value": "false"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string,null>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "verification_report_id",
+                      "description": "(Required) Report ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff324db3-dd39-4d9b-af4c-5ba811e53c79",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":verification_report_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_income_analytics",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_report_annotations",
+                      "value": "false"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string,null>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "verification_report_id",
+                      "description": "(Required) Report ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6529da45-0719-46bd-b668-4d6fccdeb58d",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":verification_report_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_income_analytics",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_report_annotations",
+                      "value": "false"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string,null>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "verification_report_id",
+                      "description": "(Required) Report ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "068e609b-7fbf-4cef-9bae-f19d45ba8bd8",
+              "name": "An invalid API version was requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":verification_report_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_income_analytics",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_report_annotations",
+                      "value": "false"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string,null>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "verification_report_id",
+                      "description": "(Required) Report ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0a7c34f-53ae-4680-84b6-7d65290bdb0d",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":verification_report_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_income_analytics",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_report_annotations",
+                      "value": "false"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string,null>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "verification_report_id",
+                      "description": "(Required) Report ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3ad4619-1f53-4284-b404-cf181c88e206",
+              "name": "Frozen SSN",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":verification_report_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_income_analytics",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_report_annotations",
+                      "value": "false"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string,null>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "verification_report_id",
+                      "description": "(Required) Report ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "code": 451,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e735ea57-a6d2-414a-8fe2-7ddcc0d0f242",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":verification_report_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_income_analytics",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_report_annotations",
+                      "value": "false"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string,null>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "verification_report_id",
+                      "description": "(Required) Report ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7201f573-6cdb-4f65-ae01-7f9ff78e9f63",
+              "name": "Not Implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":verification_report_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_income_analytics",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_report_annotations",
+                      "value": "false"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string,null>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "verification_report_id",
+                      "description": "(Required) Report ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.truework-sandbox.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1a58a71f-9c30-4903-af3b-238fdfbf57c5",
+    "name": "Truework Qualifications & Tenant Properties API (Beta) subpackage_orders subpackage_reports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public beta surfaces of the Truework API covering Qualification Checks (lightweight income/employment knockout decisions against a borrower's verified employment data) and Tenant Properties (provider-defined verification configuration knobs). These endpoints are in public beta and the schema may evolve.\n\n\nContact Support:\n Name: Truework Implementations\n Email: implementations@truework.com",
+      "type": "text/plain"
+    }
+  }
+}

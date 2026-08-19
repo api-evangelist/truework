@@ -1,0 +1,65 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Truework Qualifications & Tenant Properties API (Beta) subpackage_orders subpackage_reports API",
+    "version": "2023-10-30-beta"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get one report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.truework-sandbox.com/reports/:verification_report_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "verification_report_id",
+                "value": "",
+                "type": "path",
+                "description": "Report ID"
+              },
+              {
+                "name": "include_income_analytics",
+                "value": "",
+                "type": "query",
+                "description": "Whether to calculate income analytics for the nested reports in each verification."
+              },
+              {
+                "name": "include_report_annotations",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include annotations for the nested reports in each verification."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated names of fields to include in the response. Separate multiple fields with commas, and denote subfields with parentheses. Multiple subfields from the same type can be listed within parentheses. In case of a list, subfields apply to each individual object. If omitted, all fields are included."
+              }
+            ]
+          },
+          "docs": "Retrieves a report for a given report ID.\nIf you don't have the report id, it is recommended to use the embedded reports key on a completed verification object returned from `GET /orders`.\nYou can get the report in PDF format by adding `Accept: application/pdf` to your headers. When testing, please use the generated curl command\nwith `--output <PDF filename>` specified.\n\n<Info>\nOnly completed Reports will be returned. Any other request will fail with either 400 or 404, and provide more informati"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,2535 @@
+{
+  "item": [
+    {
+      "id": "e98dd2b3-28d8-4193-8584-33c55fcf5e30",
+      "name": "subpackage_tenantProperties",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8d7011d4-8183-4120-af67-97a6974c3d7c",
+          "name": "Create a tenant property",
+          "request": {
+            "name": "Create a tenant property",
+            "description": {
+              "content": "Creates a new tenant property and returns a JSON object with the resulting property.\n\n<Warning>\nThis endpoint is in beta and is subject to change. Please contact [implementations@truework.com](mailto:implementations@truework.com) for more information before integrating.\n</Warning>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tenant-properties"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "164a782a-cfaf-482b-8771-229923a760dc",
+              "name": "Tenant property successfully created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"address_line_1\": \"string\",\n  \"address_line_2\": \"string\",\n  \"address_line_3\": \"string\",\n  \"city\": \"string\",\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"postal_code\": \"string\",\n  \"state\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a08a1f5a-151d-430a-949e-9a483ac0e6a3",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid field values provided\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56f8adc0-dc0a-494f-a2a7-16c98d811fbb",
+              "name": "The request's authorization is missing, invalid, or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9948360-07f4-4142-98ae-f28e91e79076",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d17438bf-0ccb-4d74-8b78-d06a0b95f5e0",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc1cbb99-1d29-4f6a-ac09-e67bd3be08ab",
+              "name": "An invalid API version was requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "219c384d-10b4-4ca9-be04-83edae2fa8fe",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8fa4d395-6f90-4677-8732-127925897c5e",
+              "name": "Frozen SSN",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 451,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7dfb54ab-7103-4b4b-b10d-a50ac2350ea1",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef192228-708f-4aad-8548-e1dbc9ddf6d1",
+              "name": "Not Implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "efa6532c-c354-4284-98b9-cdf2b4bf23f6",
+          "name": "Get all tenant properties",
+          "request": {
+            "name": "Get all tenant properties",
+            "description": {
+              "content": "Retrieves all tenant properties",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tenant-properties"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Limit the number of results returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Offset the results by page"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a87e7f5b-d332-4356-96c3-9ba0a769d8e4",
+              "name": "Tenant Properties",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 684,\n  \"next\": \"string\",\n  \"previous\": \"string\",\n  \"results\": [\n    {\n      \"address_line_1\": \"string\",\n      \"address_line_2\": \"string\",\n      \"address_line_3\": \"string\",\n      \"city\": \"string\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"postal_code\": \"string\",\n      \"state\": \"string\",\n      \"status\": \"string\"\n    },\n    {\n      \"address_line_1\": \"string\",\n      \"address_line_2\": \"string\",\n      \"address_line_3\": \"string\",\n      \"city\": \"string\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"postal_code\": \"string\",\n      \"state\": \"string\",\n      \"status\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1ea8399-e5bb-43b1-a8d5-5eb4c8655e98",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid field values provided\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "430b341f-1c05-444a-b60d-1b66687521a1",
+              "name": "The request's authorization is missing, invalid, or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0201d487-1615-4a27-adce-58a8176637fd",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f5925023-73f7-45a7-a434-15a22f17780e",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2282738a-4860-40cd-819f-6073acaedcb1",
+              "name": "An invalid API version was requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7125ff52-c99c-4c0c-88ef-a71f306619fc",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "971ac498-ab4c-4f5d-8c15-19b61aa4c04e",
+              "name": "Frozen SSN",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "code": 451,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "137cebc5-69b0-4a31-baa1-d9a809c63aaa",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5fb6fe95-3d62-43cf-a0b5-c64b3cf820d3",
+              "name": "Not Implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2543019f-4b05-4eec-8623-41ea0fd91f5f",
+          "name": "Get one tenant property",
+          "request": {
+            "name": "Get one tenant property",
+            "description": {
+              "content": "Retrieves a tenant property by id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tenant-properties",
+                ":tenant_property_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenant_property_id",
+                  "description": "(Required) Tenant Property ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b8a08d10-5e42-46b6-821c-55dd76cea3ab",
+              "name": "Tenant Property",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"address_line_1\": \"string\",\n  \"address_line_2\": \"string\",\n  \"address_line_3\": \"string\",\n  \"city\": \"string\",\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"postal_code\": \"string\",\n  \"state\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b80d06ab-1796-4142-a8f4-1f10404fe0aa",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid field values provided\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13a25ce5-8c13-4b63-932e-3a3360a4e27b",
+              "name": "The request's authorization is missing, invalid, or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70844109-ea41-45cd-8204-f44fab64cd7e",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92ca6975-6278-4896-9cfc-8b03b673bbd2",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec78d3db-514f-49fc-9ede-0136a10b8d2b",
+              "name": "An invalid API version was requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b5ae830-fca1-4624-81d7-38f43d2d2009",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82010d46-14e2-47c3-b7fa-b8542a1452ab",
+              "name": "Frozen SSN",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "code": 451,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac44a550-04fb-4a82-9ba9-918d0e976b78",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd136169-b61c-4ee2-8795-5de95edce549",
+              "name": "Not Implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "56cc7955-28e9-4ea3-8af9-c78e0b44ae9c",
+          "name": "Update one tenant property",
+          "request": {
+            "name": "Update one tenant property",
+            "description": {
+              "content": "Updates a tenant property.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tenant-properties",
+                ":tenant_property_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenant_property_id",
+                  "description": "(Required) Tenant Property ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d6eea1f4-2224-4176-aa85-14332bd564ed",
+              "name": "Tenant Property",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"address_line_1\": \"string\",\n  \"address_line_2\": \"string\",\n  \"address_line_3\": \"string\",\n  \"city\": \"string\",\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"postal_code\": \"string\",\n  \"state\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29ae27eb-fdfd-4879-82bf-7f1275444d7c",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid field values provided\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "559ae997-2166-4816-8efa-d1423ddb9499",
+              "name": "The request's authorization is missing, invalid, or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc9d5976-9203-49ba-ab63-c38461ec5772",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a4f4277-36ed-4cbc-8a70-bab0d8ee95fb",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8160f56f-df26-4ede-b291-4bd1dc64d61c",
+              "name": "An invalid API version was requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f1d41d4-0b79-4998-a22b-af35d7099bb9",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2251701b-b4aa-4775-8ae4-40f38b325287",
+              "name": "Frozen SSN",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 451,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed56cf29-e199-4c5d-b7cf-6180f4fec760",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87d8ab80-135a-49db-af70-559225310679",
+              "name": "Not Implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenant-properties",
+                    ":tenant_property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_property_id",
+                      "description": "(Required) Tenant Property ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer tokens conform to the [RFC6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) spec.\n\n\nProduction API keys (secret keys) are prefixed with `tw_sk_` and sandbox keys are prefixed with `tw_sk_test_`. If your secret key is published, you should rotate your API keys.\n\nTruework.JS publishable keys are prefixed with `tw_pk_` and `tw_pk_test` respectively.\n\n\n**Examples**\n- For Authorization Headers: `Authorization: Bearer tw_sk_test_e508eb797edb95ade85284bcb54dd49ed45db1be`\n- For the \"try it now\" `token` field, input only the token itself, omitting `Bearer `.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specify the content type and version that the API should use. It's recommended to include this to avoid breaking changes.",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address_line_1\": \"<string,null>\",\n  \"address_line_2\": \"<string,null>\",\n  \"address_line_3\": \"<string,null>\",\n  \"city\": \"<string,null>\",\n  \"postal_code\": \"<string,null>\",\n  \"state\": \"<string,null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.truework-sandbox.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4bc3254b-d4e8-45aa-aaf9-44ac72c04247",
+    "name": "Truework Qualifications & Tenant Properties API (Beta) subpackage_orders subpackage_tenantProperties API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public beta surfaces of the Truework API covering Qualification Checks (lightweight income/employment knockout decisions against a borrower's verified employment data) and Tenant Properties (provider-defined verification configuration knobs). These endpoints are in public beta and the schema may evolve.\n\n\nContact Support:\n Name: Truework Implementations\n Email: implementations@truework.com",
+      "type": "text/plain"
+    }
+  }
+}
