@@ -27,7 +27,8 @@ apis:
   description: The subpackage_orders API from Truework — 8 operation(s) for subpackage_orders.
   humanURL: https://www.truework.com/docs/api-reference
   baseURL: https://api.truework.com
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_orders
   properties:
   - type: OpenAPI
@@ -76,7 +77,8 @@ apis:
   description: The subpackage_reports API from Truework — 1 operation(s) for subpackage_reports.
   humanURL: https://www.truework.com/docs/api-reference
   baseURL: https://api.truework.com
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_reports
   properties:
   - type: OpenAPI
@@ -122,6 +124,17 @@ apis:
     url: https://www.truework.com/docs/api-reference/webhooks/security
 name: Truework
 tags:
+  - Verification
+  - Income Verification
+  - Employment Verification
+  - VOIE
+  - Mortgage
+  - Lending
+  - Credit Unions
+  - Identity
+  - KYC
+  - Fintech
+tags_raw:
   - Verifications
   - Income Verification
   - Employment Verification
