@@ -1,20 +1,37 @@
 {
   "provider": "truework",
   "sources": [
-    "truework-subpackage-orders-api-openapi.yml",
-    "truework-subpackage-qualificationchecks-api-openapi.yml",
-    "truework-subpackage-reports-api-openapi.yml",
-    "truework-subpackage-tenantproperties-api-openapi.yml"
+    "_original/truework-beta-openapi.yml",
+    "_original/truework-verifications-orders-openapi.yml",
+    "_original/truework-webhooks-openapi.yml"
   ],
   "outputs": [
-    "truework-subpackage-orders-api-openapi.yml",
     "truework-subpackage-qualificationchecks-api-openapi.yml",
+    "truework-subpackage-tenantproperties-api-openapi.yml",
+    "truework-subpackage-orders-api-openapi.yml",
     "truework-subpackage-reports-api-openapi.yml",
-    "truework-subpackage-tenantproperties-api-openapi.yml"
+    "truework-truework-webhooks-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (3 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "truework-beta-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "truework-beta-openapi.yml: declared missing tag: subpackage_qualificationChecks",
+    "truework-beta-openapi.yml: declared missing tag: subpackage_tenantProperties",
+    "truework-verifications-orders-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "truework-verifications-orders-openapi.yml: declared missing tag: subpackage_orders",
+    "truework-verifications-orders-openapi.yml: declared missing tag: subpackage_reports",
+    "truework-webhooks-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "truework-webhooks-openapi.yml: tagged webhooks POST order-completed -> Truework Webhooks",
+    "truework-webhooks-openapi.yml: tagged webhooks POST verification-request-state-change -> Truework Webhooks",
+    "truework-webhooks-openapi.yml: declared missing tag: Truework Webhooks"
+  ],
+  "skipped": [
+    "truework-subpackage-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "truework-subpackage-qualificationchecks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "truework-subpackage-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "truework-subpackage-tenantproperties-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

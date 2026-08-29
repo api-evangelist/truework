@@ -122,6 +122,16 @@ apis:
     url: https://www.truework.com/docs/api-reference/webhooks
   - type: Documentation
     url: https://www.truework.com/docs/api-reference/webhooks/security
+- aid: truework:truework-truework-webhooks-api
+  name: Truework Truework Webhooks API
+  description: The Truework Webhooks API from Truework — 0 operation(s) for truework webhooks.
+  humanURL: https://www.truework.com/docs/guides/truework-direct/truework-js-reference
+  baseURL: https://js.truework.com/v1
+  tags:
+  - Truework Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/truework-truework-webhooks-api-openapi.yml
 name: Truework
 tags:
   - Verification

@@ -1,10 +1,10 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Truework Qualifications & Tenant Properties API (Beta) subpackage_orders subpackage_reports API
-  description: 'Public beta surfaces of the Truework API covering Qualification Checks (lightweight income/employment knockout decisions against a borrower''s verified employment data) and Tenant Properties (provider-defined verification configuration knobs). These endpoints are in public beta and the schema may evolve.
+  title: Truework Verifications Subpackage Reports API
+  description: 'Truework Verifications API for orders, reports, and order events. Submit verification of income and employment (VOIE) orders against a known target employer, run synchronous employer search, kick off a Truework Direct (Truework.js) borrower-driven verification, retrieve completed verification reports, list/cancel orders, and replay order event logs. Current API version is 2023-10-30.
 
     '
-  version: 2023-10-30-beta
+  version: 2023-10-30
   contact:
     name: Truework Implementations
     email: implementations@truework.com
@@ -160,38 +160,11 @@ paths:
                 $ref: '#/components/schemas/Error501'
 components:
   schemas:
-    PositionV20231030:
-      type: object
-      properties:
-        employment_type:
-          oneOf:
-          - $ref: '#/components/schemas/EmploymentTypeOutputWrapperV20231030'
-          - type: 'null'
-        end_date:
-          type:
-          - string
-          - 'null'
-          format: date
-        start_date:
-          type:
-          - string
-          - 'null'
-          format: date
-        title:
-          type:
-          - string
-          - 'null'
-      required:
-      - employment_type
-      - end_date
-      - start_date
-      - title
-      title: PositionV20231030
-    PayFrequencyOutputWrapperV20231030:
+    EligibilityProviderOutputWrapperV20231030:
       type: object
       properties:
         canonical_value:
-          $ref: '#/components/schemas/PayFrequencyOutputWrapperV20231030CanonicalValue'
+          $ref: '#/components/schemas/EligibilityProviderOutputWrapperV20231030CanonicalValue'
           description: A limited enum representation of the value, which will not be extended without a version bump.
         raw_value:
           type: string
@@ -199,156 +172,74 @@ components:
       required:
       - canonical_value
       - raw_value
-      title: PayFrequencyOutputWrapperV20231030
-    ApplicantDocumentMetadataV20220801:
+      title: EligibilityProviderOutputWrapperV20231030
+    SalaryV20231030:
       type: object
       properties:
-        detections:
-          type: array
-          items:
-            $ref: '#/components/schemas/DocumentDetection'
-          description: A list of fraud detections that were run on the document. If a detection is not present in the list it either passed or was not run.
-        id:
-          type: string
-        url:
-          type: string
-          format: uri
-          description: A URL where the document content can be downloaded via an authenticated GET request.
+        hours_per_week:
+          type:
+          - string
+          - 'null'
+        pay_frequency:
+          oneOf:
+          - $ref: '#/components/schemas/PayFrequencyOutputWrapperV20231030'
+          - type: 'null'
+          description: The frequency by which the employee is paid.
+        pay_rate:
+          oneOf:
+          - $ref: '#/components/schemas/PayRateV20231030'
+          - type: 'null'
+          description: Describes the amount and unit that determine the employees pay.
+        reduced_covid:
+          $ref: '#/components/schemas/ReducedCovidVMinimumVersion'
       required:
-      - detections
-      - id
-      - url
-      title: ApplicantDocumentMetadataV20220801
-    GrossIncomeCalculationResultV20231030:
+      - hours_per_week
+      - pay_frequency
+      - pay_rate
+      - reduced_covid
+      title: SalaryV20231030
+    _AnnualizedIncome:
       type: object
       properties:
-        average_monthly_net_income:
-          type:
-          - number
-          - 'null'
-          format: double
-        estimated_gross_annual:
-          type:
-          - number
-          - 'null'
-          format: double
-        net_annual:
-          type:
-          - number
-          - 'null'
-          format: double
+        base_amount:
+          oneOf:
+          - $ref: '#/components/schemas/MoneyAmountVMinimumVersion'
+          - type: 'null'
+          description: Represents annualized income for recurring income, like salary. In rare cases due to data quality issues, gross amount is returned without base amount or vice versa.
+        gross_amount:
+          oneOf:
+          - $ref: '#/components/schemas/MoneyAmountVMinimumVersion'
+          - type: 'null'
+          description: Represents base annualized income plus variable income sources. In rare cases due to data quality issues, gross amount is returned without base amount or vice versa.
+        short_employment_warning:
+          type: boolean
+          description: True if the employee recently started at this position, which could impact annualized income accuracy.
+        stale_data_warning:
+          type: boolean
+          description: True if the data on this report is not fresh, which could impact annualized income accuracy.
+        variable_income_warning:
+          type: boolean
+          description: True if the employees income has high variability, which could impact annualized income accuracy.
       required:
-      - average_monthly_net_income
-      - estimated_gross_annual
-      - net_annual
-      title: GrossIncomeCalculationResultV20231030
-    DetectionOutcomeWrapper:
+      - base_amount
+      - gross_amount
+      - short_employment_warning
+      - stale_data_warning
+      - variable_income_warning
+      title: _AnnualizedIncome
+    CompletedByMethodOutputWrapperV20231030:
       type: object
       properties:
         canonical_value:
-          $ref: '#/components/schemas/DetectionOutcomeWrapperCanonicalValue'
-          description: 'The outcome of the detection rule.
-
-
-            | VALUE | DESCRIPTION |
-
-            | ----- | ----------- |
-
-            | passed | The detection rule passed. |
-
-            | failed | The detection rule failed. |
-
-            | not-run | The detection rule was not run. |
-
-            | other | Another outcome occurred. |'
+          $ref: '#/components/schemas/CompletedByMethodOutputWrapperV20231030CanonicalValue'
+          description: A limited enum representation of the value, which will not be extended without a version bump.
         raw_value:
           type: string
           description: An unlimited string representation of the value, which may provide more detail when the canonical value is "other".
       required:
       - canonical_value
       - raw_value
-      title: DetectionOutcomeWrapper
-    AddressV20220801-Output:
-      type: object
-      properties:
-        address:
-          type:
-          - string
-          - 'null'
-        city:
-          type:
-          - string
-          - 'null'
-        country_code:
-          type:
-          - string
-          - 'null'
-        country_subdivision_code:
-          type:
-          - string
-          - 'null'
-        extended_address:
-          type:
-          - string
-          - 'null'
-        postal_code:
-          type:
-          - string
-          - 'null'
-      required:
-      - address
-      - city
-      - country_code
-      - country_subdivision_code
-      - extended_address
-      - postal_code
-      title: AddressV20220801-Output
-    Error404:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error404
-    PayRateV20231030:
-      type: object
-      properties:
-        amount:
-          type:
-          - string
-          - 'null'
-          description: The amount the employee gets paid per timeframe defined by the adject unit field.
-        unit:
-          oneOf:
-          - $ref: '#/components/schemas/PayUnitOutputWrapperV20231030'
-          - type: 'null'
-          description: 'The timeframe in which the employee gets paid the amount defined in the adjacent amount field. '
-      required:
-      - amount
-      - unit
-      title: PayRateV20231030
-    _EmployerAnnotation:
-      type: object
-      properties:
-        email:
-          type:
-          - string
-          - 'null'
-          format: email
-        name:
-          type:
-          - string
-          - 'null'
-        phone_number:
-          type:
-          - string
-          - 'null'
-      required:
-      - email
-      - name
-      - phone_number
-      title: _EmployerAnnotation
+      title: CompletedByMethodOutputWrapperV20231030
     EmployeeStatusOutputWrapperV20231030CanonicalValue:
       type: string
       enum:
@@ -379,6 +270,66 @@ components:
 
         | other | No other value describes the employee''s status | `2022-08-01` | N/A |'
       title: EmployeeStatusOutputWrapperV20231030CanonicalValue
+    CompletedByMethodOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+      - instant
+      - credentials
+      - smart-outreach
+      - third-party-providers
+      - other
+      description: A limited enum representation of the value, which will not be extended without a version bump.
+      title: CompletedByMethodOutputWrapperV20231030CanonicalValue
+    DetectionOutcomeWrapperCanonicalValue:
+      type: string
+      enum:
+      - passed
+      - failed
+      - not-run
+      - other
+      description: 'The outcome of the detection rule.
+
+
+        | VALUE | DESCRIPTION |
+
+        | ----- | ----------- |
+
+        | passed | The detection rule passed. |
+
+        | failed | The detection rule failed. |
+
+        | not-run | The detection rule was not run. |
+
+        | other | Another outcome occurred. |'
+      title: DetectionOutcomeWrapperCanonicalValue
+    PayUnitOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+      - annually
+      - daily
+      - semiweekly
+      - monthly
+      - weekly
+      - biweekly
+      - bimonthly
+      - semimonthly
+      - quarterly
+      - semiannually
+      - thirteen-monthly
+      - fourteen-monthly
+      - hourly
+      - variable
+      - other
+      description: A limited enum representation of the value, which will not be extended without a version bump.
+      title: PayUnitOutputWrapperV20231030CanonicalValue
+    Error406:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+      - error
+      title: Error406
     Error400:
       type: object
       properties:
@@ -387,6 +338,147 @@ components:
       required:
       - error
       title: Error400
+    DisputeV20231030:
+      type: object
+      properties:
+        created:
+          type: string
+          format: date-time
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of dispute
+        id:
+          type: string
+          description: ID for this dispute in Truework
+        reference_id:
+          type:
+          - string
+          - 'null'
+          description: ID for this dispute to be displayed and referenced outside of this API
+      required:
+      - created
+      - description
+      - id
+      - reference_id
+      title: DisputeV20231030
+    _EmployeeAnnotation:
+      type: object
+      properties:
+        positions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/_PositionAnnotation'
+        salary:
+          oneOf:
+          - $ref: '#/components/schemas/_SalaryAnnotation'
+          - type: 'null'
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/EmployeeStatusOutputWrapperV20231030'
+          - type: 'null'
+        status_detail:
+          oneOf:
+          - $ref: '#/components/schemas/EmployeeStatusDetailOutputWrapperV20231030'
+          - type: 'null'
+      required:
+      - positions
+      - salary
+      - status
+      - status_detail
+      title: _EmployeeAnnotation
+    EligibilityTypeOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+      - d1c
+      - other
+      description: A limited enum representation of the value, which will not be extended without a version bump.
+      title: EligibilityTypeOutputWrapperV20231030CanonicalValue
+    EmployeeStatusDetailOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/EmployeeStatusDetailOutputWrapperV20231030CanonicalValue'
+          description: 'The `status_detail` provides more granular information for some `status` values:
+
+
+            | VALUE              | DESCRIPTION                                                         | `Status`         |
+
+            | ------------------ | ------------------------------------------------------------------- | ---------------- |
+
+            | active             | The employee is currently employed and working for this employer    | active           |
+
+            | int-assignment     | The employee is on international assignment                         | active           |
+
+            | casual             | The employee is employed casually                                   | active           |
+
+            | long-term-dis      | The employee is on long term disability                             | active           |
+
+            | sick-leave         | The employee is on sick leave                                       | active           |
+
+            | surviving-spouse   | The employee is a surviving spouse                                  | inactive         |
+
+            | inactive           | The employee is not employed at this employer anymore               | inactive         |
+
+            | on-leave           | The employee is on leave                                            | active           |
+
+            | multiple-positions | The employee has multiple active positions                          | active           |
+
+            | new-employee       | The employee is new                                                 | active           |
+
+            | lay-off            | The employee was laid off                                           | inactive         |
+
+            | part-time          | The employee is currently employed on a part time basis             | active           |
+
+            | retired            | The employee is retired                                             | inactive         |
+
+            | separated          | The employee is separated                                           | inactive         |
+
+            | season             | The employee is seasonal                                            | active           |
+
+            | temporary          | The employee is temporary                                           | active           |
+
+            | intern             | The employee is an intern                                           | active           |
+
+            | transferred        | The employee has been transferred                                   | active           |
+
+            | deceased           | The employee is deceased                                            | inactive         |
+
+            | severed-pay        | The employee has been severed with pay                              | inactive         |
+
+            | on-sabbatical      | The employee is on sabbatical                                       | active           |
+
+            | divested           | The employee is part of a divested population                       | active           |
+
+            | temp-inactive      | The employee is temporarily inactive                                | inactive         |
+
+            | full-time          | The employee is full time                                           | active           |
+
+            | non-emp-ben        | The employee is a non employee beneficiary                          | inactive         |
+
+            | not-assignment     | The employee is not currently on assignment                         | inactive         |
+
+            | not-payroll        | The employee is not currently on payroll                            | inactive         |
+
+            | active-as-needed   | The employee is active as needed                                    | active           |
+
+            | unknown            | Truework could not determine the employment status of this employee | unknown          |
+
+            | furloughed-covid   | The employee was furloughed due to COVID-19                         | furloughed-covid |
+
+            | non-employee       | Truework could not find record of this employee                     | non-employee     |
+
+            | other              | No other value exemplifies Verification Status Detail               | other            |'
+        raw_value:
+          type: string
+          description: An unlimited string representation of the value, which may provide more detail when the canonical value is "other".
+      required:
+      - canonical_value
+      - raw_value
+      title: EmployeeStatusDetailOutputWrapperV20231030
     FinancialInstitutionIncomeStreamPeriodV20231030:
       type: object
       properties:
@@ -416,141 +508,34 @@ components:
       - id
       - start_day
       title: FinancialInstitutionIncomeStreamPeriodV20231030
-    PayFrequencyOutputWrapperV20231030CanonicalValue:
-      type: string
-      enum:
-      - annually
-      - daily
-      - semiweekly
-      - monthly
-      - weekly
-      - biweekly
-      - bimonthly
-      - semimonthly
-      - quarterly
-      - semiannually
-      - thirteen-monthly
-      - fourteen-monthly
-      - hourly
-      - variable
-      - other
-      description: A limited enum representation of the value, which will not be extended without a version bump.
-      title: PayFrequencyOutputWrapperV20231030CanonicalValue
-    MoneyAmountVMinimumVersion:
+    _GovernmentId:
       type: object
       properties:
-        amount:
-          type:
-          - string
-          - 'null'
-        currency:
-          oneOf:
-          - $ref: '#/components/schemas/CurrencyVMinimumVersion'
-          - type: 'null'
-      required:
-      - amount
-      - currency
-      title: MoneyAmountVMinimumVersion
-    DetectionOutcomeWrapperCanonicalValue:
-      type: string
-      enum:
-      - passed
-      - failed
-      - not-run
-      - other
-      description: 'The outcome of the detection rule.
-
-
-        | VALUE | DESCRIPTION |
-
-        | ----- | ----------- |
-
-        | passed | The detection rule passed. |
-
-        | failed | The detection rule failed. |
-
-        | not-run | The detection rule was not run. |
-
-        | other | Another outcome occurred. |'
-      title: DetectionOutcomeWrapperCanonicalValue
-    FinancialInstitutionIncomeStreamV20231030:
-      type: object
-      properties:
-        age_in_months:
-          type:
-          - integer
-          - 'null'
-        average_monthly_net_income:
-          type:
-          - number
-          - 'null'
-          format: double
-        confidence:
-          type: integer
-        confidence_level:
-          type: string
-        end_date:
-          type:
-          - string
-          - 'null'
-          format: date
-        estimated_gross_annual:
-          type:
-          - number
-          - 'null'
-          format: double
-        frequency_days:
-          type:
-          - integer
-          - 'null'
         id:
           type: string
-        name:
-          type: string
-        net_annual:
-          type:
-          - number
-          - 'null'
-          format: double
-        periods:
-          type: array
-          items:
-            $ref: '#/components/schemas/FinancialInstitutionIncomeStreamPeriodV20231030'
-        start_date:
-          type:
-          - string
-          - 'null'
-          format: date
-        status:
-          type: string
+        type:
+          $ref: '#/components/schemas/GovernmentIdTypeOutputWrapperV20231030'
       required:
-      - age_in_months
-      - average_monthly_net_income
-      - confidence
-      - confidence_level
-      - end_date
-      - estimated_gross_annual
-      - frequency_days
       - id
-      - name
-      - net_annual
-      - periods
-      - start_date
-      - status
-      title: FinancialInstitutionIncomeStreamV20231030
-    GovernmentIdTypeOutputWrapperV20231030:
+      - type
+      title: _GovernmentId
+    _SalaryAnnotation:
       type: object
       properties:
-        canonical_value:
-          $ref: '#/components/schemas/GovernmentIdTypeOutputWrapperV20231030CanonicalValue'
-          description: A limited enum representation of the value, which will not be extended without a version bump.
-        raw_value:
-          type: string
-          description: An unlimited string representation of the value, which may provide more detail when the canonical value is "other".
+        pay_rate:
+          oneOf:
+          - $ref: '#/components/schemas/PayRateV20231030'
+          - type: 'null'
       required:
-      - canonical_value
-      - raw_value
-      title: GovernmentIdTypeOutputWrapperV20231030
+      - pay_rate
+      title: _SalaryAnnotation
+    ReducedCovidVMinimumVersion:
+      type: string
+      enum:
+      - 'yes'
+      - 'no'
+      - unknown
+      title: ReducedCovidVMinimumVersion
     PayUnitOutputWrapperV20231030:
       type: object
       properties:
@@ -564,21 +549,430 @@ components:
       - canonical_value
       - raw_value
       title: PayUnitOutputWrapperV20231030
-    EligibilityTypeOutputWrapperV20231030CanonicalValue:
-      type: string
-      enum:
-      - d1c
-      - other
-      description: A limited enum representation of the value, which will not be extended without a version bump.
-      title: EligibilityTypeOutputWrapperV20231030CanonicalValue
-    Error:
+    DocumentDetection:
       type: object
       properties:
-        message:
-          type: string
+        count:
+          type: integer
+        outcome:
+          $ref: '#/components/schemas/DetectionOutcomeWrapper'
+        type:
+          $ref: '#/components/schemas/DetectionTypeWrapper'
       required:
-      - message
-      title: Error
+      - count
+      - outcome
+      - type
+      title: DocumentDetection
+    GovernmentIdTypeOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/GovernmentIdTypeOutputWrapperV20231030CanonicalValue'
+          description: A limited enum representation of the value, which will not be extended without a version bump.
+        raw_value:
+          type: string
+          description: An unlimited string representation of the value, which may provide more detail when the canonical value is "other".
+      required:
+      - canonical_value
+      - raw_value
+      title: GovernmentIdTypeOutputWrapperV20231030
+    DetectionTypeWrapper:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/DetectionTypeWrapperCanonicalValue'
+          description: 'The type of detection that was found on the document.
+
+
+            | VALUE | DESCRIPTION |
+
+            | ----- | ----------- |
+
+            | ssn-mismatch | The SSN on the document does not match the SSN on the request. |
+
+            | employer-name-mismatch | The employer name on the document may not match the employer name on the request. |
+
+            | page-edited | The form may have been created by a recognized software package. |
+
+            | other-edits | The form may have been edited with a recognized software package. |
+
+            | online-generated-paystub | The pay stub format may match a template from sites known to create paystubs for a fee. |
+
+            | earnings-edits | The listed earnings may have been edited. |
+
+            | deductions-edits | Current or YTD deductions (including taxes) may have been edited. |
+
+            | pay-frequency-edits | Pay frequency may have been edited. |
+
+            | dollar-amount-edits | One or more of the following dollar amounts may have been changed: Beginning balance, Ending balance, Total deposits, Total withdrawals, Daily balance, Individual amounts, Ledger balances. |
+
+            | employee-taxpayer-id-edits | The employee''s social security number may have been edited. |
+
+            | employee-details-edits | The employee''s marital status may have been edited. |
+
+            | employee-name-edits | The employee''s name may have been edited. |
+
+            | employer-name-edits | The employer’s name may have been edited. |
+
+            | employer-address-edits | The employer’s address may have been edited. |
+
+            | date-edits | One or more of the following dates may have been edited (hire date, pay period, period start date, period end date). |
+
+            | misaligned-text | The field or text may not match the expected alignment compared to the rest of the document. |
+
+            | other | Something else was detected. |'
+        raw_value:
+          type: string
+          description: An unlimited string representation of the value, which may provide more detail when the canonical value is "other".
+      required:
+      - canonical_value
+      - raw_value
+      title: DetectionTypeWrapper
+    GrossIncomeCalculationResultV20231030:
+      type: object
+      properties:
+        average_monthly_net_income:
+          type:
+          - number
+          - 'null'
+          format: double
+        estimated_gross_annual:
+          type:
+          - number
+          - 'null'
+          format: double
+        net_annual:
+          type:
+          - number
+          - 'null'
+          format: double
+      required:
+      - average_monthly_net_income
+      - estimated_gross_annual
+      - net_annual
+      title: GrossIncomeCalculationResultV20231030
+    EmployeeStatusOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/EmployeeStatusOutputWrapperV20231030CanonicalValue'
+          description: 'There are five employment statuses available on the `status` field in
+
+            `Employee`:
+
+
+            | VALUE            | DESCRIPTION                                                         | VERSION INTRODUCED | OLDER VERSION VALUE |
+
+            | ---------------- | ------------------------------------------------------------------- | ------------------ | ------------------- |
+
+            | active           | The employee is currently employed and working for this employer    |                    |                     |
+
+            | inactive         | The employee is not employed at this employer anymore               |                    |                     |
+
+            | unknown          | Truework could not determine the employment status of this employee |                    |                     |
+
+            | furloughed-covid | The employee was furloughed due to COVID-19                         | `2020-12-07`       | inactive            |
+
+            | non-employee     | Truework could not find record of this employee                     | `2020-12-07`       | unknown             |
+
+            | other | No other value describes the employee''s status | `2022-08-01` | N/A |'
+        raw_value:
+          type: string
+          description: An unlimited string representation of the value, which may provide more detail when the canonical value is "other".
+      required:
+      - canonical_value
+      - raw_value
+      title: EmployeeStatusOutputWrapperV20231030
+    _EmployerAnnotation:
+      type: object
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+          format: email
+        name:
+          type:
+          - string
+          - 'null'
+        phone_number:
+          type:
+          - string
+          - 'null'
+      required:
+      - email
+      - name
+      - phone_number
+      title: _EmployerAnnotation
+    ReportIncomeAnalyticsV20231030:
+      type: object
+      properties:
+        annualized_income:
+          oneOf:
+          - $ref: '#/components/schemas/_AnnualizedIncome'
+          - type: 'null'
+        income_volatility:
+          oneOf:
+          - $ref: '#/components/schemas/_IncomeVolatility'
+          - type: 'null'
+      required:
+      - annualized_income
+      - income_volatility
+      title: ReportIncomeAnalyticsV20231030
+    EmployeeV20231030:
+      type: object
+      properties:
+        address:
+          oneOf:
+          - $ref: '#/components/schemas/AddressV20220801-Output'
+          - type: 'null'
+        earnings:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EarningsV20231030'
+        email:
+          type:
+          - string
+          - 'null'
+          format: email
+        first_name:
+          type:
+          - string
+          - 'null'
+        hired_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: This is the most recent hiring date of the employee. If the employee has been rehired, this date will be updated to the most recent hiring date.
+        last_name:
+          type:
+          - string
+          - 'null'
+        on_leave_date:
+          type:
+          - string
+          - 'null'
+          format: date
+        original_hired_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: This is the original hiring date of the employee. If the employee has been rehired, this date will not change.
+        positions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PositionV20231030'
+        salary:
+          oneOf:
+          - $ref: '#/components/schemas/SalaryV20231030'
+          - type: 'null'
+        social_security_number:
+          type:
+          - string
+          - 'null'
+          description: The employee's obfuscated social security number
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/EmployeeStatusOutputWrapperV20231030'
+          - type: 'null'
+        status_detail:
+          oneOf:
+          - $ref: '#/components/schemas/EmployeeStatusDetailOutputWrapperV20231030'
+          - type: 'null'
+        termination_date:
+          type:
+          - string
+          - 'null'
+          format: date
+      required:
+      - address
+      - earnings
+      - email
+      - first_name
+      - hired_date
+      - last_name
+      - on_leave_date
+      - original_hired_date
+      - positions
+      - salary
+      - social_security_number
+      - status
+      - status_detail
+      - termination_date
+      title: EmployeeV20231030
+    RespondentV20231030:
+      type: object
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+        full_name:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+      required:
+      - email
+      - full_name
+      - title
+      title: RespondentV20231030
+    _IncomeVolatility:
+      type: object
+      properties:
+        gross_income_volatility:
+          type:
+          - string
+          - 'null'
+          description: Coefficient of variation of the aggregated per pay period gross earnings for a given list of paystubs.
+      required:
+      - gross_income_volatility
+      title: _IncomeVolatility
+    PaystubV20231030:
+      type: object
+      properties:
+        base:
+          type:
+          - string
+          - 'null'
+          description: Pre-deduction base pay
+        bonus:
+          type:
+          - string
+          - 'null'
+          description: Pre-deduction bonus pay
+        commission:
+          type:
+          - string
+          - 'null'
+          description: Pre-deduction commission pay
+        gross:
+          type:
+          - string
+          - 'null'
+          description: Total pre-deduction earnings for this pay period
+        id:
+          type: string
+          description: ID for this paystub in Truework
+        net:
+          type:
+          - string
+          - 'null'
+          description: Total post-deduction earnings for this pay period
+        other:
+          type:
+          - string
+          - 'null'
+          description: Pre-deduction other pay
+        overtime:
+          type:
+          - string
+          - 'null'
+          description: Pre-deduction overtime pay
+        pay_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Date of paycheck delivery
+        pay_period_end_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: Last day of pay period
+        pay_period_hours:
+          type:
+          - string
+          - 'null'
+          description: Hours worked in this pay period
+        pay_period_start_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          description: First day of pay period
+        reference_id:
+          type:
+          - string
+          - 'null'
+          description: ID for this paystub from the payroll provider
+      required:
+      - base
+      - bonus
+      - commission
+      - gross
+      - id
+      - net
+      - other
+      - overtime
+      - pay_date
+      - pay_period_end_date
+      - pay_period_hours
+      - pay_period_start_date
+      - reference_id
+      title: PaystubV20231030
+    PositionV20231030:
+      type: object
+      properties:
+        employment_type:
+          oneOf:
+          - $ref: '#/components/schemas/EmploymentTypeOutputWrapperV20231030'
+          - type: 'null'
+        end_date:
+          type:
+          - string
+          - 'null'
+          format: date
+        start_date:
+          type:
+          - string
+          - 'null'
+          format: date
+        title:
+          type:
+          - string
+          - 'null'
+      required:
+      - employment_type
+      - end_date
+      - start_date
+      - title
+      title: PositionV20231030
+    PayRateV20231030:
+      type: object
+      properties:
+        amount:
+          type:
+          - string
+          - 'null'
+          description: The amount the employee gets paid per timeframe defined by the adject unit field.
+        unit:
+          oneOf:
+          - $ref: '#/components/schemas/PayUnitOutputWrapperV20231030'
+          - type: 'null'
+          description: 'The timeframe in which the employee gets paid the amount defined in the adjacent amount field. '
+      required:
+      - amount
+      - unit
+      title: PayRateV20231030
+    Error451:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+      - error
+      title: Error451
     OrderVerificationReportResourceV20231030:
       type: object
       properties:
@@ -680,128 +1074,6 @@ components:
       - respondent
       - verification_request
       title: OrderVerificationReportResourceV20231030
-    Error403:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error403
-    _EmployeeAnnotation:
-      type: object
-      properties:
-        positions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/_PositionAnnotation'
-        salary:
-          oneOf:
-          - $ref: '#/components/schemas/_SalaryAnnotation'
-          - type: 'null'
-        status:
-          oneOf:
-          - $ref: '#/components/schemas/EmployeeStatusOutputWrapperV20231030'
-          - type: 'null'
-        status_detail:
-          oneOf:
-          - $ref: '#/components/schemas/EmployeeStatusDetailOutputWrapperV20231030'
-          - type: 'null'
-      required:
-      - positions
-      - salary
-      - status
-      - status_detail
-      title: _EmployeeAnnotation
-    CompletedByMethodOutputWrapperV20231030:
-      type: object
-      properties:
-        canonical_value:
-          $ref: '#/components/schemas/CompletedByMethodOutputWrapperV20231030CanonicalValue'
-          description: A limited enum representation of the value, which will not be extended without a version bump.
-        raw_value:
-          type: string
-          description: An unlimited string representation of the value, which may provide more detail when the canonical value is "other".
-      required:
-      - canonical_value
-      - raw_value
-      title: CompletedByMethodOutputWrapperV20231030
-    RespondentV20231030:
-      type: object
-      properties:
-        email:
-          type:
-          - string
-          - 'null'
-        full_name:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-      required:
-      - email
-      - full_name
-      - title
-      title: RespondentV20231030
-    _AnnualizedIncome:
-      type: object
-      properties:
-        base_amount:
-          oneOf:
-          - $ref: '#/components/schemas/MoneyAmountVMinimumVersion'
-          - type: 'null'
-          description: Represents annualized income for recurring income, like salary. In rare cases due to data quality issues, gross amount is returned without base amount or vice versa.
-        gross_amount:
-          oneOf:
-          - $ref: '#/components/schemas/MoneyAmountVMinimumVersion'
-          - type: 'null'
-          description: Represents base annualized income plus variable income sources. In rare cases due to data quality issues, gross amount is returned without base amount or vice versa.
-        short_employment_warning:
-          type: boolean
-          description: True if the employee recently started at this position, which could impact annualized income accuracy.
-        stale_data_warning:
-          type: boolean
-          description: True if the data on this report is not fresh, which could impact annualized income accuracy.
-        variable_income_warning:
-          type: boolean
-          description: True if the employees income has high variability, which could impact annualized income accuracy.
-      required:
-      - base_amount
-      - gross_amount
-      - short_employment_warning
-      - stale_data_warning
-      - variable_income_warning
-      title: _AnnualizedIncome
-    SalaryV20231030:
-      type: object
-      properties:
-        hours_per_week:
-          type:
-          - string
-          - 'null'
-        pay_frequency:
-          oneOf:
-          - $ref: '#/components/schemas/PayFrequencyOutputWrapperV20231030'
-          - type: 'null'
-          description: The frequency by which the employee is paid.
-        pay_rate:
-          oneOf:
-          - $ref: '#/components/schemas/PayRateV20231030'
-          - type: 'null'
-          description: Describes the amount and unit that determine the employees pay.
-        reduced_covid:
-          $ref: '#/components/schemas/ReducedCovidVMinimumVersion'
-      required:
-      - hours_per_week
-      - pay_frequency
-      - pay_rate
-      - reduced_covid
-      title: SalaryV20231030
     _InvalidRequestError:
       type: object
       properties:
@@ -811,29 +1083,21 @@ components:
       required:
       - message
       title: _InvalidRequestError
-    EligibilityTypeOutputWrapperV20231030:
-      type: object
-      properties:
-        canonical_value:
-          $ref: '#/components/schemas/EligibilityTypeOutputWrapperV20231030CanonicalValue'
-          description: A limited enum representation of the value, which will not be extended without a version bump.
-        raw_value:
-          type: string
-          description: An unlimited string representation of the value, which may provide more detail when the canonical value is "other".
-      required:
-      - canonical_value
-      - raw_value
-      title: EligibilityTypeOutputWrapperV20231030
-    CompletedByMethodOutputWrapperV20231030CanonicalValue:
+    GovernmentIdTypeOutputWrapperV20231030CanonicalValue:
       type: string
       enum:
-      - instant
-      - credentials
-      - smart-outreach
-      - third-party-providers
+      - us-fein
       - other
       description: A limited enum representation of the value, which will not be extended without a version bump.
-      title: CompletedByMethodOutputWrapperV20231030CanonicalValue
+      title: GovernmentIdTypeOutputWrapperV20231030CanonicalValue
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
+      title: Error
     EmployerV20231030:
       type: object
       properties:
@@ -856,402 +1120,19 @@ components:
       - government_ids
       - name
       title: EmployerV20231030
-    EmploymentTypeOutputWrapperV20231030:
+    Error500:
       type: object
       properties:
-        canonical_value:
-          $ref: '#/components/schemas/EmploymentTypeOutputWrapperV20231030CanonicalValue'
-          description: '| VALUE             | DESCRIPTION                      | VERSION INTRODUCED | OLDER VERSION VALUE |
-
-            | ----------------- | -------------------------------- | ------------------ | ------------------- |
-
-            | regular-full-time | Regular full time                |                    |                     |
-
-            | regular-part-time | Regular part time                |                    |                     |
-
-            | contractor-1099   | Contractor                       |                    |                     |
-
-            | no-answer         | Question was not answered        | `2020-12-07`       | other               |
-
-            | other             | Other or unknown employment type |                    |                     |'
-        raw_value:
-          type: string
-          description: An unlimited string representation of the value, which may provide more detail when the canonical value is "other".
+        error:
+          $ref: '#/components/schemas/Error'
       required:
-      - canonical_value
-      - raw_value
-      title: EmploymentTypeOutputWrapperV20231030
+      - error
+      title: Error500
     CurrencyVMinimumVersion:
       type: string
       enum:
       - USD
       title: CurrencyVMinimumVersion
-    OrderAnnotationsV20231030:
-      type: object
-      properties:
-        applicant:
-          oneOf:
-          - $ref: '#/components/schemas/_OrderAnnotation'
-          - type: 'null'
-        verifier:
-          oneOf:
-          - $ref: '#/components/schemas/_OrderAnnotation'
-          - type: 'null'
-      required:
-      - applicant
-      - verifier
-      title: OrderAnnotationsV20231030
-    VerificationRequestV20231030:
-      type: object
-      properties:
-        created:
-          type: string
-          format: date-time
-        id:
-          type: string
-        type:
-          $ref: '#/components/schemas/VerificationTypeV20231030'
-      required:
-      - created
-      - id
-      - type
-      title: VerificationRequestV20231030
-    PayUnitOutputWrapperV20231030CanonicalValue:
-      type: string
-      enum:
-      - annually
-      - daily
-      - semiweekly
-      - monthly
-      - weekly
-      - biweekly
-      - bimonthly
-      - semimonthly
-      - quarterly
-      - semiannually
-      - thirteen-monthly
-      - fourteen-monthly
-      - hourly
-      - variable
-      - other
-      description: A limited enum representation of the value, which will not be extended without a version bump.
-      title: PayUnitOutputWrapperV20231030CanonicalValue
-    _OrderAnnotation:
-      type: object
-      properties:
-        employee:
-          oneOf:
-          - $ref: '#/components/schemas/_EmployeeAnnotation'
-          - type: 'null'
-        employer:
-          oneOf:
-          - $ref: '#/components/schemas/_EmployerAnnotation'
-          - type: 'null'
-      required:
-      - employee
-      - employer
-      title: _OrderAnnotation
-    _SalaryAnnotation:
-      type: object
-      properties:
-        pay_rate:
-          oneOf:
-          - $ref: '#/components/schemas/PayRateV20231030'
-          - type: 'null'
-      required:
-      - pay_rate
-      title: _SalaryAnnotation
-    _GovernmentId:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          $ref: '#/components/schemas/GovernmentIdTypeOutputWrapperV20231030'
-      required:
-      - id
-      - type
-      title: _GovernmentId
-    DetectionTypeWrapper:
-      type: object
-      properties:
-        canonical_value:
-          $ref: '#/components/schemas/DetectionTypeWrapperCanonicalValue'
-          description: 'The type of detection that was found on the document.
-
-
-            | VALUE | DESCRIPTION |
-
-            | ----- | ----------- |
-
-            | ssn-mismatch | The SSN on the document does not match the SSN on the request. |
-
-            | employer-name-mismatch | The employer name on the document may not match the employer name on the request. |
-
-            | page-edited | The form may have been created by a recognized software package. |
-
-            | other-edits | The form may have been edited with a recognized software package. |
-
-            | online-generated-paystub | The pay stub format may match a template from sites known to create paystubs for a fee. |
-
-            | earnings-edits | The listed earnings may have been edited. |
-
-            | deductions-edits | Current or YTD deductions (including taxes) may have been edited. |
-
-            | pay-frequency-edits | Pay frequency may have been edited. |
-
-            | dollar-amount-edits | One or more of the following dollar amounts may have been changed: Beginning balance, Ending balance, Total deposits, Total withdrawals, Daily balance, Individual amounts, Ledger balances. |
-
-            | employee-taxpayer-id-edits | The employee''s social security number may have been edited. |
-
-            | employee-details-edits | The employee''s marital status may have been edited. |
-
-            | employee-name-edits | The employee''s name may have been edited. |
-
-            | employer-name-edits | The employer’s name may have been edited. |
-
-            | employer-address-edits | The employer’s address may have been edited. |
-
-            | date-edits | One or more of the following dates may have been edited (hire date, pay period, period start date, period end date). |
-
-            | misaligned-text | The field or text may not match the expected alignment compared to the rest of the document. |
-
-            | other | Something else was detected. |'
-        raw_value:
-          type: string
-          description: An unlimited string representation of the value, which may provide more detail when the canonical value is "other".
-      required:
-      - canonical_value
-      - raw_value
-      title: DetectionTypeWrapper
-    DisputeV20231030:
-      type: object
-      properties:
-        created:
-          type: string
-          format: date-time
-        description:
-          type:
-          - string
-          - 'null'
-          description: Description of dispute
-        id:
-          type: string
-          description: ID for this dispute in Truework
-        reference_id:
-          type:
-          - string
-          - 'null'
-          description: ID for this dispute to be displayed and referenced outside of this API
-      required:
-      - created
-      - description
-      - id
-      - reference_id
-      title: DisputeV20231030
-    Error451:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error451
-    ReducedCovidVMinimumVersion:
-      type: string
-      enum:
-      - 'yes'
-      - 'no'
-      - unknown
-      title: ReducedCovidVMinimumVersion
-    VerificationTypeV20231030:
-      type: string
-      enum:
-      - employment-income
-      - employment
-      - tenant-screening
-      - assets
-      - self-employment
-      title: VerificationTypeV20231030
-    FinancialInstitutionAccountSnapshotV20231030:
-      type: object
-      properties:
-        available_balance:
-          type:
-          - number
-          - 'null'
-          format: double
-        average_monthly_balance:
-          type:
-          - number
-          - 'null'
-          format: double
-        balance:
-          type:
-          - number
-          - 'null'
-          format: double
-        balance_date:
-          type:
-          - string
-          - 'null'
-          format: date
-        currency_code:
-          type:
-          - string
-          - 'null'
-        id:
-          type: string
-        tot_number_days_since_most_recent_insufficient_funds_fee_debit_tx_account:
-          type:
-          - integer
-          - 'null'
-        tot_number_insufficient_funds_fee_debit_tx_account:
-          type:
-          - integer
-          - 'null'
-        tot_number_insufficient_funds_fee_debit_tx_over_2_months_account:
-          type:
-          - integer
-          - 'null'
-      required:
-      - available_balance
-      - average_monthly_balance
-      - balance
-      - balance_date
-      - currency_code
-      - id
-      - tot_number_days_since_most_recent_insufficient_funds_fee_debit_tx_account
-      - tot_number_insufficient_funds_fee_debit_tx_account
-      - tot_number_insufficient_funds_fee_debit_tx_over_2_months_account
-      title: FinancialInstitutionAccountSnapshotV20231030
-    _PositionAnnotation:
-      type: object
-      properties:
-        end_date:
-          type:
-          - string
-          - 'null'
-          format: date
-        start_date:
-          type:
-          - string
-          - 'null'
-          format: date
-        title:
-          type:
-          - string
-          - 'null'
-      required:
-      - end_date
-      - start_date
-      - title
-      title: _PositionAnnotation
-    DocumentDetection:
-      type: object
-      properties:
-        count:
-          type: integer
-        outcome:
-          $ref: '#/components/schemas/DetectionOutcomeWrapper'
-        type:
-          $ref: '#/components/schemas/DetectionTypeWrapper'
-      required:
-      - count
-      - outcome
-      - type
-      title: DocumentDetection
-    DetectionTypeWrapperCanonicalValue:
-      type: string
-      enum:
-      - ssn-mismatch
-      - employer-name-mismatch
-      - page-edited
-      - other-edits
-      - online-generated-paystub
-      - earnings-edits
-      - deductions-edits
-      - pay-frequency-edits
-      - dollar-amount-edits
-      - employee-taxpayer-id-edits
-      - employee-details-edits
-      - employee-name-edits
-      - employer-name-edits
-      - employer-address-edits
-      - date-edits
-      - misaligned-text
-      - other
-      description: 'The type of detection that was found on the document.
-
-
-        | VALUE | DESCRIPTION |
-
-        | ----- | ----------- |
-
-        | ssn-mismatch | The SSN on the document does not match the SSN on the request. |
-
-        | employer-name-mismatch | The employer name on the document may not match the employer name on the request. |
-
-        | page-edited | The form may have been created by a recognized software package. |
-
-        | other-edits | The form may have been edited with a recognized software package. |
-
-        | online-generated-paystub | The pay stub format may match a template from sites known to create paystubs for a fee. |
-
-        | earnings-edits | The listed earnings may have been edited. |
-
-        | deductions-edits | Current or YTD deductions (including taxes) may have been edited. |
-
-        | pay-frequency-edits | Pay frequency may have been edited. |
-
-        | dollar-amount-edits | One or more of the following dollar amounts may have been changed: Beginning balance, Ending balance, Total deposits, Total withdrawals, Daily balance, Individual amounts, Ledger balances. |
-
-        | employee-taxpayer-id-edits | The employee''s social security number may have been edited. |
-
-        | employee-details-edits | The employee''s marital status may have been edited. |
-
-        | employee-name-edits | The employee''s name may have been edited. |
-
-        | employer-name-edits | The employer’s name may have been edited. |
-
-        | employer-address-edits | The employer’s address may have been edited. |
-
-        | date-edits | One or more of the following dates may have been edited (hire date, pay period, period start date, period end date). |
-
-        | misaligned-text | The field or text may not match the expected alignment compared to the rest of the document. |
-
-        | other | Something else was detected. |'
-      title: DetectionTypeWrapperCanonicalValue
-    ReportsVerificationReportIdGetParametersAccept:
-      type: string
-      enum:
-      - application/json
-      - application/pdf
-      - application/json; version=2023-10-30
-      - application/pdf; version=2023-10-30
-      default: application/json
-      title: ReportsVerificationReportIdGetParametersAccept
-    Error406:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error406
-    EligibilityProviderOutputWrapperV20231030:
-      type: object
-      properties:
-        canonical_value:
-          $ref: '#/components/schemas/EligibilityProviderOutputWrapperV20231030CanonicalValue'
-          description: A limited enum representation of the value, which will not be extended without a version bump.
-        raw_value:
-          type: string
-          description: An unlimited string representation of the value, which may provide more detail when the canonical value is "other".
-      required:
-      - canonical_value
-      - raw_value
-      title: EligibilityProviderOutputWrapperV20231030
     EligibilityV20231030:
       type: object
       properties:
@@ -1279,21 +1160,22 @@ components:
       - reference_id
       - type
       title: EligibilityV20231030
-    ReportIncomeAnalyticsV20231030:
+    Error404:
       type: object
       properties:
-        annualized_income:
-          oneOf:
-          - $ref: '#/components/schemas/_AnnualizedIncome'
-          - type: 'null'
-        income_volatility:
-          oneOf:
-          - $ref: '#/components/schemas/_IncomeVolatility'
-          - type: 'null'
+        error:
+          $ref: '#/components/schemas/Error'
       required:
-      - annualized_income
-      - income_volatility
-      title: ReportIncomeAnalyticsV20231030
+      - error
+      title: Error404
+    Error401:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+      - error
+      title: Error401
     EmployeeStatusDetailOutputWrapperV20231030CanonicalValue:
       type: string
       enum:
@@ -1401,17 +1283,117 @@ components:
 
         | other              | No other value exemplifies Verification Status Detail               | other            |'
       title: EmployeeStatusDetailOutputWrapperV20231030CanonicalValue
-    _IncomeVolatility:
+    MoneyAmountVMinimumVersion:
       type: object
       properties:
-        gross_income_volatility:
+        amount:
           type:
           - string
           - 'null'
-          description: Coefficient of variation of the aggregated per pay period gross earnings for a given list of paystubs.
+        currency:
+          oneOf:
+          - $ref: '#/components/schemas/CurrencyVMinimumVersion'
+          - type: 'null'
       required:
-      - gross_income_volatility
-      title: _IncomeVolatility
+      - amount
+      - currency
+      title: MoneyAmountVMinimumVersion
+    VerificationRequestV20231030:
+      type: object
+      properties:
+        created:
+          type: string
+          format: date-time
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/VerificationTypeV20231030'
+      required:
+      - created
+      - id
+      - type
+      title: VerificationRequestV20231030
+    DetectionTypeWrapperCanonicalValue:
+      type: string
+      enum:
+      - ssn-mismatch
+      - employer-name-mismatch
+      - page-edited
+      - other-edits
+      - online-generated-paystub
+      - earnings-edits
+      - deductions-edits
+      - pay-frequency-edits
+      - dollar-amount-edits
+      - employee-taxpayer-id-edits
+      - employee-details-edits
+      - employee-name-edits
+      - employer-name-edits
+      - employer-address-edits
+      - date-edits
+      - misaligned-text
+      - other
+      description: 'The type of detection that was found on the document.
+
+
+        | VALUE | DESCRIPTION |
+
+        | ----- | ----------- |
+
+        | ssn-mismatch | The SSN on the document does not match the SSN on the request. |
+
+        | employer-name-mismatch | The employer name on the document may not match the employer name on the request. |
+
+        | page-edited | The form may have been created by a recognized software package. |
+
+        | other-edits | The form may have been edited with a recognized software package. |
+
+        | online-generated-paystub | The pay stub format may match a template from sites known to create paystubs for a fee. |
+
+        | earnings-edits | The listed earnings may have been edited. |
+
+        | deductions-edits | Current or YTD deductions (including taxes) may have been edited. |
+
+        | pay-frequency-edits | Pay frequency may have been edited. |
+
+        | dollar-amount-edits | One or more of the following dollar amounts may have been changed: Beginning balance, Ending balance, Total deposits, Total withdrawals, Daily balance, Individual amounts, Ledger balances. |
+
+        | employee-taxpayer-id-edits | The employee''s social security number may have been edited. |
+
+        | employee-details-edits | The employee''s marital status may have been edited. |
+
+        | employee-name-edits | The employee''s name may have been edited. |
+
+        | employer-name-edits | The employer’s name may have been edited. |
+
+        | employer-address-edits | The employer’s address may have been edited. |
+
+        | date-edits | One or more of the following dates may have been edited (hire date, pay period, period start date, period end date). |
+
+        | misaligned-text | The field or text may not match the expected alignment compared to the rest of the document. |
+
+        | other | Something else was detected. |'
+      title: DetectionTypeWrapperCanonicalValue
+    PayFrequencyOutputWrapperV20231030CanonicalValue:
+      type: string
+      enum:
+      - annually
+      - daily
+      - semiweekly
+      - monthly
+      - weekly
+      - biweekly
+      - bimonthly
+      - semimonthly
+      - quarterly
+      - semiannually
+      - thirteen-monthly
+      - fourteen-monthly
+      - hourly
+      - variable
+      - other
+      description: A limited enum representation of the value, which will not be extended without a version bump.
+      title: PayFrequencyOutputWrapperV20231030CanonicalValue
     EligibilityProviderOutputWrapperV20231030CanonicalValue:
       type: string
       enum:
@@ -1420,46 +1402,109 @@ components:
       - other
       description: A limited enum representation of the value, which will not be extended without a version bump.
       title: EligibilityProviderOutputWrapperV20231030CanonicalValue
-    EmployeeStatusOutputWrapperV20231030:
+    PayFrequencyOutputWrapperV20231030:
       type: object
       properties:
         canonical_value:
-          $ref: '#/components/schemas/EmployeeStatusOutputWrapperV20231030CanonicalValue'
-          description: 'There are five employment statuses available on the `status` field in
-
-            `Employee`:
-
-
-            | VALUE            | DESCRIPTION                                                         | VERSION INTRODUCED | OLDER VERSION VALUE |
-
-            | ---------------- | ------------------------------------------------------------------- | ------------------ | ------------------- |
-
-            | active           | The employee is currently employed and working for this employer    |                    |                     |
-
-            | inactive         | The employee is not employed at this employer anymore               |                    |                     |
-
-            | unknown          | Truework could not determine the employment status of this employee |                    |                     |
-
-            | furloughed-covid | The employee was furloughed due to COVID-19                         | `2020-12-07`       | inactive            |
-
-            | non-employee     | Truework could not find record of this employee                     | `2020-12-07`       | unknown             |
-
-            | other | No other value describes the employee''s status | `2022-08-01` | N/A |'
+          $ref: '#/components/schemas/PayFrequencyOutputWrapperV20231030CanonicalValue'
+          description: A limited enum representation of the value, which will not be extended without a version bump.
         raw_value:
           type: string
           description: An unlimited string representation of the value, which may provide more detail when the canonical value is "other".
       required:
       - canonical_value
       - raw_value
-      title: EmployeeStatusOutputWrapperV20231030
-    Error429:
+      title: PayFrequencyOutputWrapperV20231030
+    EarningsV20231030:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/Error'
+        base:
+          type:
+          - string
+          - 'null'
+        bonus:
+          type:
+          - string
+          - 'null'
+        commission:
+          type:
+          - string
+          - 'null'
+        other:
+          type:
+          - string
+          - 'null'
+        overtime:
+          type:
+          - string
+          - 'null'
+        total:
+          type:
+          - string
+          - 'null'
+        year:
+          type:
+          - string
+          - 'null'
       required:
-      - error
-      title: Error429
+      - base
+      - bonus
+      - commission
+      - other
+      - overtime
+      - total
+      - year
+      title: EarningsV20231030
+    DetectionOutcomeWrapper:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/DetectionOutcomeWrapperCanonicalValue'
+          description: 'The outcome of the detection rule.
+
+
+            | VALUE | DESCRIPTION |
+
+            | ----- | ----------- |
+
+            | passed | The detection rule passed. |
+
+            | failed | The detection rule failed. |
+
+            | not-run | The detection rule was not run. |
+
+            | other | Another outcome occurred. |'
+        raw_value:
+          type: string
+          description: An unlimited string representation of the value, which may provide more detail when the canonical value is "other".
+      required:
+      - canonical_value
+      - raw_value
+      title: DetectionOutcomeWrapper
+    VerificationTypeV20231030:
+      type: string
+      enum:
+      - employment-income
+      - employment
+      - tenant-screening
+      - assets
+      - self-employment
+      title: VerificationTypeV20231030
+    OrderAnnotationsV20231030:
+      type: object
+      properties:
+        applicant:
+          oneOf:
+          - $ref: '#/components/schemas/_OrderAnnotation'
+          - type: 'null'
+        verifier:
+          oneOf:
+          - $ref: '#/components/schemas/_OrderAnnotation'
+          - type: 'null'
+      required:
+      - applicant
+      - verifier
+      title: OrderAnnotationsV20231030
     FinancialInstitutionAccountV20231030:
       type: object
       properties:
@@ -1506,6 +1551,71 @@ components:
       - owner_name
       - snapshots
       title: FinancialInstitutionAccountV20231030
+    FinancialInstitutionIncomeStreamV20231030:
+      type: object
+      properties:
+        age_in_months:
+          type:
+          - integer
+          - 'null'
+        average_monthly_net_income:
+          type:
+          - number
+          - 'null'
+          format: double
+        confidence:
+          type: integer
+        confidence_level:
+          type: string
+        end_date:
+          type:
+          - string
+          - 'null'
+          format: date
+        estimated_gross_annual:
+          type:
+          - number
+          - 'null'
+          format: double
+        frequency_days:
+          type:
+          - integer
+          - 'null'
+        id:
+          type: string
+        name:
+          type: string
+        net_annual:
+          type:
+          - number
+          - 'null'
+          format: double
+        periods:
+          type: array
+          items:
+            $ref: '#/components/schemas/FinancialInstitutionIncomeStreamPeriodV20231030'
+        start_date:
+          type:
+          - string
+          - 'null'
+          format: date
+        status:
+          type: string
+      required:
+      - age_in_months
+      - average_monthly_net_income
+      - confidence
+      - confidence_level
+      - end_date
+      - estimated_gross_annual
+      - frequency_days
+      - id
+      - name
+      - net_annual
+      - periods
+      - start_date
+      - status
+      title: FinancialInstitutionIncomeStreamV20231030
     EmploymentTypeOutputWrapperV20231030CanonicalValue:
       type: string
       enum:
@@ -1528,14 +1638,212 @@ components:
 
         | other             | Other or unknown employment type |                    |                     |'
       title: EmploymentTypeOutputWrapperV20231030CanonicalValue
-    Error401:
+    Error403:
       type: object
       properties:
         error:
           $ref: '#/components/schemas/Error'
       required:
       - error
-      title: Error401
+      title: Error403
+    Error429:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+      - error
+      title: Error429
+    ReportsVerificationReportIdGetParametersAccept:
+      type: string
+      enum:
+      - application/json
+      - application/pdf
+      - application/json; version=2023-10-30
+      - application/pdf; version=2023-10-30
+      default: application/json
+      title: ReportsVerificationReportIdGetParametersAccept
+    EmploymentTypeOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/EmploymentTypeOutputWrapperV20231030CanonicalValue'
+          description: '| VALUE             | DESCRIPTION                      | VERSION INTRODUCED | OLDER VERSION VALUE |
+
+            | ----------------- | -------------------------------- | ------------------ | ------------------- |
+
+            | regular-full-time | Regular full time                |                    |                     |
+
+            | regular-part-time | Regular part time                |                    |                     |
+
+            | contractor-1099   | Contractor                       |                    |                     |
+
+            | no-answer         | Question was not answered        | `2020-12-07`       | other               |
+
+            | other             | Other or unknown employment type |                    |                     |'
+        raw_value:
+          type: string
+          description: An unlimited string representation of the value, which may provide more detail when the canonical value is "other".
+      required:
+      - canonical_value
+      - raw_value
+      title: EmploymentTypeOutputWrapperV20231030
+    _PositionAnnotation:
+      type: object
+      properties:
+        end_date:
+          type:
+          - string
+          - 'null'
+          format: date
+        start_date:
+          type:
+          - string
+          - 'null'
+          format: date
+        title:
+          type:
+          - string
+          - 'null'
+      required:
+      - end_date
+      - start_date
+      - title
+      title: _PositionAnnotation
+    FinancialInstitutionAccountSnapshotV20231030:
+      type: object
+      properties:
+        available_balance:
+          type:
+          - number
+          - 'null'
+          format: double
+        average_monthly_balance:
+          type:
+          - number
+          - 'null'
+          format: double
+        balance:
+          type:
+          - number
+          - 'null'
+          format: double
+        balance_date:
+          type:
+          - string
+          - 'null'
+          format: date
+        currency_code:
+          type:
+          - string
+          - 'null'
+        id:
+          type: string
+        tot_number_days_since_most_recent_insufficient_funds_fee_debit_tx_account:
+          type:
+          - integer
+          - 'null'
+        tot_number_insufficient_funds_fee_debit_tx_account:
+          type:
+          - integer
+          - 'null'
+        tot_number_insufficient_funds_fee_debit_tx_over_2_months_account:
+          type:
+          - integer
+          - 'null'
+      required:
+      - available_balance
+      - average_monthly_balance
+      - balance
+      - balance_date
+      - currency_code
+      - id
+      - tot_number_days_since_most_recent_insufficient_funds_fee_debit_tx_account
+      - tot_number_insufficient_funds_fee_debit_tx_account
+      - tot_number_insufficient_funds_fee_debit_tx_over_2_months_account
+      title: FinancialInstitutionAccountSnapshotV20231030
+    _OrderAnnotation:
+      type: object
+      properties:
+        employee:
+          oneOf:
+          - $ref: '#/components/schemas/_EmployeeAnnotation'
+          - type: 'null'
+        employer:
+          oneOf:
+          - $ref: '#/components/schemas/_EmployerAnnotation'
+          - type: 'null'
+      required:
+      - employee
+      - employer
+      title: _OrderAnnotation
+    ApplicantDocumentMetadataV20220801:
+      type: object
+      properties:
+        detections:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentDetection'
+          description: A list of fraud detections that were run on the document. If a detection is not present in the list it either passed or was not run.
+        id:
+          type: string
+        url:
+          type: string
+          format: uri
+          description: A URL where the document content can be downloaded via an authenticated GET request.
+      required:
+      - detections
+      - id
+      - url
+      title: ApplicantDocumentMetadataV20220801
+    AddressV20220801-Output:
+      type: object
+      properties:
+        address:
+          type:
+          - string
+          - 'null'
+        city:
+          type:
+          - string
+          - 'null'
+        country_code:
+          type:
+          - string
+          - 'null'
+        country_subdivision_code:
+          type:
+          - string
+          - 'null'
+        extended_address:
+          type:
+          - string
+          - 'null'
+        postal_code:
+          type:
+          - string
+          - 'null'
+      required:
+      - address
+      - city
+      - country_code
+      - country_subdivision_code
+      - extended_address
+      - postal_code
+      title: AddressV20220801-Output
+    EligibilityTypeOutputWrapperV20231030:
+      type: object
+      properties:
+        canonical_value:
+          $ref: '#/components/schemas/EligibilityTypeOutputWrapperV20231030CanonicalValue'
+          description: A limited enum representation of the value, which will not be extended without a version bump.
+        raw_value:
+          type: string
+          description: An unlimited string representation of the value, which may provide more detail when the canonical value is "other".
+      required:
+      - canonical_value
+      - raw_value
+      title: EligibilityTypeOutputWrapperV20231030
     Error501:
       type: object
       properties:
@@ -1544,314 +1852,6 @@ components:
       required:
       - error
       title: Error501
-    EmployeeV20231030:
-      type: object
-      properties:
-        address:
-          oneOf:
-          - $ref: '#/components/schemas/AddressV20220801-Output'
-          - type: 'null'
-        earnings:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EarningsV20231030'
-        email:
-          type:
-          - string
-          - 'null'
-          format: email
-        first_name:
-          type:
-          - string
-          - 'null'
-        hired_date:
-          type:
-          - string
-          - 'null'
-          format: date
-          description: This is the most recent hiring date of the employee. If the employee has been rehired, this date will be updated to the most recent hiring date.
-        last_name:
-          type:
-          - string
-          - 'null'
-        on_leave_date:
-          type:
-          - string
-          - 'null'
-          format: date
-        original_hired_date:
-          type:
-          - string
-          - 'null'
-          format: date
-          description: This is the original hiring date of the employee. If the employee has been rehired, this date will not change.
-        positions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PositionV20231030'
-        salary:
-          oneOf:
-          - $ref: '#/components/schemas/SalaryV20231030'
-          - type: 'null'
-        social_security_number:
-          type:
-          - string
-          - 'null'
-          description: The employee's obfuscated social security number
-        status:
-          oneOf:
-          - $ref: '#/components/schemas/EmployeeStatusOutputWrapperV20231030'
-          - type: 'null'
-        status_detail:
-          oneOf:
-          - $ref: '#/components/schemas/EmployeeStatusDetailOutputWrapperV20231030'
-          - type: 'null'
-        termination_date:
-          type:
-          - string
-          - 'null'
-          format: date
-      required:
-      - address
-      - earnings
-      - email
-      - first_name
-      - hired_date
-      - last_name
-      - on_leave_date
-      - original_hired_date
-      - positions
-      - salary
-      - social_security_number
-      - status
-      - status_detail
-      - termination_date
-      title: EmployeeV20231030
-    EarningsV20231030:
-      type: object
-      properties:
-        base:
-          type:
-          - string
-          - 'null'
-        bonus:
-          type:
-          - string
-          - 'null'
-        commission:
-          type:
-          - string
-          - 'null'
-        other:
-          type:
-          - string
-          - 'null'
-        overtime:
-          type:
-          - string
-          - 'null'
-        total:
-          type:
-          - string
-          - 'null'
-        year:
-          type:
-          - string
-          - 'null'
-      required:
-      - base
-      - bonus
-      - commission
-      - other
-      - overtime
-      - total
-      - year
-      title: EarningsV20231030
-    Error500:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error500
-    PaystubV20231030:
-      type: object
-      properties:
-        base:
-          type:
-          - string
-          - 'null'
-          description: Pre-deduction base pay
-        bonus:
-          type:
-          - string
-          - 'null'
-          description: Pre-deduction bonus pay
-        commission:
-          type:
-          - string
-          - 'null'
-          description: Pre-deduction commission pay
-        gross:
-          type:
-          - string
-          - 'null'
-          description: Total pre-deduction earnings for this pay period
-        id:
-          type: string
-          description: ID for this paystub in Truework
-        net:
-          type:
-          - string
-          - 'null'
-          description: Total post-deduction earnings for this pay period
-        other:
-          type:
-          - string
-          - 'null'
-          description: Pre-deduction other pay
-        overtime:
-          type:
-          - string
-          - 'null'
-          description: Pre-deduction overtime pay
-        pay_date:
-          type:
-          - string
-          - 'null'
-          format: date
-          description: Date of paycheck delivery
-        pay_period_end_date:
-          type:
-          - string
-          - 'null'
-          format: date
-          description: Last day of pay period
-        pay_period_hours:
-          type:
-          - string
-          - 'null'
-          description: Hours worked in this pay period
-        pay_period_start_date:
-          type:
-          - string
-          - 'null'
-          format: date
-          description: First day of pay period
-        reference_id:
-          type:
-          - string
-          - 'null'
-          description: ID for this paystub from the payroll provider
-      required:
-      - base
-      - bonus
-      - commission
-      - gross
-      - id
-      - net
-      - other
-      - overtime
-      - pay_date
-      - pay_period_end_date
-      - pay_period_hours
-      - pay_period_start_date
-      - reference_id
-      title: PaystubV20231030
-    GovernmentIdTypeOutputWrapperV20231030CanonicalValue:
-      type: string
-      enum:
-      - us-fein
-      - other
-      description: A limited enum representation of the value, which will not be extended without a version bump.
-      title: GovernmentIdTypeOutputWrapperV20231030CanonicalValue
-    EmployeeStatusDetailOutputWrapperV20231030:
-      type: object
-      properties:
-        canonical_value:
-          $ref: '#/components/schemas/EmployeeStatusDetailOutputWrapperV20231030CanonicalValue'
-          description: 'The `status_detail` provides more granular information for some `status` values:
-
-
-            | VALUE              | DESCRIPTION                                                         | `Status`         |
-
-            | ------------------ | ------------------------------------------------------------------- | ---------------- |
-
-            | active             | The employee is currently employed and working for this employer    | active           |
-
-            | int-assignment     | The employee is on international assignment                         | active           |
-
-            | casual             | The employee is employed casually                                   | active           |
-
-            | long-term-dis      | The employee is on long term disability                             | active           |
-
-            | sick-leave         | The employee is on sick leave                                       | active           |
-
-            | surviving-spouse   | The employee is a surviving spouse                                  | inactive         |
-
-            | inactive           | The employee is not employed at this employer anymore               | inactive         |
-
-            | on-leave           | The employee is on leave                                            | active           |
-
-            | multiple-positions | The employee has multiple active positions                          | active           |
-
-            | new-employee       | The employee is new                                                 | active           |
-
-            | lay-off            | The employee was laid off                                           | inactive         |
-
-            | part-time          | The employee is currently employed on a part time basis             | active           |
-
-            | retired            | The employee is retired                                             | inactive         |
-
-            | separated          | The employee is separated                                           | inactive         |
-
-            | season             | The employee is seasonal                                            | active           |
-
-            | temporary          | The employee is temporary                                           | active           |
-
-            | intern             | The employee is an intern                                           | active           |
-
-            | transferred        | The employee has been transferred                                   | active           |
-
-            | deceased           | The employee is deceased                                            | inactive         |
-
-            | severed-pay        | The employee has been severed with pay                              | inactive         |
-
-            | on-sabbatical      | The employee is on sabbatical                                       | active           |
-
-            | divested           | The employee is part of a divested population                       | active           |
-
-            | temp-inactive      | The employee is temporarily inactive                                | inactive         |
-
-            | full-time          | The employee is full time                                           | active           |
-
-            | non-emp-ben        | The employee is a non employee beneficiary                          | inactive         |
-
-            | not-assignment     | The employee is not currently on assignment                         | inactive         |
-
-            | not-payroll        | The employee is not currently on payroll                            | inactive         |
-
-            | active-as-needed   | The employee is active as needed                                    | active           |
-
-            | unknown            | Truework could not determine the employment status of this employee | unknown          |
-
-            | furloughed-covid   | The employee was furloughed due to COVID-19                         | furloughed-covid |
-
-            | non-employee       | Truework could not find record of this employee                     | non-employee     |
-
-            | other              | No other value exemplifies Verification Status Detail               | other            |'
-        raw_value:
-          type: string
-          description: An unlimited string representation of the value, which may provide more detail when the canonical value is "other".
-      required:
-      - canonical_value
-      - raw_value
-      title: EmployeeStatusDetailOutputWrapperV20231030
   securitySchemes:
     Bearer:
       type: http
