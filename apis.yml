@@ -134,7 +134,7 @@ apis:
     url: openapi/truework-truework-webhooks-api-openapi.yml
 name: Truework
 tags:
-  - Verification
+  - Verifications
   - Income Verification
   - Employment Verification
   - VOIE
