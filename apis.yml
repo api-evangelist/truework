@@ -185,6 +185,8 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/truework.png
 access: 3rd-Party
 common:
+  - type: Website
+    url: https://www.truework.com/
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/truework/overview
   - type: AgenticAccess
