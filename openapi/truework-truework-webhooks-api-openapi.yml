@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Truework Webhooks API
-  description: 'Webhook event reference for Truework. Subscribers receive `order.completed` events when every verification on an order has finished, and `verification_request.state.change` events as individual verifications transition through their state machine (pending-approval, processing, action-required, completed, canceled, invalid). Each webhook instance is associated with a token delivered in the `X-Truework-Token` header so handlers can authenticate the call.
-
-    '
+  description: Webhook event reference for Truework. Subscribers receive `order.completed` events when every verification on an order has finished, and `verification_request.state.change` events as individual verifications transition through their state machine (pending-approval, processing, action-required, completed, canceled, invalid). Each webhook instance is associated with a token delivered in the `X-Truework-Token` header so handlers can authenticate the call.
   version: 2023-10-30
   contact:
     name: Truework Implementations
@@ -67,75 +65,6 @@ webhooks:
       - Truework Webhooks
 components:
   schemas:
-    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHook:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The ID of the webhook
-        event:
-          $ref: '#/components/schemas/VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHookEvent'
-          description: The event that triggered the webhook
-        target:
-          type: string
-          description: The target of the webhook
-        triggered_at:
-          type: string
-          format: date-time
-          description: Date and time of the event that triggered the webhook
-      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHook
-    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataMetadata:
-      type: object
-      properties: {}
-      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataMetadata
-    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHookEvent:
-      type: string
-      enum:
-      - verification_request.state.change
-      description: The event that triggered the webhook
-      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHookEvent
-    OrderCompletedPostPayloadContentApplicationJsonSchemaData:
-      type: object
-      properties:
-        order_id:
-          type: string
-          description: The ID of the order that was completed
-        metadata:
-          $ref: '#/components/schemas/OrderCompletedPostPayloadContentApplicationJsonSchemaDataMetadata'
-      title: OrderCompletedPostPayloadContentApplicationJsonSchemaData
-    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaData:
-      type: object
-      properties:
-        order_id:
-          type: string
-          description: The ID of the order that contains the verification request
-        state:
-          $ref: '#/components/schemas/VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataState'
-        verification_request_id:
-          type: string
-          description: The ID of the verification request
-        credentials_session_token:
-          type: string
-          description: The ID of the Truework Direct session
-        metadata:
-          $ref: '#/components/schemas/VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataMetadata'
-      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaData
-    OrderCompletedPostPayloadContentApplicationJsonSchemaHookEvent:
-      type: string
-      enum:
-      - order.completed
-      description: The event that triggered the webhook
-      title: OrderCompletedPostPayloadContentApplicationJsonSchemaHookEvent
-    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataState:
-      type: string
-      enum:
-      - pending-approval
-      - processing
-      - action-requred
-      - completed
-      - canceled
-      - invalid
-      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataState
     OrderCompletedPostPayloadContentApplicationJsonSchemaHook:
       type: object
       properties:
@@ -153,7 +82,76 @@ components:
           format: date-time
           description: Date and time of the event that triggered the webhook
       title: OrderCompletedPostPayloadContentApplicationJsonSchemaHook
+    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHook:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The ID of the webhook
+        event:
+          $ref: '#/components/schemas/VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHookEvent'
+          description: The event that triggered the webhook
+        target:
+          type: string
+          description: The target of the webhook
+        triggered_at:
+          type: string
+          format: date-time
+          description: Date and time of the event that triggered the webhook
+      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHook
     OrderCompletedPostPayloadContentApplicationJsonSchemaDataMetadata:
       type: object
       properties: {}
       title: OrderCompletedPostPayloadContentApplicationJsonSchemaDataMetadata
+    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHookEvent:
+      type: string
+      enum:
+      - verification_request.state.change
+      description: The event that triggered the webhook
+      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHookEvent
+    OrderCompletedPostPayloadContentApplicationJsonSchemaHookEvent:
+      type: string
+      enum:
+      - order.completed
+      description: The event that triggered the webhook
+      title: OrderCompletedPostPayloadContentApplicationJsonSchemaHookEvent
+    OrderCompletedPostPayloadContentApplicationJsonSchemaData:
+      type: object
+      properties:
+        order_id:
+          type: string
+          description: The ID of the order that was completed
+        metadata:
+          $ref: '#/components/schemas/OrderCompletedPostPayloadContentApplicationJsonSchemaDataMetadata'
+      title: OrderCompletedPostPayloadContentApplicationJsonSchemaData
+    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataState:
+      type: string
+      enum:
+      - pending-approval
+      - processing
+      - action-requred
+      - completed
+      - canceled
+      - invalid
+      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataState
+    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaData:
+      type: object
+      properties:
+        order_id:
+          type: string
+          description: The ID of the order that contains the verification request
+        state:
+          $ref: '#/components/schemas/VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataState'
+        verification_request_id:
+          type: string
+          description: The ID of the verification request
+        credentials_session_token:
+          type: string
+          description: The ID of the Truework Direct session
+        metadata:
+          $ref: '#/components/schemas/VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataMetadata'
+      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaData
+    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataMetadata:
+      type: object
+      properties: {}
+      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataMetadata

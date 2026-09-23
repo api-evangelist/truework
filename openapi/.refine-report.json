@@ -26,12 +26,14 @@
     "truework-webhooks-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "truework-webhooks-openapi.yml: tagged webhooks POST order-completed -> Truework Webhooks",
     "truework-webhooks-openapi.yml: tagged webhooks POST verification-request-state-change -> Truework Webhooks",
-    "truework-webhooks-openapi.yml: declared missing tag: Truework Webhooks"
+    "truework-webhooks-openapi.yml: declared missing tag: Truework Webhooks",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "truework-subpackage-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "truework-subpackage-qualificationchecks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "truework-subpackage-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "truework-subpackage-tenantproperties-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+    "truework-subpackage-tenantproperties-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "truework-truework-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]
 }
