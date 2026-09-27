@@ -332,29 +332,15 @@ paths:
                 $ref: '#/components/schemas/Error501'
 components:
   schemas:
-    QualificationCheckSetListResourceV20231030:
+    _PropertyDetails-Output:
       type: object
       properties:
-        count:
-          type: integer
-        next:
-          type:
-          - string
-          - 'null'
-        previous:
-          type:
-          - string
-          - 'null'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/QualificationCheckSetResourceV20231030'
+        rent:
+          type: string
+          description: The target rent amount for qualification, expressed in USD
       required:
-      - count
-      - next
-      - previous
-      - results
-      title: QualificationCheckSetListResourceV20231030
+      - rent
+      title: _PropertyDetails-Output
     _SatisfiedDocumentIncomeRequirement:
       type: object
       properties:
@@ -375,6 +361,29 @@ components:
       - file_type
       - start_date
       title: _SatisfiedDocumentIncomeRequirement
+    Error403:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+      - error
+      title: Error403
+    QualificationChecksQualificationCheckResultIdGetParametersAccept:
+      type: string
+      enum:
+      - application/json
+      - application/json; version=2023-10-30
+      default: application/json
+      title: QualificationChecksQualificationCheckResultIdGetParametersAccept
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
+      title: Error
     QualificationChecksPostParametersAccept:
       type: string
       enum:
@@ -382,42 +391,78 @@ components:
       - application/json; version=2023-10-30
       default: application/json
       title: QualificationChecksPostParametersAccept
-    QualificationCheckCreatePostRequestV20231030:
+    QualificationCheckIncomeFidelity:
+      type: string
+      enum:
+      - estimate
+      - source
+      description: Whether or not the monthly gross income data was estimated using source data or provided directly from the source
+      title: QualificationCheckIncomeFidelity
+    Error451:
       type: object
       properties:
-        kind:
-          $ref: '#/components/schemas/QualificationCheckKind'
-        metadata:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-          description: A single level key-value JSON object that can be used to store custom data on the qualification check; keys and values must be strings
-        order_id:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+      - error
+      title: Error451
+    QualificationCheckSetsGetParametersAccept:
+      type: string
+      enum:
+      - application/json
+      - application/json; version=2023-10-30
+      default: application/json
+      title: QualificationCheckSetsGetParametersAccept
+    QualificationCheckOutcome:
+      type: string
+      enum:
+      - qualified
+      - not_qualified
+      - not_enough_information
+      description: The outcome of evaluating a specified set of qualification checks against specified report data
+      title: QualificationCheckOutcome
+    _PropertyDetails-Input:
+      type: object
+      properties:
+        rent:
+          $ref: '#/components/schemas/PropertyDetailsInputRent'
+          description: The target rent amount for qualification, expressed in USD
+      required:
+      - rent
+      title: _PropertyDetails-Input
+    _QualificationCheckSet:
+      type: object
+      properties:
+        applicant_rent_to_income_ratio:
+          type: string
+          description: The ratio of the specified rent to the monthly gross income of the applicant.
+        guarantor_rent_to_income_ratio:
+          type: string
+          description: The ratio of the specified rent to the monthly gross income of the guarantor.
+        id:
+          type: string
+        income_multiple:
           type:
           - string
           - 'null'
-        order_ids:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        property_details:
-          $ref: '#/components/schemas/_PropertyDetails-Input'
-        qualification_check_set_id:
+          description: Deprecated. Please use applicant_rent_to_income_ratio. Threshold ratio for target rent to monthly gross income. Must be greater than 0
+        name:
           type: string
-        report_ids:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
       required:
-      - property_details
-      - qualification_check_set_id
-      title: QualificationCheckCreatePostRequestV20231030
+      - applicant_rent_to_income_ratio
+      - guarantor_rent_to_income_ratio
+      - id
+      - income_multiple
+      - name
+      title: _QualificationCheckSet
+    Error404:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+      - error
+      title: Error404
     Error400:
       type: object
       properties:
@@ -426,56 +471,13 @@ components:
       required:
       - error
       title: Error400
-    Error406:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error406
-    QualificationCheckSetsGetParametersAccept:
-      type: string
-      enum:
-      - application/json
-      - application/json; version=2023-10-30
-      default: application/json
-      title: QualificationCheckSetsGetParametersAccept
-    QualificationCheckKind:
-      type: string
-      enum:
-      - applicant
-      - guarantor
-      description: The kind of qualification check being requested, either for the applicant or guarantor.
-      title: QualificationCheckKind
-    QualificationCheckSetResourceV20231030:
-      type: object
-      properties:
-        applicant_rent_to_income_ratio:
-          type: string
-          description: The ratio of the specified rent to the monthly gross income of the applicant.
-        description:
-          type:
-          - string
-          - 'null'
-        guarantor_rent_to_income_ratio:
-          type: string
-          description: The ratio of the specified rent to the monthly gross income of the guarantor.
-        id:
-          type: string
-        income_multiple:
-          type: string
-          description: Deprecated. Please use applicant_rent_to_income_ratio. Threshold ratio for target rent to monthly gross income. Must be greater than 0.
-        name:
-          type: string
-      required:
-      - applicant_rent_to_income_ratio
-      - description
-      - guarantor_rent_to_income_ratio
-      - id
-      - income_multiple
-      - name
-      title: QualificationCheckSetResourceV20231030
+    PropertyDetailsInputRent:
+      oneOf:
+      - type: number
+        format: double
+      - type: string
+      description: The target rent amount for qualification, expressed in USD
+      title: PropertyDetailsInputRent
     _QualificationCheckResult:
       type: object
       properties:
@@ -506,109 +508,6 @@ components:
       - rent_to_income_ratio
       - report_results
       title: _QualificationCheckResult
-    QualificationCheckOutcome:
-      type: string
-      enum:
-      - qualified
-      - not_qualified
-      - not_enough_information
-      description: The outcome of evaluating a specified set of qualification checks against specified report data
-      title: QualificationCheckOutcome
-    Error500:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error500
-    QualificationCheckIncomeFidelity:
-      type: string
-      enum:
-      - estimate
-      - source
-      description: Whether or not the monthly gross income data was estimated using source data or provided directly from the source
-      title: QualificationCheckIncomeFidelity
-    _QualificationCheckSet:
-      type: object
-      properties:
-        applicant_rent_to_income_ratio:
-          type: string
-          description: The ratio of the specified rent to the monthly gross income of the applicant.
-        guarantor_rent_to_income_ratio:
-          type: string
-          description: The ratio of the specified rent to the monthly gross income of the guarantor.
-        id:
-          type: string
-        income_multiple:
-          type:
-          - string
-          - 'null'
-          description: Deprecated. Please use applicant_rent_to_income_ratio. Threshold ratio for target rent to monthly gross income. Must be greater than 0
-        name:
-          type: string
-      required:
-      - applicant_rent_to_income_ratio
-      - guarantor_rent_to_income_ratio
-      - id
-      - income_multiple
-      - name
-      title: _QualificationCheckSet
-    Error403:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error403
-    _PropertyDetails-Input:
-      type: object
-      properties:
-        rent:
-          $ref: '#/components/schemas/PropertyDetailsInputRent'
-          description: The target rent amount for qualification, expressed in USD
-      required:
-      - rent
-      title: _PropertyDetails-Input
-    QualificationChecksQualificationCheckResultIdGetParametersAccept:
-      type: string
-      enum:
-      - application/json
-      - application/json; version=2023-10-30
-      default: application/json
-      title: QualificationChecksQualificationCheckResultIdGetParametersAccept
-    PropertyDetailsInputRent:
-      oneOf:
-      - type: number
-        format: double
-      - type: string
-      description: The target rent amount for qualification, expressed in USD
-      title: PropertyDetailsInputRent
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-      required:
-      - message
-      title: Error
-    Error429:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error429
-    Error404:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error404
     Error401:
       type: object
       properties:
@@ -617,6 +516,42 @@ components:
       required:
       - error
       title: Error401
+    Error406:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+      - error
+      title: Error406
+    QualificationCheckSetResourceV20231030:
+      type: object
+      properties:
+        applicant_rent_to_income_ratio:
+          type: string
+          description: The ratio of the specified rent to the monthly gross income of the applicant.
+        description:
+          type:
+          - string
+          - 'null'
+        guarantor_rent_to_income_ratio:
+          type: string
+          description: The ratio of the specified rent to the monthly gross income of the guarantor.
+        id:
+          type: string
+        income_multiple:
+          type: string
+          description: Deprecated. Please use applicant_rent_to_income_ratio. Threshold ratio for target rent to monthly gross income. Must be greater than 0.
+        name:
+          type: string
+      required:
+      - applicant_rent_to_income_ratio
+      - description
+      - guarantor_rent_to_income_ratio
+      - id
+      - income_multiple
+      - name
+      title: QualificationCheckSetResourceV20231030
     _QualificationCheckReportResult:
       type: object
       properties:
@@ -643,31 +578,6 @@ components:
       - report_id
       - satisfied_document_income_requirements
       title: _QualificationCheckReportResult
-    _PropertyDetails-Output:
-      type: object
-      properties:
-        rent:
-          type: string
-          description: The target rent amount for qualification, expressed in USD
-      required:
-      - rent
-      title: _PropertyDetails-Output
-    Error501:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error501
-    Error451:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error451
     _InvalidRequestError:
       type: object
       properties:
@@ -711,6 +621,96 @@ components:
       - qualification_check_set
       - result
       title: QualificationCheckResponseResourceV20231030
+    Error501:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+      - error
+      title: Error501
+    QualificationCheckCreatePostRequestV20231030:
+      type: object
+      properties:
+        kind:
+          $ref: '#/components/schemas/QualificationCheckKind'
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+          description: A single level key-value JSON object that can be used to store custom data on the qualification check; keys and values must be strings
+        order_id:
+          type:
+          - string
+          - 'null'
+        order_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        property_details:
+          $ref: '#/components/schemas/_PropertyDetails-Input'
+        qualification_check_set_id:
+          type: string
+        report_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      required:
+      - property_details
+      - qualification_check_set_id
+      title: QualificationCheckCreatePostRequestV20231030
+    QualificationCheckKind:
+      type: string
+      enum:
+      - applicant
+      - guarantor
+      description: The kind of qualification check being requested, either for the applicant or guarantor.
+      title: QualificationCheckKind
+    QualificationCheckSetListResourceV20231030:
+      type: object
+      properties:
+        count:
+          type: integer
+        next:
+          type:
+          - string
+          - 'null'
+        previous:
+          type:
+          - string
+          - 'null'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/QualificationCheckSetResourceV20231030'
+      required:
+      - count
+      - next
+      - previous
+      - results
+      title: QualificationCheckSetListResourceV20231030
+    Error429:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+      - error
+      title: Error429
+    Error500:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+      - error
+      title: Error500
   securitySchemes:
     Bearer:
       type: http
