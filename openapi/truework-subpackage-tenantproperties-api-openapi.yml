@@ -445,6 +445,62 @@ paths:
               $ref: '#/components/schemas/TenantPropertyUpdatePutRequestV20231030'
 components:
   schemas:
+    Error406:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+      - error
+      title: Error406
+    Error401:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+      - error
+      title: Error401
+    TenantPropertiesPostParametersAccept:
+      type: string
+      enum:
+      - application/json
+      - application/json; version=2023-10-30
+      default: application/json
+      title: TenantPropertiesPostParametersAccept
+    Error400:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/_InvalidRequestError'
+      required:
+      - error
+      title: Error400
+    _InvalidRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+          default: Invalid field values provided
+      required:
+      - message
+      title: _InvalidRequestError
+    Error404:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+      - error
+      title: Error404
+    Error501:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+      - error
+      title: Error501
     Error403:
       type: object
       properties:
@@ -453,36 +509,61 @@ components:
       required:
       - error
       title: Error403
-    TenantPropertiesPostParametersAccept:
-      type: string
-      enum:
-      - application/json
-      - application/json; version=2023-10-30
-      default: application/json
-      title: TenantPropertiesPostParametersAccept
-    Error:
+    TenantPropertyListResourceV20231030:
       type: object
       properties:
-        message:
+        count:
+          type: integer
+        next:
+          type:
+          - string
+          - 'null'
+        previous:
+          type:
+          - string
+          - 'null'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TenantPropertyResourceV20231030'
+      required:
+      - count
+      - next
+      - previous
+      - results
+      title: TenantPropertyListResourceV20231030
+    TenantPropertyCreatePostRequestV20231030:
+      type: object
+      properties:
+        address_line_1:
+          type:
+          - string
+          - 'null'
+        address_line_2:
+          type:
+          - string
+          - 'null'
+        address_line_3:
+          type:
+          - string
+          - 'null'
+        city:
+          type:
+          - string
+          - 'null'
+        name:
           type: string
+        postal_code:
+          type:
+          - string
+          - 'null'
+        state:
+          type:
+          - string
+          - 'null'
       required:
-      - message
-      title: Error
-    TenantPropertiesGetParametersAccept:
-      type: string
-      enum:
-      - application/json
-      - application/json; version=2023-10-30
-      default: application/json
-      title: TenantPropertiesGetParametersAccept
-    Error451:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error451
+      - name
+      title: TenantPropertyCreatePostRequestV20231030
     TenantPropertyResourceV20231030:
       type: object
       properties:
@@ -527,93 +608,6 @@ components:
       - state
       - status
       title: TenantPropertyResourceV20231030
-    Error404:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error404
-    TenantPropertyCreatePostRequestV20231030:
-      type: object
-      properties:
-        address_line_1:
-          type:
-          - string
-          - 'null'
-        address_line_2:
-          type:
-          - string
-          - 'null'
-        address_line_3:
-          type:
-          - string
-          - 'null'
-        city:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-        postal_code:
-          type:
-          - string
-          - 'null'
-        state:
-          type:
-          - string
-          - 'null'
-      required:
-      - name
-      title: TenantPropertyCreatePostRequestV20231030
-    Error400:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/_InvalidRequestError'
-      required:
-      - error
-      title: Error400
-    Error401:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error401
-    Error406:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error406
-    TenantPropertyListResourceV20231030:
-      type: object
-      properties:
-        count:
-          type: integer
-        next:
-          type:
-          - string
-          - 'null'
-        previous:
-          type:
-          - string
-          - 'null'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/TenantPropertyResourceV20231030'
-      required:
-      - count
-      - next
-      - previous
-      - results
-      title: TenantPropertyListResourceV20231030
     TenantPropertiesTenantPropertyIdGetParametersAccept:
       type: string
       enum:
@@ -621,23 +615,14 @@ components:
       - application/json; version=2023-10-30
       default: application/json
       title: TenantPropertiesTenantPropertyIdGetParametersAccept
-    _InvalidRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-          default: Invalid field values provided
-      required:
-      - message
-      title: _InvalidRequestError
-    Error501:
+    Error451:
       type: object
       properties:
         error:
           $ref: '#/components/schemas/Error'
       required:
       - error
-      title: Error501
+      title: Error451
     TenantPropertyUpdatePutRequestV20231030:
       type: object
       properties:
@@ -670,21 +655,6 @@ components:
       required:
       - name
       title: TenantPropertyUpdatePutRequestV20231030
-    Error429:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      required:
-      - error
-      title: Error429
-    TenantPropertiesTenantPropertyIdPutParametersAccept:
-      type: string
-      enum:
-      - application/json
-      - application/json; version=2023-10-30
-      default: application/json
-      title: TenantPropertiesTenantPropertyIdPutParametersAccept
     Error500:
       type: object
       properties:
@@ -693,6 +663,36 @@ components:
       required:
       - error
       title: Error500
+    TenantPropertiesTenantPropertyIdPutParametersAccept:
+      type: string
+      enum:
+      - application/json
+      - application/json; version=2023-10-30
+      default: application/json
+      title: TenantPropertiesTenantPropertyIdPutParametersAccept
+    TenantPropertiesGetParametersAccept:
+      type: string
+      enum:
+      - application/json
+      - application/json; version=2023-10-30
+      default: application/json
+      title: TenantPropertiesGetParametersAccept
+    Error429:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+      - error
+      title: Error429
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
+      title: Error
   securitySchemes:
     Bearer:
       type: http
