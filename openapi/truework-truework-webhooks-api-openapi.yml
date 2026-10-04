@@ -65,28 +65,10 @@ webhooks:
       - Truework Webhooks
 components:
   schemas:
-    OrderCompletedPostPayloadContentApplicationJsonSchemaHookEvent:
-      type: string
-      enum:
-      - order.completed
-      description: The event that triggered the webhook
-      title: OrderCompletedPostPayloadContentApplicationJsonSchemaHookEvent
-    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHookEvent:
-      type: string
-      enum:
-      - verification_request.state.change
-      description: The event that triggered the webhook
-      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHookEvent
-    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataState:
-      type: string
-      enum:
-      - pending-approval
-      - processing
-      - action-requred
-      - completed
-      - canceled
-      - invalid
-      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataState
+    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataMetadata:
+      type: object
+      properties: {}
+      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataMetadata
     OrderCompletedPostPayloadContentApplicationJsonSchemaData:
       type: object
       properties:
@@ -96,31 +78,6 @@ components:
         metadata:
           $ref: '#/components/schemas/OrderCompletedPostPayloadContentApplicationJsonSchemaDataMetadata'
       title: OrderCompletedPostPayloadContentApplicationJsonSchemaData
-    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHook:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The ID of the webhook
-        event:
-          $ref: '#/components/schemas/VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHookEvent'
-          description: The event that triggered the webhook
-        target:
-          type: string
-          description: The target of the webhook
-        triggered_at:
-          type: string
-          format: date-time
-          description: Date and time of the event that triggered the webhook
-      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHook
-    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataMetadata:
-      type: object
-      properties: {}
-      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataMetadata
-    OrderCompletedPostPayloadContentApplicationJsonSchemaDataMetadata:
-      type: object
-      properties: {}
-      title: OrderCompletedPostPayloadContentApplicationJsonSchemaDataMetadata
     OrderCompletedPostPayloadContentApplicationJsonSchemaHook:
       type: object
       properties:
@@ -155,3 +112,46 @@ components:
         metadata:
           $ref: '#/components/schemas/VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataMetadata'
       title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaData
+    OrderCompletedPostPayloadContentApplicationJsonSchemaHookEvent:
+      type: string
+      enum:
+      - order.completed
+      description: The event that triggered the webhook
+      title: OrderCompletedPostPayloadContentApplicationJsonSchemaHookEvent
+    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHookEvent:
+      type: string
+      enum:
+      - verification_request.state.change
+      description: The event that triggered the webhook
+      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHookEvent
+    OrderCompletedPostPayloadContentApplicationJsonSchemaDataMetadata:
+      type: object
+      properties: {}
+      title: OrderCompletedPostPayloadContentApplicationJsonSchemaDataMetadata
+    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataState:
+      type: string
+      enum:
+      - pending-approval
+      - processing
+      - action-requred
+      - completed
+      - canceled
+      - invalid
+      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaDataState
+    VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHook:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The ID of the webhook
+        event:
+          $ref: '#/components/schemas/VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHookEvent'
+          description: The event that triggered the webhook
+        target:
+          type: string
+          description: The target of the webhook
+        triggered_at:
+          type: string
+          format: date-time
+          description: Date and time of the event that triggered the webhook
+      title: VerificationRequestStateChangePostPayloadContentApplicationJsonSchemaHook
