@@ -1,3 +1,8 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (dated 2026-05-24 by the file itself), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
+generated: '2026-05-24'
 specification: API Commons Plans
 specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
@@ -98,3 +103,35 @@ plans:
       - name: Dark Matter Empower
       - name: Blend POS
       - name: nCino POS
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - negotiated
+  units:
+  - transaction
+  plans:
+  - name: Truework Verifications Platform
+    access: negotiated
+    model: negotiated
+    model_how: stated
+    units:
+    - transaction
+    periods:
+    - per-use
+  - name: Truework API
+    access: negotiated
+    model: negotiated
+    model_how: stated
+    units:
+    - other
+    periods:
+    - month
+  - name: LOS / POS Integrations
+    access: other
+    model: negotiated
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
