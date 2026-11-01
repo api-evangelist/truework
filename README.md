@@ -1,4 +1,4 @@
-# Truework (truework)
+# Truework
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,191 +66,155 @@
 
 Truework operates a unified income and employment verification platform for mortgage lenders, credit unions, and fintechs. The Truework API orchestrates six verification methods — Instant Data, Payroll Credentials, Bank Credentials, Tax Credentials, Smart Outreach, and Document Upload — behind a single REST surface (api.truework.com), asynchronous webhooks, and the Truework.js / Truework Direct widget for consumer-permissioned verifications. The platform claims coverage of more than 97% of U.S. workers and 75% completion rates versus a ~48% industry average. Core resources are Orders, Verification Requests, Reports, and Order Events, with beta surfaces for Qualification Checks and Tenant Properties.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/truework/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/truework/refs/heads/main/apis.yml)
+**Areas:** Verification · Income Verification · Employment Verification · VOIE · Mortgage · Lending · Credit Union · Identity · KYC · Fintech
 
-## Scope
+## Truework on APIs.io
 
-- **Position:** Consuming
-- **Access:** 3rd-Party
+Everything profiled for Truework is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/truework/](https://apis.io/providers/truework/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (6)
 
-- Verifications
-- Income Verification
-- Employment Verification
-- VOIE
-- Mortgage
-- Lending
-- Credit Unions
-- Identity
-- KYC
-- Fintech
+- [Truework.js (Truework Direct)](https://apis.io/apis/truework/truework-js/) — Truework.js is the client-side JavaScript library that powers Truework Direct, the borrower-driven (consumer-permissioned) verification flow. The host page…
+- [Truework Subpackage Orders API](https://apis.io/apis/truework/truework-subpackage-orders-api/) — The subpackage_orders API from Truework — 8 operation(s) for subpackage_orders.
+- [Truework Subpackage Qualification Checks API](https://apis.io/apis/truework/truework-subpackage-qualificationchecks-api/) — The subpackage_qualificationChecks API from Truework — 3 operation(s) for subpackage_qualificationchecks.
+- [Truework Subpackage Reports API](https://apis.io/apis/truework/truework-subpackage-reports-api/) — The subpackage_reports API from Truework — 1 operation(s) for subpackage_reports.
+- [Truework Subpackage Tenant Properties API](https://apis.io/apis/truework/truework-subpackage-tenantproperties-api/) — The subpackage_tenantProperties API from Truework — 2 operation(s) for subpackage_tenantproperties.
+- [Truework Webhooks API](https://apis.io/apis/truework/truework-truework-webhooks-api/) — The Truework Webhooks API from Truework — 0 operation(s) for truework webhooks.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-05-24T00:00:00.000Z
-- **Modified:** 2026-05-24
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### Truework Verifications API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-Truework Verifications API for orders, reports, and order events. Submit a verification of income and employment (VOIE) order against a known target employer, run a synchronous employer search, kick off a Truework Direct (Truework.js) borrower-driven verification, retrieve completed verification reports, list and cancel orders, and replay the order event log. Six verification methods are orchestrated automatically: Instant Data, Payroll Credentials, Bank Credentials, Tax Credentials, Smart Outreach, and Document Upload. Current API version is 2023-10-30; pinned per API key via the Accept header.
+- [Truework Agentic Access](https://apis.io/agentic-access/truework/truework-agentic-access/)
 
-- **Human URL:** [https://www.truework.com/docs/api-reference](https://www.truework.com/docs/api-reference)
-- **Base URL:** `https://api.truework.com`
+#### JSON Schema (2)
 
-#### Tags
+The data models the API reads and writes.
 
-- Verifications
-- VOIE
-- Orders
-- Reports
-- Mortgage
+- [Truework Order](https://apis.io/schemas/truework/truework-order/)
+- [Truework Verification Report](https://apis.io/schemas/truework/truework-report/)
 
-#### Properties
+#### JSON-LD (1)
 
-- [Documentation](https://www.truework.com/docs/api-reference)
-- [Documentation](https://www.truework.com/docs/api-reference/versions/2023-10-30)
-- [OpenAPI](openapi/truework-verifications-orders-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/truework-verifications-orders.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/truework-verifications-orders.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/truework-order-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/truework-report-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/truework-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+Linked-data contexts for the provider's vocabulary.
 
-### Truework Qualifications API (Beta)
+- [Truework Context](https://apis.io/jsonld/truework/truework-context/)
 
-Public beta surface for running qualification checks against a borrower's verified employment and income data. Create a qualification check, retrieve a check result, and list the qualification check sets defined for a tenant. Useful for low-latency knockout decisions (e.g. "minimum gross monthly income") layered on top of full verification reports.
+#### Collections (11)
 
-- **Human URL:** [https://www.truework.com/docs/api-reference](https://www.truework.com/docs/api-reference)
-- **Base URL:** `https://api.truework.com`
+Postman and Open Collection request collections.
 
-#### Tags
+- [Truework Qualifications & Tenant Properties API (Beta)](https://apis.io/collections/truework/open-truework-beta/)
+- [Truework Qualifications & Tenant Properties API (Beta) subpackage_orders API](https://apis.io/collections/truework/open-truework-subpackage-orders-api/)
+- [Truework Qualifications & Tenant Properties API (Beta) subpackage_orders subpackage_qualificationChecks API](https://apis.io/collections/truework/open-truework-subpackage-qualificationchecks-api/)
+- [Truework Qualifications & Tenant Properties API (Beta) subpackage_orders subpackage_reports API](https://apis.io/collections/truework/open-truework-subpackage-reports-api/)
+- [Truework Qualifications & Tenant Properties API (Beta) subpackage_orders subpackage_tenantProperties API](https://apis.io/collections/truework/open-truework-subpackage-tenantproperties-api/)
+- [Truework Verifications API](https://apis.io/collections/truework/open-truework-verifications-orders/)
+- [Truework Webhooks](https://apis.io/collections/truework/open-truework-webhooks/)
+- [Truework Qualifications & Tenant Properties API (Beta) subpackage_orders API](https://apis.io/collections/truework/postman-truework-subpackage-orders-api/)
+- [Truework Qualifications & Tenant Properties API (Beta) subpackage_orders subpackage_qualificationChecks API](https://apis.io/collections/truework/postman-truework-subpackage-qualificationchecks-api/)
+- [Truework Qualifications & Tenant Properties API (Beta) subpackage_orders subpackage_reports API](https://apis.io/collections/truework/postman-truework-subpackage-reports-api/)
+- [Truework Qualifications & Tenant Properties API (Beta) subpackage_orders subpackage_tenantProperties API](https://apis.io/collections/truework/postman-truework-subpackage-tenantproperties-api/)
 
-- Qualifications
-- Decisioning
-- Beta
-- VOIE
+#### Governance rules (1)
 
-#### Properties
+Spectral rulesets for the provider's contracts.
 
-- [Documentation](https://www.truework.com/docs/api-reference)
-- [OpenAPI](openapi/truework-beta-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/truework-beta.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/truework-beta.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Truework — jsonschema rules](https://apis.io/rules/truework/truework-jsonschema-spectral-rules/)
 
-### Truework Tenant Properties API (Beta)
+#### Security (2)
 
-Public beta surface for programmatically managing tenant-scoped configuration properties on Truework. Create, list, retrieve, and update tenant properties that govern verification behavior (allowed methods, branding, callback expectations) across the account.
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://www.truework.com/docs/api-reference](https://www.truework.com/docs/api-reference)
-- **Base URL:** `https://api.truework.com`
+- [Truework Authentication](https://apis.io/security/truework/truework-authentication/)
+- [Truework Domain Security](https://apis.io/security/truework/truework-domain-security/)
 
-#### Tags
+#### Plans and pricing (1)
 
-- Configuration
-- Tenant
-- Beta
+Published plans, tiers and prices.
 
-#### Properties
+- [Truework Plans Pricing](https://apis.io/plans/truework/truework-plans-pricing/)
 
-- [Documentation](https://www.truework.com/docs/api-reference)
-- [OpenAPI](openapi/truework-beta-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/truework-beta.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/truework-beta.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Rate limits (1)
 
-### Truework Webhooks
+Published request limits.
 
-Truework emits two webhook event types — `order.completed` when every verification on an order is finished, and `verification_request.state.change` as individual verifications transition through pending-approval, processing, action-required, completed, canceled, and invalid. Each webhook destination is associated with a token delivered in the `X-Truework-Token` header so receivers can authenticate the call. Failed deliveries are retried periodically for up to 48 hours. Accounts may register up to 10 webhook destinations.
+- [Truework Rate Limits](https://apis.io/rate-limits/truework/truework-rate-limits/)
 
-- **Human URL:** [https://www.truework.com/docs/api-reference/webhooks](https://www.truework.com/docs/api-reference/webhooks)
+#### FinOps (1)
 
-#### Tags
+What the API costs to run, by operation.
 
-- Webhooks
-- Events
+- [Truework Finops](https://apis.io/finops/truework/truework-finops/)
 
-#### Properties
+## Where to find this API
 
-- [Documentation](https://www.truework.com/docs/api-reference/webhooks)
-- [Documentation](https://www.truework.com/docs/api-reference/webhooks/security)
-- [OpenAPI](openapi/truework-webhooks-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/truework-webhooks.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/truework-webhooks.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-### Truework.js (Truework Direct)
-
-Truework.js is the client-side JavaScript library that powers Truework Direct, the borrower-driven (consumer-permissioned) verification flow. The host page loads `https://js.truework.com/v1` and initializes the widget with a session token created server-side via POST /orders/truework-direct, then handles `onComplete`, `onClose`, and `onError` callbacks. Publishable keys (`tw_pk_*` / `tw_pk_test_*`) authenticate the client.
-
-- **Human URL:** [https://www.truework.com/docs/guides/truework-direct/truework-js-reference](https://www.truework.com/docs/guides/truework-direct/truework-js-reference)
-- **Base URL:** `https://js.truework.com/v1`
-
-#### Tags
-
-- JavaScript
-- SDK
-- Embedded
-
-#### Properties
-
-- [Documentation](https://www.truework.com/docs/guides/truework-direct/truework-js-reference)
-- [Documentation](https://www.truework.com/docs/guides/truework-direct/getting-started)
-- [Code Examples](https://github.com/truework/truework.js-examples)
-- [Postman Collection](collections/truework-beta.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/truework-beta.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/truework-verifications-orders.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/truework-verifications-orders.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/truework-webhooks.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/truework-webhooks.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [Portal](https://www.truework.com)
+- [Website](https://www.truework.com/)
 - [Documentation](https://www.truework.com/docs)
-- [Documentation](https://www.truework.com/docs/api-reference)
-- [Documentation](https://www.truework.com/docs/api-reference/versions/2023-10-30)
-- [Documentation](https://www.truework.com/docs/api-reference/versions)
-- [Versioning](https://www.truework.com/docs/api-reference/versions)
-- [Authentication](https://www.truework.com/docs/api-reference/authentication)
-- [Rate Limits](https://www.truework.com/docs/api-reference/limits)
-- [Errors](https://www.truework.com/docs/api-reference/versions/2023-10-30)
-- [Sandbox](https://www.truework.com/docs/api-reference/sandbox)
-- [Documentation](https://www.truework.com/docs/api-reference/sandbox/test-cases)
-- [Documentation](https://www.truework.com/docs/api-reference/monitoring)
-- [Webhooks](https://www.truework.com/docs/api-reference/webhooks)
-- [Documentation](https://www.truework.com/docs/api-reference/webhooks/security)
-- [Documentation](https://www.truework.com/docs/guides)
-- [Getting Started](https://www.truework.com/docs/guides/api/getting-started)
-- [Documentation](https://www.truework.com/docs/guides/methods)
-- [Documentation](https://www.truework.com/docs/guides/workflows)
-- [Documentation](https://www.truework.com/docs/guides/truework-direct/getting-started)
-- [Documentation](https://www.truework.com/docs/guides/truework-direct/truework-js-reference)
-- [Documentation](https://www.truework.com/docs/guides/mortgage/mortgage-intro)
-- [Documentation](https://www.truework.com/docs/guides/mortgage/mortgage-los)
-- [Documentation](https://www.truework.com/docs/guides/mortgage/mortgage-pos)
-- [Portal](https://www.truework.com/products/api)
-- [Portal](https://www.truework.com/products)
-- [Sign Up](https://app.truework.com/requester/signup)
-- [Login](https://app.truework.com/requester/login)
-- [Sandbox](https://api.truework-sandbox.com)
-- [Status Page](https://truework.statuspage.io)
+- [Getting started](https://www.truework.com/docs/guides/api/getting-started)
 - [Support](https://help.truework.com)
-- [Documentation](https://www.truework.com/legal/terms)
-- [Privacy Policy](https://www.truework.com/legal/privacy)
-- [GitHub Organization](https://github.com/truework)
-- [SDK](https://github.com/truework/truework.js-examples)
-- [Tool](https://github.com/truework/gretchen)
-- [Tool](https://github.com/truework/mounty)
-- [LinkedIn](https://www.linkedin.com/company/truework)
 - [Blog](https://www.truework.com/resource-center/blog)
-- [Plans](plans/truework-plans-pricing.yml)
-- [Rate Limits](rate-limits/truework-rate-limits.yml)
-- [Fin Ops](finops/truework-finops.yml)
-- [Features](undefined)
+- [Privacy policy](https://www.truework.com/legal/privacy)
+- [GitHub](https://github.com/truework)
+- [Status](https://truework.statuspage.io)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** info@apievangelist.com
-**URL:** https://apievangelist.com
+**Kin Score 46.7** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 64.4 |
+| Contract governance | 9.8 |
+| Operational transparency | 50.0 |
+| Developer ergonomics | 65.5 |
+| Access clarity | 22.4 |
+
+**Agent readiness 36.5** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | documented (partial credit) |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 13.4** — Banking & Open Finance
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/truework/](https://apis.io/providers/truework/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Truework: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/truework/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
